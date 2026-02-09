@@ -84,8 +84,8 @@ Output these fields in this exact order:
 - If not on website, check official state business filings (e.g., Sunbiz.org, Secretary of State databases)
 - Do NOT use: copyright dates, domain registration dates, page publish dates, "years of experience," or third-party directory listings (e.g., Lawyers.com, Avvo) — these often reflect when a profile was created, not when the business was founded
 - Do NOT use an attorney's career start date or bar admission year unless documents explicitly state the firm was founded that year
-- Before outputting a year, list every source checked and the year each one returned. If any two sources disagree, output "Unconfirmed" and flag in Missing Inputs Needed. Include a brief explanation of the conflicting sources so the user can resolve it with the client.
-- If all sources agree on a single year: output that year with `Sources: {1 URL}`
+- Output a single year. If sources conflict, output "Unconfirmed" and flag in Missing Inputs Needed
+- If confirmed: `Sources: {1 URL}`
 
 **Organizational Structure**:
 1. Extract from documents (ownership model, entity type, locations, brand architecture, leadership structure)
@@ -97,15 +97,13 @@ Output these fields in this exact order:
 **Leadership and Seniority**: Bullet list of principals, partners, senior attorneys, lead practitioners, or equivalent senior roles who directly deliver core services. For each:
 - Full name and title
 - 1 to 2 sentence role summary (responsibilities, relevance to approvals, service delivery, operations, marketing)
-- Link to authoritative profile page (prefer client's own website bio; use LinkedIn only if no owned profile exists). The link must be a full URL on its own line below the role summary.
-
-**Completeness requirement**: Fetch the client's website team/attorneys page directly and list every person found there. Cross-reference with intake documents. If the website lists someone not mentioned in documents, include them. If documents mention someone not on the website, include them and note the discrepancy. Do not rely solely on names found in intake documents; the website team page is the authoritative roster.
+- Link to authoritative profile page (prefer client's own website bio; use LinkedIn only if no owned profile exists)
 
 Classification: if a person holds a title like Attorney, Managing Attorney, Senior Attorney, Partner, Lead Provider, or equivalent, they belong here even if they also handle operational tasks. Do NOT include administrators, firm managers, intake staff, coordinators, or support staff (those go under Other Key Roles).
 
 **Other Key Roles and Operational Leadership**: Roles influencing approvals, intake, scheduling, operations, customer experience, or delivery quality. If names unknown, list role and state "Name not provided."
 
-**Locations**: All known locations as bullets. Check intake documents first, then verify against the client's website (footer, contact page, locations page) for any additional addresses not mentioned in documents. If location-based does not apply, define the delivery model (virtual, service area, by appointment, nationwide shipping).
+**Locations**: All known locations as bullets. If location-based does not apply, define the delivery model (virtual, service area, by appointment, nationwide shipping).
 
 **Targeting**: Bullet list of primary geography, secondary geography, and key audience/segment focus (only if explicitly stated).
 
@@ -114,8 +112,6 @@ Classification: if a person holds a title like Attorney, Managing Attorney, Seni
 **Current Website**: Canonical primary URL. If multiple sites, list Primary and Secondary with a one-line purpose for each.
 
 **Social Media Accounts**: Read and follow the **Social Media Discovery Protocol** in `references/social-media-discovery-protocol.md`. This protocol covers the complete search, verification, and output process for all six platforms (Facebook, Instagram, LinkedIn, YouTube, TikTok, X/Twitter).
-
-**URL requirement**: Every platform in the output must have either a direct profile URL or "Not found." If a platform search returns no direct URL but the client's website footer links to that platform, fetch the website page to extract the actual destination URL. Never output a platform line without a URL unless the account genuinely does not exist.
 
 **Approval Gate**:
 ```
@@ -333,8 +329,6 @@ These rules govern every section of the brief:
 **Format control** — follow the exact section order and headings specified. No invented fields or headings.
 
 **Output cleanliness** — no code, HTML, debug text, placeholder fragments, Unicode dividers, or em dashes (use commas, colons, periods). No internal process narration: output only required sections and approval gates.
-
-**Approval gate presentation** — present each section at the approval gate exactly as it will appear in the final document, including all URLs, profile links, and source citations. Do not summarize, abbreviate, or strip detail from the chat presentation. The user must be able to review the complete content before approving.
 
 ---
 
