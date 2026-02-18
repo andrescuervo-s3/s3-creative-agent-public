@@ -48,6 +48,17 @@ For existing clients, the foundational brief and/or any active creative brief co
 
 If no brief exists, that's fine — the document works without one. The user may provide context through conversation, uploaded files, or research you do together.
 
+### Research S3 Products and Technology
+
+Any time the recommendation references an S3 product, proprietary system, or internal technology — the S3 Hub, a module system, a content registry, a gallery system, a locator, or any other S3-built tool — search Google Drive for existing documentation before writing the doc. This is not optional. S3 has product descriptions, architecture docs, pitch materials, and internal writeups for its products. Use them.
+
+Search Drive for:
+- The product name (e.g., "S3 Hub", "Gallery Hub", "Location Finder")
+- Related terms (e.g., "content hub", "media hub", "module system")
+- Product briefs, pitch decks, architecture docs, or internal descriptions
+
+Use what the team has actually written to describe the product in the recommendation doc. If the Drive search returns nothing, flag it to the user and ask how they'd like the product described — or offer to write a draft for their review. Never describe an S3 product from assumption alone.
+
 ### Accept Additional Uploads
 
 The user may upload screenshots, analytics reports, competitor examples, email threads, Slack messages, or other materials that inform the recommendation. Read everything provided. These are the raw ingredients.
@@ -60,7 +71,8 @@ Every recommendation doc follows the same bones, but sections flex depending on 
 - Client name in large bold caps (22pt / size 44)
 - Subtitle describing the topic in medium grey (18pt / size 36, color #666666)
 - Heavy black rule underneath (4pt border)
-- Meta table (borderless): Prepared for (event + date/time), Attendees
+- Meta table (borderless): Prepared for, Requested by, Prepared by, Date
+- **Date handling:** If the recommendation is for a scheduled meeting or call, use that date and time. If it originated from a side chat, Slack thread, or informal request with no scheduled meeting, use the current date as the "Prepared" date. Never leave the date blank or vague like "TBD."
 
 ### 2. Context Section (optional)
 If there's important background data that frames the recommendation — site performance metrics, current state of something, recent changes — it goes here. Use metric cards for standout numbers, or an alert box for a key framing statement.
@@ -87,14 +99,16 @@ The core of the document. State the recommendation clearly. Two patterns work we
 
 ### 6. Recommended Approach
 The what-we'd-actually-do section. Break it into numbered steps with H2 subheadings. Each step gets:
-- A clear subheading (e.g., "1. Build the Legally Goff Podcast Page")
+- A clear subheading (e.g., "1. Build the Gallery Hub")
 - A short paragraph explaining the approach in plain language
 - Bullet points for specifics
 
 Write this for the account manager. "Publish an episode and the page updates itself" — not technical jargon.
 
 ### 7. Explanatory Section (optional)
-If the recommendation involves a concept the reader might not know (like "What is the S3 Hub?"), add a brief explainer. Two paragraphs max. Think of it as the "here's the thing you'll need to be able to talk about on the call" section.
+If the recommendation involves an S3 product, technology, or concept the reader might not know (like the S3 Hub, a specific module, or a proprietary system), add a brief explainer. Two paragraphs max. Think of it as the "here's the thing you'll need to be able to talk about on the call" section.
+
+**Important:** Do NOT write S3 product explanations from memory or assumption. Always pull from the Drive research done in the "Research S3 Products and Technology" step above. Use what the team has actually written. If no documentation was found, flag this to the user and ask how they'd like to describe it — or offer to write a draft for their review.
 
 ### 8. Technical Reference (when needed)
 A clearly labeled appendix at the bottom for the dev team. This is where module names, CMS architecture, data attributes, comparison tables, and implementation specs live. Introduce it with a note in lighter text: "The following details are for the development team."
@@ -126,6 +140,7 @@ The audience is an account manager who needs to walk into a client call feeling 
 - **Be direct about the position** — "We advise against..." or "We recommend..." not "It might be worth considering..."
 - **Frame benefits in client terms** — "the page updates itself" not "content is dynamically rendered"
 - **Keep it tight** — 2–6 pages is the sweet spot. If you're past 6, you're overexplaining
+- **No cross-client references** — never mention another client's project, name, or deliverable in the document unless the user explicitly asks for a comparison. Each recommendation doc stands on its own. If the approach is informed by work done for another client, describe the pattern or capability generically ("we've built this before," "this is a proven approach") — never "we did this for [Client X]"
 
 ## Building the Document
 
@@ -141,4 +156,4 @@ The audience is an account manager who needs to walk into a client call feeling 
 
 ### Naming Convention
 
-`{Client_Name}_{Topic_Slug}.docx` — e.g., `Goff_Billboard_Strategy.docx`, `Goff_Podcast_Hub_Integration.docx`
+`{Client_Name}_{Topic_Slug}.docx` — e.g., `Teitelbaum_S3_Gallery_Hub.docx`, `ClientName_Billboard_Strategy.docx`
