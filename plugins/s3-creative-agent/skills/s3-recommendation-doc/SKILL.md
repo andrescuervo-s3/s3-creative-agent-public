@@ -29,58 +29,24 @@ The visual identity is intentionally monochrome — black, white, and greys only
 
 The shared style system is the foundation. This skill's reference file adds the components unique to recommendation docs.
 
-### Gather Context — Research First, Ask Second
+### Gather Context
 
-The goal is to minimize what the user has to explain by doing the research upfront. Follow this sequence:
+Before writing, you need to understand the situation. If the user hasn't already provided these, ask:
 
-#### Step 1: Two questions only
+1. **Client name** — who is this for?
+2. **The ask** — what did the client request? (ideally with attribution: who asked, when)
+3. **Meeting details** — when is the call/meeting, who's attending?
+4. **Your position** — does the team have a clear recommendation, or does this need to be figured out?
 
-Ask exactly two things:
+### Pull in Existing Briefs (When Available)
 
-1. **Existing or new client?** — Don't pre-populate client names. Let the user type it.
-2. **Client name?** — Free text. Never offer a list of clients to pick from.
+For existing clients, the foundational brief and/or any active creative brief contain critical context — audience profiles, brand voice, goals, pain points, competitive landscape, and digital snapshot data. If either exists:
 
-That's it. Do NOT ask about the topic, meeting details, position, audience, or anything else yet.
-
-#### Step 2: Search everything immediately
-
-As soon as you have the client name, search all available sources for recent activity:
-
-- **Gmail** — recent emails mentioning the client name (last 2 weeks)
-- **Google Drive** — documents, briefs, meeting notes, proposals for this client
-- **Notion** — pages, databases, meeting notes referencing the client
-- **Google Calendar** — upcoming meetings with the client name
-
-Look for anything that suggests what this recommendation might be about — a recent email thread, a Slack discussion, a meeting note, a project update.
-
-#### Step 3: Surface what you found and confirm
-
-If you find recent activity that looks like it could be the trigger for this recommendation (e.g., a recent email about building a gallery hub, meeting notes about a website redesign, a Slack thread about a campaign ask):
-
-> "I found a recent email from [person] about [topic] for [client]. Is this recommendation about that?"
-
-If you find multiple things, summarize the 2–3 most recent/relevant and ask which one.
-
-If nothing recent or obvious turns up, ask: "What's this recommendation about?"
-
-#### Step 4: Fill in the gaps
-
-Once you know the topic, you may still need:
-- **Who requested this?** — if not clear from the research
-- **Is there a scheduled meeting or call?** — for the meta table date (if not, use today's date)
-- **Who's the audience?** — internal (S3 team) or client-facing?
-- **Does the team already have a position?** — or does this need to be figured out?
-
-Only ask what you couldn't find in the research. If the email thread already tells you who asked and when, don't re-ask.
-
-### Pull in Existing Briefs
-
-For existing clients, also search Google Drive and Notion for the client's foundational brief and/or any active creative brief. These contain audience profiles, brand voice, goals, pain points, competitive landscape, and digital snapshot data.
-
+- Ask the user to upload them, or search Google Drive / Notion for the client's foundational brief
 - Use them as background context to inform the recommendation — not to reproduce, but to ensure the recommendation aligns with established facts about the client
 - Reference specific data points when they strengthen the argument (e.g., site performance metrics, audience demographics, competitive positioning)
 
-If no brief exists, that's fine — the document works without one.
+If no brief exists, that's fine — the document works without one. The user may provide context through conversation, uploaded files, or research you do together.
 
 ### Research S3 Products and Technology
 
