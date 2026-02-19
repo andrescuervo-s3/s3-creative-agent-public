@@ -53,6 +53,8 @@ As soon as you have the client name, search all available sources for recent act
 
 Look for anything that suggests what this recommendation might be about — a recent email thread, a Slack discussion, a meeting note, a project update.
 
+**Track every source URL.** As you search, save the URL/link for every email thread, Drive doc, Notion page, Calendar event, Slack message, and external link you access. You'll need these for the Reference Links section at the end of the document. Start a running list now — don't try to reconstruct it later.
+
 #### Step 3: Surface what you found and confirm
 
 If you find recent activity that looks like it could be the trigger for this recommendation (e.g., a recent email about building a gallery hub, meeting notes about a website redesign, a Slack thread about a campaign ask):
@@ -110,15 +112,67 @@ Do NOT embed images when:
 - The topic is technical (e.g., CMS architecture, module system)
 - There's no visual component to the decision
 
-#### How to gather images
+#### How to gather images — sandbox constraints
 
-1. **From web sources (mood boards, Peerspace, Pinterest, etc.):** Open the page in the browser, scroll through the content, and use the `zoom` action to capture specific images at high quality. Save screenshots to the working directory.
-2. **From user uploads:** Read the uploaded files — images, PDFs, decks — and extract the visual assets.
-3. **From Google Drive:** If the user references a mood board or visual document on Drive, fetch it and extract the imagery.
+The browser runs on the user's machine and the working environment is sandboxed separately. There is no direct file transfer path from browser to filesystem. This means many obvious approaches to downloading web images will fail. Follow this priority order:
+
+**Priority 1: Ask the user to upload images directly.** This is the most reliable method. If the user references a mood board, location listing, or any visual source, ask them to download the key images themselves and upload them to the conversation. Be specific: "Can you download 4–6 key reference images from the Cosmos mood board and upload them here? I'll embed them directly in the document."
+
+**Priority 2: User-uploaded files.** Read any uploaded images, PDFs, or decks and extract the visual assets. Images uploaded to the conversation are available at their upload path and can be read with `fs.readFileSync()`.
+
+**Priority 3: WebFetch for supported domains.** Try `WebFetch` on image URLs before resorting to browser tools. Some domains work, many don't. If the fetch succeeds and returns image data, save it to the working directory.
+
+**Priority 4: Browser screenshot capture.** As a last resort, open the page in the browser and use the `zoom` action to capture specific images as cropped screenshots. This produces lower-fidelity images (screen resolution, possible UI artifacts), but it works when nothing else does. Zoom into individual images tightly to minimize surrounding UI.
+
+**What will NOT work** (do not waste time on these):
+- `curl` / `wget` / Node.js `https.request` — the VM proxy blocks most image CDNs
+- `fetch()` + canvas `toDataURL()` in the browser — cross-origin tainting blocks export
+- `fetch()` + `FileReader` in the browser — base64 data gets blocked by the security layer when reading it back through tool responses
+- Direct `document.querySelectorAll('img')` URL extraction — authenticated/tokenized platforms (Cosmos, some Google tools) return blocked URLs
 
 Save all gathered images to the working directory with descriptive filenames (e.g., `moodboard_bright_portrait.png`, `venue_main_room.png`, `moodboard_dark_cinematic.png`).
 
-#### How to embed in docx-js
+#### Fallback: Image placeholder boxes
+
+If images cannot be embedded (user didn't upload, all download methods failed), do NOT just skip them or leave plain text links. Create styled **placeholder boxes** in the document that visually indicate where an image belongs:
+
+```javascript
+// Image placeholder — shaded box with caption and link
+new Table({
+  rows: [new TableRow({
+    children: [new TableCell({
+      width: { size: 9000, type: WidthType.DXA },
+      shading: { fill: "F2F2F2" },
+      borders: {
+        top: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+        bottom: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+        left: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+        right: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" },
+      },
+      children: [
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { before: 400, after: 100 },
+          children: [new TextRun({ text: "[ Mood Board Reference — Bright Editorial Portrait ]", font: "Open Sans", size: 20, color: "666666", italics: true })]
+        }),
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { before: 100, after: 400 },
+          children: [new ExternalHyperlink({
+            link: "https://cosmos.so/e/moodboard-link",
+            children: [new TextRun({ text: "View on Cosmos →", font: "Open Sans", size: 18, color: "333333", underline: { type: UnderlineType.SINGLE } })]
+          })]
+        })
+      ]
+    })]
+  })],
+  width: { size: 9000, type: WidthType.DXA },
+})
+```
+
+Use these placeholder boxes in every position where an image would have gone. The reader can click through to see the actual image. This is far better than a bullet point that says "see mood board."
+
+#### How to embed in docx-js (when images are available)
 
 Use `ImageRun` from the docx library:
 
@@ -237,7 +291,41 @@ A clearly labeled appendix at the bottom for the dev team. This is where module 
 
 Use data tables (header row + striped data rows) and 2-column comparison tables here. See the components reference for exact patterns.
 
-### 9. Footer
+### 9. Reference Links
+
+Every recommendation doc should end with a **Reference Links** section that collects all sources used during research and writing. This gives the reader direct access to everything the recommendation draws from — no hunting through email or Drive.
+
+Include links from every source type used:
+- **Google Drive documents** — briefs, meeting notes, shot lists, mood boards, proposals (use the Google Docs/Drive sharing URL)
+- **Gmail threads** — email conversations that triggered or informed the recommendation (use the Gmail thread URL, e.g., `https://mail.google.com/mail/u/0/#inbox/THREAD_ID`)
+- **Slack messages** — conversations or threads referenced (use the Slack message permalink if available)
+- **Notion pages** — meeting notes, project pages, databases referenced
+- **Google Calendar events** — the meeting or call this recommendation is for (use the Calendar event URL)
+- **External links** — mood boards (Cosmos, Pinterest), location listings (Peerspace), competitor sites, reference articles, video links
+
+Format as a simple list with descriptive labels. Use `ExternalHyperlink` in docx-js so they're clickable:
+
+```javascript
+// Reference Links section
+h1("REFERENCE LINKS"),
+sectionDivider(),
+new Paragraph({
+  spacing: { before: 200, after: 100 },
+  children: [
+    new TextRun({ text: "•  ", font: "Open Sans", size: 20, color: "333333" }),
+    new ExternalHyperlink({
+      link: "https://docs.google.com/document/d/...",
+      children: [new TextRun({ text: "Popok Creative Brief (Final, Feb 4)", font: "Open Sans", size: 20, color: "333333", underline: { type: UnderlineType.SINGLE } })]
+    }),
+    new TextRun({ text: " — Google Drive", font: "Open Sans", size: 20, color: "666666", italics: true })
+  ]
+}),
+// ... repeat for each source
+```
+
+**Important:** Track sources as you go. During the Gather Context research phase, save every URL you access — every email thread, every Drive doc, every Slack link, every external URL. You'll need them for this section. Don't try to reconstruct the list after the fact.
+
+### 10. Footer
 A light rule (#CCCCCC top border), then "Prepared by Studio 3 Marketing · [Month Year]" in light grey (#999999).
 
 ## Heading Mapping
