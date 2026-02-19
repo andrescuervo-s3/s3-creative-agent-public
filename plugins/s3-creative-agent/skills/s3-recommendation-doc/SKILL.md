@@ -97,25 +97,15 @@ Confirm with the user: "I see [N] location photos and [N] mood board references.
 
 If the recommendation isn't visual, skip this step entirely.
 
-### Pull in Existing Briefs
+#### Step 6: Pull in briefs and product docs (silent, no user prompt)
 
-For existing clients, also search Google Drive and Notion for the client's foundational brief and/or any active creative brief. These contain audience profiles, brand voice, goals, pain points, competitive landscape, and digital snapshot data.
+This step runs silently after the topic is confirmed. No need to ask the user — just do it.
 
-- Use them as background context to inform the recommendation — not to reproduce, but to ensure the recommendation aligns with established facts about the client
-- Reference specific data points when they strengthen the argument (e.g., site performance metrics, audience demographics, competitive positioning)
+**Existing briefs:** For existing clients, search Google Drive and Notion for the client's foundational brief and/or any active creative brief. Use them as background context — audience profiles, brand voice, goals, competitive landscape. Don't reproduce them, just let them inform the recommendation. If none exist, move on.
 
-If no brief exists, that's fine — the document works without one.
+**S3 product documentation (only when relevant):** If the confirmed topic involves an S3 product or proprietary technology (the S3 Hub, a module system, a gallery, a locator, etc.), search Drive for existing documentation — product descriptions, architecture docs, pitch materials. Use what the team has written to describe it accurately. If the Drive search returns nothing, flag it to the user.
 
-### Research S3 Products and Technology
-
-Any time the recommendation references an S3 product, proprietary system, or internal technology — the S3 Hub, a module system, a content registry, a gallery system, a locator, or any other S3-built tool — search Google Drive for existing documentation before writing the doc. This is not optional. S3 has product descriptions, architecture docs, pitch materials, and internal writeups for its products. Use them.
-
-Search Drive for:
-- The product name (e.g., "S3 Hub", "Gallery Hub", "Location Finder")
-- Related terms (e.g., "content hub", "media hub", "module system")
-- Product briefs, pitch decks, architecture docs, or internal descriptions
-
-Use what the team has actually written to describe the product in the recommendation doc. If the Drive search returns nothing, flag it to the user and ask how they'd like the product described — or offer to write a draft for their review. Never describe an S3 product from assumption alone.
+**Do NOT search for S3 products if the topic doesn't involve one.** Many recommendations are about strategy, creative direction, media, campaigns, or other topics that have nothing to do with S3 technology. Never go looking for an S3 product to include. This search only fires when the user or the research has already surfaced an S3 product as part of the recommendation.
 
 ### Gather Visual Assets (When the Recommendation Is Visual)
 
@@ -397,9 +387,11 @@ The what-we'd-actually-do section. Break it into numbered steps with H2 subheadi
 Write this for the account manager. "Publish an episode and the page updates itself" — not technical jargon.
 
 ### 7. Explanatory Section (optional)
-If the recommendation involves an S3 product, technology, or concept the reader might not know (like the S3 Hub, a specific module, or a proprietary system), add a brief explainer. Two paragraphs max. Think of it as the "here's the thing you'll need to be able to talk about on the call" section.
+Only include this section if the recommendation involves an S3 product, technology, or concept the reader might not know (like the S3 Hub, a specific module, or a proprietary system). Two paragraphs max. Think of it as the "here's the thing you'll need to be able to talk about on the call" section.
 
-**Important:** Do NOT write S3 product explanations from memory or assumption. Always pull from the Drive research done in the "Research S3 Products and Technology" step above. Use what the team has actually written. If no documentation was found, flag this to the user and ask how they'd like to describe it — or offer to write a draft for their review.
+If this section is needed, use the documentation found in Step 6's Drive search — not memory or assumption. If no documentation was found, flag it to the user and ask how they'd like the product described.
+
+Most recommendations don't need this section. Skip it entirely if no S3 product is involved.
 
 ### 8. Technical Reference (when needed)
 A clearly labeled appendix at the bottom for the dev team. This is where module names, CMS architecture, data attributes, comparison tables, and implementation specs live. Introduce it with a note in lighter text: "The following details are for the development team."
