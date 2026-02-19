@@ -75,6 +75,27 @@ Once you know the topic, you may still need:
 
 Only ask what you couldn't find in the research. If the email thread already tells you who asked and when, don't re-ask.
 
+#### Step 5: Ask about image references (when the topic is visual)
+
+If the recommendation involves anything visual — a photoshoot, art direction, a location, a mood board, website design, campaign creative, or anything where the user or their sources reference images, links to visual platforms (Cosmos, Pinterest, Peerspace, Behance, etc.), or visual assets — ask:
+
+> "Would you like to upload any image references for the document? For example, mood board screenshots, location photos, design mockups, or inspiration images. I can embed them directly in the recommendation."
+
+If the user shares **links** to visual sources (mood boards, Peerspace listings, etc.) rather than uploading images, let them know:
+
+> "I can't pull images directly from that link into the document. Could you download the key reference images and upload them here? I'll embed them in the right sections."
+
+If the user uploads images (individual files or a zip), categorize them by looking at the content:
+- **Location / venue photos** — images of a physical space (studio, office, event venue)
+- **Mood board / inspiration** — styled reference shots, color palettes, tone examples
+- **Design mockups / wireframes** — UI designs, layout concepts, visual comps
+- **Existing brand assets** — logos, current website screenshots, campaign examples
+- **Portraits / headshots** — reference shots of people, styling examples
+
+Confirm with the user: "I see [N] location photos and [N] mood board references. I'll place the location shots in the venue section and the mood references alongside the creative direction. Sound right?"
+
+If the recommendation isn't visual, skip this step entirely.
+
 ### Pull in Existing Briefs
 
 For existing clients, also search Google Drive and Notion for the client's foundational brief and/or any active creative brief. These contain audience profiles, brand voice, goals, pain points, competitive landscape, and digital snapshot data.
@@ -112,25 +133,13 @@ Do NOT embed images when:
 - The topic is technical (e.g., CMS architecture, module system)
 - There's no visual component to the decision
 
-#### How to gather images — sandbox constraints
+#### How to get images into the document
 
-The browser runs on the user's machine and the working environment is sandboxed separately. There is no direct file transfer path from browser to filesystem. This means many obvious approaches to downloading web images will fail. Follow this priority order:
+**The only reliable method is user uploads.** The sandbox environment blocks downloading images from external URLs (proxy restrictions, cross-origin security, base64 filtering). Do not attempt `curl`, `wget`, `fetch()`, or any other download approach — they will all fail.
 
-**Priority 1: Ask the user to upload images directly.** This is the most reliable method. If the user references a mood board, location listing, or any visual source, ask them to download the key images themselves and upload them to the conversation. Be specific: "Can you download 4–6 key reference images from the Cosmos mood board and upload them here? I'll embed them directly in the document."
+When the user uploads images (individual files or a .zip), they land at `/mnt/uploads/` and can be read directly with `fs.readFileSync()`. Extract zips to the working directory first.
 
-**Priority 2: User-uploaded files.** Read any uploaded images, PDFs, or decks and extract the visual assets. Images uploaded to the conversation are available at their upload path and can be read with `fs.readFileSync()`.
-
-**Priority 3: WebFetch for supported domains.** Try `WebFetch` on image URLs before resorting to browser tools. Some domains work, many don't. If the fetch succeeds and returns image data, save it to the working directory.
-
-**Priority 4: Browser screenshot capture.** As a last resort, open the page in the browser and use the `zoom` action to capture specific images as cropped screenshots. This produces lower-fidelity images (screen resolution, possible UI artifacts), but it works when nothing else does. Zoom into individual images tightly to minimize surrounding UI.
-
-**What will NOT work** (do not waste time on these):
-- `curl` / `wget` / Node.js `https.request` — the VM proxy blocks most image CDNs
-- `fetch()` + canvas `toDataURL()` in the browser — cross-origin tainting blocks export
-- `fetch()` + `FileReader` in the browser — base64 data gets blocked by the security layer when reading it back through tool responses
-- Direct `document.querySelectorAll('img')` URL extraction — authenticated/tokenized platforms (Cosmos, some Google tools) return blocked URLs
-
-Save all gathered images to the working directory with descriptive filenames (e.g., `moodboard_bright_portrait.png`, `venue_main_room.png`, `moodboard_dark_cinematic.png`).
+If the user shares links instead of files, ask them to download and upload the images. Be direct about why: "I can embed images directly in the document, but I need the actual image files — could you download them and upload here?"
 
 #### Fallback: Image placeholder boxes
 
@@ -172,37 +181,142 @@ new Table({
 
 Use these placeholder boxes in every position where an image would have gone. The reader can click through to see the actual image. This is far better than a bullet point that says "see mood board."
 
-#### How to embed in docx-js (when images are available)
+#### How to embed images in docx-js
 
-Use `ImageRun` from the docx library:
+All image layouts below have been tested and verified. The critical requirements are:
+- `TableLayoutType.FIXED` on every table that contains images
+- `columnWidths` array on the table matching the cell widths
+- Image `transformation` width must fit inside its table cell
+- Page content area is 9360 DXA (6.5 inches) with 1-inch margins on Letter
+
+**Image helper function:**
 
 ```javascript
-const { ImageRun } = require("docx");
+const { ImageRun, Table, TableRow, TableCell, TableLayoutType, WidthType, BorderStyle, Paragraph, TextRun } = require("docx");
 
-// In a paragraph:
-new Paragraph({
-  children: [new ImageRun({
-    type: "png",  // or "jpg" — match the file type
-    data: fs.readFileSync("moodboard_bright_portrait.png"),
-    transformation: { width: 580, height: 380 },  // adjust to fit page width
-    altText: { title: "Mood Reference", description: "Bright editorial portrait from Cosmos mood board", name: "moodboard_bright" }
-  })]
-})
+const NONE_BORDER = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
+const NO_BORDERS = { top: NONE_BORDER, bottom: NONE_BORDER, left: NONE_BORDER, right: NONE_BORDER };
+
+function embedImage(filepath, widthPx) {
+  const data = fs.readFileSync(filepath);
+  const ext = filepath.endsWith('.png') ? 'png' : 'jpg';
+  // Calculate height from source aspect ratio. Default to 0.65 for landscape photos.
+  // Adjust ratio based on actual image dimensions if known.
+  const ratio = 0.65;
+  const heightPx = Math.round(widthPx * ratio);
+  return new ImageRun({
+    type: ext,
+    data: data,
+    transformation: { width: widthPx, height: heightPx },
+    altText: { title: "Reference", description: filepath.split('/').pop(), name: filepath.split('/').pop().replace(/\s/g, '_') }
+  });
+}
+
+function imageCaption(text) {
+  return new Paragraph({
+    spacing: { before: 80, after: 200 },
+    children: [new TextRun({ text, italics: true, size: 18, font: "Open Sans", color: "666666" })]
+  });
+}
 ```
 
 **Image sizing guidelines:**
-- Full-width images: ~580px wide (fits within page margins)
-- Side-by-side pair: ~280px each with a spacer column
-- Thumbnail/reference: ~180px wide
-- Always maintain aspect ratio — calculate height proportionally
+- Full-width: 580px (fits within 9360 DXA page content area)
+- Side-by-side pair: 290px each (in 4680 DXA columns)
+- Three-up grid: 190px each (in 3120 DXA columns)
+- Image + text: 260px image (in 4200 DXA column)
+- Always calculate height from the source image's actual aspect ratio
 
-#### Image layout patterns
+#### Tested layout patterns
 
-**Full-width reference image** — for hero shots, location overviews, or key mood references. One image per paragraph, centered or left-aligned.
+**1. Full-width image** — location overviews, hero mood references, key shots:
 
-**Image grid** — for mood board compilations or multiple reference shots. Use a borderless table with 2–3 columns, images sized to fit evenly. Add a light caption below each image in MG (#666666) italic text.
+```javascript
+new Paragraph({ children: [embedImage("venue_main.jpeg", 580)] }),
+imageCaption("Daylight loft studio — natural light, floor-to-ceiling windows"),
+```
 
-**Image + text side by side** — for shot-by-shot direction where each image needs an accompanying description. Use a 2-column table: image on the left (~200px), direction text on the right.
+**2. Side-by-side pair** — comparing two references, before/after, two angles:
+
+```javascript
+new Table({
+  columnWidths: [4680, 4680],
+  layout: TableLayoutType.FIXED,
+  rows: [
+    new TableRow({ children: [
+      new TableCell({ borders: NO_BORDERS, width: { size: 4680, type: WidthType.DXA },
+        children: [new Paragraph({ children: [embedImage("mood_bright.jpeg", 290)] })] }),
+      new TableCell({ borders: NO_BORDERS, width: { size: 4680, type: WidthType.DXA },
+        children: [new Paragraph({ children: [embedImage("mood_dark.jpeg", 290)] })] }),
+    ]}),
+    new TableRow({ children: [
+      new TableCell({ borders: NO_BORDERS, width: { size: 4680, type: WidthType.DXA },
+        children: [imageCaption("Bright editorial")] }),
+      new TableCell({ borders: NO_BORDERS, width: { size: 4680, type: WidthType.DXA },
+        children: [imageCaption("Dark cinematic")] }),
+    ]}),
+  ],
+  width: { size: 9360, type: WidthType.DXA },
+}),
+```
+
+**3. Three-up grid** — mood board compilations, multiple reference shots:
+
+```javascript
+new Table({
+  columnWidths: [3120, 3120, 3120],
+  layout: TableLayoutType.FIXED,
+  rows: [
+    new TableRow({ children: [
+      new TableCell({ borders: NO_BORDERS, width: { size: 3120, type: WidthType.DXA },
+        children: [new Paragraph({ children: [embedImage("ref_1.jpeg", 190)] })] }),
+      new TableCell({ borders: NO_BORDERS, width: { size: 3120, type: WidthType.DXA },
+        children: [new Paragraph({ children: [embedImage("ref_2.jpeg", 190)] })] }),
+      new TableCell({ borders: NO_BORDERS, width: { size: 3120, type: WidthType.DXA },
+        children: [new Paragraph({ children: [embedImage("ref_3.jpeg", 190)] })] }),
+    ]}),
+    new TableRow({ children: [
+      new TableCell({ borders: NO_BORDERS, width: { size: 3120, type: WidthType.DXA }, children: [imageCaption("Caption A")] }),
+      new TableCell({ borders: NO_BORDERS, width: { size: 3120, type: WidthType.DXA }, children: [imageCaption("Caption B")] }),
+      new TableCell({ borders: NO_BORDERS, width: { size: 3120, type: WidthType.DXA }, children: [imageCaption("Caption C")] }),
+    ]}),
+  ],
+  width: { size: 9360, type: WidthType.DXA },
+}),
+```
+
+**4. Image + text side by side** — shot direction, location details with description:
+
+```javascript
+new Table({
+  columnWidths: [4200, 5160],
+  layout: TableLayoutType.FIXED,
+  rows: [new TableRow({ children: [
+    new TableCell({ borders: NO_BORDERS, width: { size: 4200, type: WidthType.DXA }, verticalAlign: "top",
+      children: [new Paragraph({ children: [embedImage("location_kitchen.jpeg", 260)] })] }),
+    new TableCell({ borders: NO_BORDERS, width: { size: 5160, type: WidthType.DXA }, verticalAlign: "top", margins: { left: 200 },
+      children: [
+        new Paragraph({ spacing: { after: 120 }, children: [new TextRun({ text: "Kitchen / Prep Area", bold: true, size: 24, font: "Open Sans" })] }),
+        new Paragraph({ children: [new TextRun({ text: "Description of this area and how it will be used during the shoot.", size: 20, font: "Open Sans", color: "333333" })] }),
+      ] }),
+  ]})],
+  width: { size: 9360, type: WidthType.DXA },
+}),
+```
+
+#### Where to place images in the document
+
+Place uploaded images based on their category and the document section they support:
+
+| Image Category | Where It Goes | Layout Pattern |
+|---|---|---|
+| Location / venue photos | Context Section or Recommended Approach (venue subsection) | Full-width for hero shot, side-by-side or three-up for multiple angles |
+| Mood board / inspiration | Recommended Approach (creative direction subsections) | Side-by-side for contrasting moods, three-up for mood compilations |
+| Design mockups / wireframes | Our Position or Recommended Approach | Full-width for key mockup, image+text for annotated walkthroughs |
+| Portraits / headshot refs | Recommended Approach (shot categories) | Image+text with direction notes alongside |
+| Brand assets / screenshots | Current State or Context Section | Full-width or image+text with analysis |
+
+When placing images, add them **inline with the relevant text** — right after the paragraph that describes what the image shows. Don't dump all images into a separate "Visual References" section at the end.
 
 #### Video references
 
