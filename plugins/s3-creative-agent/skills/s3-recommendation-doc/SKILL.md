@@ -44,14 +44,15 @@ That's it. Do NOT ask about the topic, meeting details, position, audience, or a
 
 #### Step 2: Search everything immediately
 
-As soon as you have the client name, search all available sources for recent activity:
+As soon as you have the client name, search **all** of the following sources for recent activity. Do not skip any:
 
 - **Gmail** — recent emails mentioning the client name (last 2 weeks)
 - **Google Drive** — documents, briefs, meeting notes, proposals for this client
+- **Slack** — messages and threads mentioning the client name across all channels
 - **Notion** — pages, databases, meeting notes referencing the client
 - **Google Calendar** — upcoming meetings with the client name
 
-Look for anything that suggests what this recommendation might be about — a recent email thread, a Slack discussion, a meeting note, a project update.
+Search every source in this list. Slack is especially important — many client discussions happen there first and may not exist anywhere else. If a connector is unavailable, note it and move on, but never skip a source that is connected.
 
 **Track every source URL.** As you search, save the URL/link for every email thread, Drive doc, Notion page, Calendar event, Slack message, and external link you access. You'll need these for the Reference Links section at the end of the document. Start a running list now — don't try to reconstruct it later.
 
