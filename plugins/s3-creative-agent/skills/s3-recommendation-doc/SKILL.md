@@ -93,6 +93,93 @@ Search Drive for:
 
 Use what the team has actually written to describe the product in the recommendation doc. If the Drive search returns nothing, flag it to the user and ask how they'd like the product described — or offer to write a draft for their review. Never describe an S3 product from assumption alone.
 
+### Gather Visual Assets (When the Recommendation Is Visual)
+
+Some recommendations are inherently visual — art direction for a photoshoot, creative direction for a campaign, location scouting, mood board reviews, website design direction. When the topic involves visual creative work, the document should **show** the direction, not just describe it.
+
+#### When to embed images
+
+Embed images in the document when:
+- The user provides or references a **mood board** — capture key reference images
+- The recommendation involves a **physical location** (Peerspace, venue, studio) — capture the space
+- There are **design mockups, wireframes, or visual examples** that inform the direction
+- The user explicitly asks for a "visually strong" or "client-facing" document with imagery
+
+Do NOT embed images when:
+- The recommendation is purely strategic (e.g., "should we build feature X?")
+- The topic is technical (e.g., CMS architecture, module system)
+- There's no visual component to the decision
+
+#### How to gather images
+
+1. **From web sources (mood boards, Peerspace, Pinterest, etc.):** Open the page in the browser, scroll through the content, and use the `zoom` action to capture specific images at high quality. Save screenshots to the working directory.
+2. **From user uploads:** Read the uploaded files — images, PDFs, decks — and extract the visual assets.
+3. **From Google Drive:** If the user references a mood board or visual document on Drive, fetch it and extract the imagery.
+
+Save all gathered images to the working directory with descriptive filenames (e.g., `moodboard_bright_portrait.png`, `venue_main_room.png`, `moodboard_dark_cinematic.png`).
+
+#### How to embed in docx-js
+
+Use `ImageRun` from the docx library:
+
+```javascript
+const { ImageRun } = require("docx");
+
+// In a paragraph:
+new Paragraph({
+  children: [new ImageRun({
+    type: "png",  // or "jpg" — match the file type
+    data: fs.readFileSync("moodboard_bright_portrait.png"),
+    transformation: { width: 580, height: 380 },  // adjust to fit page width
+    altText: { title: "Mood Reference", description: "Bright editorial portrait from Cosmos mood board", name: "moodboard_bright" }
+  })]
+})
+```
+
+**Image sizing guidelines:**
+- Full-width images: ~580px wide (fits within page margins)
+- Side-by-side pair: ~280px each with a spacer column
+- Thumbnail/reference: ~180px wide
+- Always maintain aspect ratio — calculate height proportionally
+
+#### Image layout patterns
+
+**Full-width reference image** — for hero shots, location overviews, or key mood references. One image per paragraph, centered or left-aligned.
+
+**Image grid** — for mood board compilations or multiple reference shots. Use a borderless table with 2–3 columns, images sized to fit evenly. Add a light caption below each image in MG (#666666) italic text.
+
+**Image + text side by side** — for shot-by-shot direction where each image needs an accompanying description. Use a 2-column table: image on the left (~200px), direction text on the right.
+
+#### Video references
+
+Word documents can't play embedded video. Instead, use a **clickable video thumbnail**:
+
+1. Capture a screenshot frame from the video (or use the video's thumbnail image)
+2. Embed the screenshot as an `ImageRun` inside an `ExternalHyperlink` that links to the video URL
+3. Add a small caption below: "▶ Click to view video" in MG italic
+
+```javascript
+const { ExternalHyperlink, ImageRun, TextRun } = require("docx");
+
+new Paragraph({
+  children: [new ExternalHyperlink({
+    link: "https://www.youtube.com/watch?v=VIDEO_ID",
+    children: [new ImageRun({
+      type: "png",
+      data: fs.readFileSync("video_thumbnail.png"),
+      transformation: { width: 580, height: 326 },
+      altText: { title: "Video", description: "Sizzle reel preview", name: "video_thumb" }
+    })]
+  })]
+}),
+new Paragraph({
+  spacing: { before: 80 },
+  children: [new TextRun({ text: "▶ Click to view video", font: "Open Sans", size: 18, italics: true, color: "666666" })]
+})
+```
+
+This works in all Word viewers and lets the reader jump straight to the video from the document.
+
 ### Accept Additional Uploads
 
 The user may upload screenshots, analytics reports, competitor examples, email threads, Slack messages, or other materials that inform the recommendation. Read everything provided. These are the raw ingredients.
@@ -136,6 +223,7 @@ The what-we'd-actually-do section. Break it into numbered steps with H2 subheadi
 - A clear subheading (e.g., "1. Build the Gallery Hub")
 - A short paragraph explaining the approach in plain language
 - Bullet points for specifics
+- **Visual references when relevant** — if a step involves creative direction (e.g., "Hero Portraits — Natural Light"), embed the mood board reference images inline so the reader sees exactly what you mean. Use image + text layouts for shot-by-shot direction.
 
 Write this for the account manager. "Publish an episode and the page updates itself" — not technical jargon.
 
