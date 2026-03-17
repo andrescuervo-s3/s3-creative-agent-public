@@ -273,7 +273,11 @@ Write these three sections **in a single response**, then stop at the 2.1 approv
 
 ### 1.1 Cover
 
-- **Date**: Generation date (Month Day, Year)
+Include the document status badge per `references/s3-docx-styles.md` (DRAFT for new and updated briefs, FINAL for finalized briefs).
+
+- **Created**: Date the brief was first generated (Month Day, Year)
+- **Last Updated**: Date of the most recent edit or update session (Month Day, Year). Update this every time the skill touches the document.
+- **Finalized**: (Only on finalized documents) Date the document was locked down as the authority version.
 - **Client**: Primary brand name from intake documents. Show both legal and public-facing names only if both are explicitly provided.
 
 ### 2.1 Client Details

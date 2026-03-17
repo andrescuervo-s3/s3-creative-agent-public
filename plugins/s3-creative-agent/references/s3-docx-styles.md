@@ -202,6 +202,42 @@ styles: {
 
 ---
 
+## Document Status Badge
+
+Every brief must include a status badge in the top right corner of the first page.
+
+| Property | Draft | Final |
+|----------|-------|-------|
+| Position | Top right of first page, right-aligned | Same |
+| Text | DRAFT | FINAL |
+| Font | Open Sans Bold, 9pt, uppercase, letter-spacing 1.5px | Same |
+| Background | Transparent (no fill) | #000000 (black) |
+| Text color | #000000 (black) | #FFFFFF (white) |
+| Border | 1.5pt solid #000000 | 1.5pt solid #000000 |
+| Padding | 4px top/bottom, 14px left/right | Same |
+| Border radius | 3px | Same |
+
+Implementation: use a right-aligned text box or header element positioned at the top of the first page. The badge should sit above the 1.0 Intro heading.
+
+---
+
+## Cover Date Fields
+
+Section 1.1 Cover must include the following date fields:
+
+**Draft documents:**
+- **Created**: The date the brief was first generated (Month Day, Year)
+- **Last Updated**: The date of the most recent edit or update session (Month Day, Year)
+
+**Finalized documents:**
+- **Created**: The date the brief was first generated
+- **Last Updated**: The date of the most recent edit before finalization
+- **Finalized**: The date the document was locked down as the authority version
+
+Every time the skill touches the document (update or finalize), the Last Updated date must be refreshed to the current date.
+
+---
+
 ## Content Structure Rules
 
 These rules govern how content is formatted, not what it says:
