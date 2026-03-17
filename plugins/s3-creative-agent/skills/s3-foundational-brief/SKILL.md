@@ -85,14 +85,23 @@ After files are uploaded, before writing 1.0 Intro, create a working .docx file:
 - Name it `{Client Name}_Foundational_Brief.docx` and save to the outputs folder.
 - Build the document incrementally: append each approved section immediately after approval.
 
-### After Each Approval
+### Approval Gate Behavior
 
+Each section has an approval gate. The user reviews the section in chat and either approves or requests edits.
+
+**When approved with no edits:**
 1. Append the approved section to the .docx, applying styles from `references/s3-docx-styles.md`
-2. Confirm: "Section [NAME] has been added to the brief document."
-3. Provide the document link
-4. Proceed to write the next section
+2. Confirm briefly: "Section [NAME] added to the brief."
+3. Proceed to write the next section. Do not regenerate the document preview.
 
-If the user requests edits, apply them, update the document, then proceed.
+**When the user requests edits:**
+1. The user may provide one or more notes in a single message. Apply all edits.
+2. Do NOT reprint the entire section. Instead, confirm each change as a short summary. For example: "Updated: Year Founded changed from 2018 to 2016. Removed duplicate location entry."
+3. Ask: "Anything else, or approved?"
+4. Repeat until the user approves.
+5. Only write to the .docx once, after final approval. Do not update the document on every small edit.
+
+**Do NOT regenerate the document preview after every edit or approval.** Only provide the document link after the final section (5.0) is approved and the brief is complete.
 
 ---
 
@@ -378,7 +387,7 @@ These rules govern every section of the brief:
 
 **Output cleanliness** — no code, HTML, debug text, placeholder fragments, Unicode dividers, or em dashes (use commas, colons, periods). No internal process narration: output only required sections and approval gates.
 
-**Approval gate presentation** — present each section at the approval gate exactly as it will appear in the final document, including all URLs, profile links, and source citations. Do not summarize, abbreviate, or strip detail from the chat presentation. The user must be able to review the complete content before approving.
+**Approval gate presentation** — present each section at the approval gate with full detail, including all URLs, profile links, and source citations. The user must be able to review the complete content before approving. However, when the user requests edits after the initial presentation, do NOT reprint the entire section. Confirm changes as short summaries and only reprint if the user explicitly asks to see the full section again.
 
 ---
 
