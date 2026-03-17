@@ -1,11 +1,7 @@
 ---
 name: s3-foundational-brief
 description: |
-  **S3 Foundational Brief**: Produces a structured, fact-based Foundational Brief for new clients from uploaded intake documents and web research. Captures evergreen client facts across Client Details, Goals/Painpoints/Asks, Digital Snapshot, Brand Essentials, Audiences, Competitors, Market Differentiators, Brand Voice, and Bright Idea.
-  - MANDATORY TRIGGERS: foundational brief, client brief, S3 brief, new client brief, onboarding brief, onboarding document, foundation brief, client research document
-  - Also trigger when: user uploads client intake documents (creative survey, client profile, creative notes, work agreement, SEO keywords) and wants a structured brief produced from them
-  - Do NOT trigger on: "creative brief," "brief" (ambiguous), "start a brief," "get the brief going," "campaign brief," "project brief," "website brief," "media brief," "paid ads brief," or "social media brief" — these are handled by the s3-brief-selector skill or the s3-creative-brief skill
-  - Use any time a team member explicitly asks for a Foundational Brief or uses foundational-specific language (onboarding, new client, client research)
+  Produces a structured, fact-based Foundational Brief for new S3 clients from uploaded intake documents and web research. Covers Client Details, Goals/Painpoints/Asks, Digital Snapshot, Brand Essentials, Audiences, Competitors, Market Differentiators, Brand Voice, and Bright Idea. Triggers on: foundational brief, client brief, S3 brief, new client brief, onboarding brief, onboarding document, foundation brief, client research document. Also triggers when user uploads intake docs for a structured brief. Do NOT trigger on: creative brief, brief (ambiguous), campaign brief, website/media/paid ads/social media brief.
 ---
 
 # S3 Foundational Brief

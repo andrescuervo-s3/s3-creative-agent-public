@@ -1,12 +1,7 @@
 ---
 name: s3-brief-selector
 description: |
-  **S3 Brief Selector**: Routes users to the correct S3 brief skill when their request is ambiguous. Studio 3 Marketing produces two types of briefs — a Foundational Brief (evergreen client onboarding document) and a Creative Brief (project-specific brief for Website, Media, Paid Ads, or Social Media work). This skill determines which one the user needs and hands off accordingly.
-  - MANDATORY TRIGGERS: brief, creative brief, start a brief, get the brief going, campaign brief, project brief
-  - Trigger when: the user mentions "brief" without specifying whether they mean a Foundational Brief or a Creative Brief
-  - Trigger when: the user says "creative brief" — this is the S3 Creative Brief, NOT the Foundational Brief
-  - Do NOT trigger when: the user explicitly says "foundational brief," "client brief," "S3 brief," "new client brief," "onboarding brief," "onboarding document," "foundation brief," or "client research document" — those go directly to the s3-foundational-brief skill
-  - Do NOT trigger when: the user explicitly says "website brief," "media brief," "paid ads brief," or "social media brief" — those go directly to the corresponding s3-creative-brief skill
+  Routes users to the correct S3 brief skill when ambiguous. S3 has two brief types: Foundational Brief (evergreen client onboarding) and Creative Brief (project-specific for Website, Media, Paid Ads, or Social Media). Triggers on: brief, creative brief, start a brief, get the brief going, campaign brief, project brief. Do NOT trigger on: foundational brief, client brief, onboarding brief, website brief, media brief, paid ads brief, social media brief — those route directly to their specific skills.
 ---
 
 # S3 Brief Selector

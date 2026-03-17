@@ -1,12 +1,7 @@
 ---
 name: s3-recommendation-doc
 description: |
-  **S3 Recommendation Document**: Produces polished B&W internal recommendation documents (.docx) for client strategy discussions. These are short (2–6 page), account-manager-friendly documents that present a clear position on a client request — what we recommend, why, and what the approach looks like. Uses the shared S3 document style system (Open Sans, B&W palette).
-  - MANDATORY TRIGGERS: recommendation doc, recommendation document, strategy recommendation, internal recommendation, client recommendation, rec doc, write a recommendation, position paper, strategy doc for client
-  - Also trigger when: the user describes a client ask and wants to prepare a formal internal position or recommendation for a meeting, call, or presentation
-  - Also trigger when: the user says things like "write up a recommendation for [client]", "prepare a doc for the call about [topic]", "put together our position on [topic]"
-  - Do NOT trigger on: "foundational brief," "creative brief," "brief" (any kind), "proposal," "SOW," "contract," "invoice" — those are handled by other S3 skills or different workflows entirely
-  - When in doubt, if someone at Studio 3 is preparing for a client call and needs a document that says "here's what we think and why," this is the skill to use
+  Produces polished B&W internal recommendation documents (.docx) for S3 client strategy discussions. Short (2–6 page), account-manager-friendly docs presenting a clear position on a client request — what we recommend, why, and the approach. Uses Open Sans, B&W palette. Triggers on: recommendation doc, recommendation document, strategy recommendation, internal recommendation, client recommendation, rec doc, write a recommendation, position paper, strategy doc for client. Also triggers when preparing a formal position for a client meeting or call. Do NOT trigger on: foundational brief, creative brief, brief, proposal, SOW, contract, invoice.
 ---
 
 # S3 Recommendation Document
