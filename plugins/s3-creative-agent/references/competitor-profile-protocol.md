@@ -4,6 +4,36 @@ Purpose: Generate up to 6 credible, evidence-based competitor profiles for a cli
 
 ---
 
+## Verification Methodology
+
+Every claim — from the client and from competitors — is an assumption until verified. The foundational brief is a verification engine, not a transcription exercise.
+
+**Positioning vs. Proof:**
+- **Positioning** is what a business says about itself on its own website, ads, and social channels. Observe it. Document it. Never treat it as fact.
+- **Proof** is what third parties can verify: review counts and ratings, licensing board records, court filings, awards from independent bodies, media coverage from credentialed journalists, verified credentials.
+
+Example: "We are Orlando's top-rated family law firm" on a competitor's homepage is positioning. "4.8 stars from 215 reviews on Avvo, listed in Super Lawyers 2024" is proof.
+
+**The differentiator equation:**
+The net result of this protocol feeds section 3.4 (Market Differentiators). True differentiators are determined by subtraction: what the client can verify that competitors cannot. Shared verified claims are table stakes. Unverified claims from either side are flagged as assumptions.
+
+---
+
+## Source Quality Tiers
+
+**Tier 1 — Authoritative (highest weight)**
+Licensing boards (state bar, medical boards), government registries, court records, peer-reviewed publications, credentialed investigative journalism with citations.
+
+**Tier 2 — Verified Independent**
+Review platforms with verified reviews (Avvo, Healthgrades, BBB, G2, RealSelf), professional association recognition (Super Lawyers, Martindale-Hubbell), independent media coverage, trade publication features.
+
+**Tier 3 — Observed (positioning only)**
+The competitor's own website, social channels, and advertising. Use to understand their messaging, target audience, and market position. Never cite as proof of quality, outcomes, or credentials.
+
+**Never use:** Marketing agency blogs, vendor-published rankings, AI-generated lists, paid placements presented as editorial, or any source with a commercial relationship to the competitor.
+
+---
+
 ## Source Eligibility Rules
 
 ### Approved Source Types
@@ -25,6 +55,15 @@ Purpose: Generate up to 6 credible, evidence-based competitor profiles for a cli
 ---
 
 ## Research Instructions
+
+### Step 0: Start With What You Have
+Before searching the web, use available client data to identify competitors:
+1. **Client documents** — intake forms, surveys, and creative notes often name competitors directly
+2. **SEO keyword data from Step 0** — search for who ranks for the client's priority terms
+3. **Google Analytics (if connected)** — referral sources and competitor domains appearing in traffic data
+4. **Google Drive** — past briefs or proposals for similar clients in the same vertical and market
+
+This gives you a shortlist grounded in the client's actual competitive landscape before you rely on generic searches.
 
 ### Step 1: Identify Priority Service Area and Region
 Use client documents, intake notes, or SEO terms to identify:

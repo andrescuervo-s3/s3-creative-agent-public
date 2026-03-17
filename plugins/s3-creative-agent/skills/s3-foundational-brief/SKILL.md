@@ -290,11 +290,11 @@ Prefer competitor lists from client or SEO materials. If missing, identify compe
 
 For each competitor:
 - **Name**: Official brand or firm name
-- **Overview**: 2 to 4 sentences on emphasis and self-presentation
 - **URL**: Most relevant page (non-ad)
-- **Proof Signals**: 2 to 5 concrete credibility signals from competitor's site or trusted third-party sources
+- **Positioning**: 2 to 4 sentences on how they present themselves — their messaging, stated value proposition, and who they appear to target. This is what they claim, observed from their own channels.
+- **Proof Signals**: 2 to 5 concrete credibility indicators verified through third-party sources only (review platforms, licensing boards, media coverage, professional associations). Never cite the competitor's own website as proof.
 
-Do not editorialize.
+Do not editorialize. Maintain the distinction between positioning (what they say) and proof (what can be verified).
 
 **Approval Gate**:
 ```
@@ -306,12 +306,23 @@ If everything looks good, reply "Approved" to continue to the next section: 3.4 
 
 **Allowed Sources**: ONLY facts from sections 2.1, 3.1, and 3.3.
 
-4 to 6 differentiators relative to the competitor set. Each must reference competitor patterns from 3.3. No new facts. No recommendations.
+4 to 6 differentiators relative to the competitor set. No new facts. No recommendations.
+
+**Verification requirement**: Apply the same positioning-vs-proof standard to the client's claims as was applied to competitors in 3.3. A differentiator is only valid if the client's claim is verified AND competitors cannot make the same verified claim. Shared verified claims are table stakes, not differentiators.
+
+**Confidence scoring**: Each differentiator must include a confidence level:
+- **Verified** — confirmed via Tier 1 or multiple Tier 2 sources for the client, and confirmed absent across competitors
+- **Corroborated** — supported by Tier 2 source for the client, not evidenced by competitors
+- **Unverified** — client claims this but no third-party confirmation yet. Flag for the user to confirm with the client.
+- **Contradicted** — evidence conflicts with the client's claim. State what was found and flag for resolution.
 
 Structure:
-- **Pattern Title**
-- **Pattern Summary** (what competitors do)
-- **Client Difference and Why It Matters**
+- **Differentiator Title**
+- **Confidence**: Verified | Corroborated | Unverified | Contradicted
+- **Client Claim**: What the client states or implies
+- **Client Verification**: Source confirming or contradicting the claim
+- **Competitor Landscape**: What competitors claim and what is verified for them
+- **Why It Matters**: The strategic significance of this difference (factual, not a recommendation)
 
 **Approval Gate**:
 ```

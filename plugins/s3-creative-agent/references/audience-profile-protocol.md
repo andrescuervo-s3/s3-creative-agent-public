@@ -4,6 +4,34 @@ Purpose: Develop accurate, evidence-based audience profiles grounded in third-pa
 
 ---
 
+## Source Quality Framework
+
+All audience research must follow this hierarchy. Higher tiers override lower tiers when facts conflict.
+
+**Tier 1 — Authoritative (highest weight)**
+Government data (U.S. Census, BLS, CDC, NIH, FTC, state agencies), peer-reviewed academic studies, professional licensing boards (state bar associations, medical boards, NCCRS), and established research institutions (Pew Research, Brookings, Urban Institute).
+
+**Tier 2 — Verified Independent**
+Investigative journalism with cited sources, neutral review platforms with verified reviews (Healthgrades, Avvo, BBB), professional association reports (ABA, AMA, NAHB, SHRM), and industry trade surveys with disclosed methodology.
+
+**Tier 3 — Observed (positioning only, never proof)**
+The client's own website, social channels, and marketing materials. Use to understand how the client presents themselves, not as evidence of audience behavior.
+
+**Never use:** Marketing agency blogs, vendor whitepapers, AI-generated listicles, SEO-first articles with unclear methodology, or any source that sells services to the audience it describes.
+
+---
+
+## Research Order
+
+Start with what you have, then go deeper:
+
+1. **Client data first** — Google Analytics (if connected): actual site visitors, demographics, geography, device, top landing pages, referral sources. SEO keyword data from Step 0. This is real behavioral data about the client's current audience.
+2. **Location-specific authoritative data** — Census/ACS data for the client's service area: income, household composition, age distribution, education, housing. State-level licensing boards or professional registries for regulated industries.
+3. **Category-specific research** — Pew, academic studies, professional association surveys that describe how this audience type makes decisions, what they fear, what trust signals matter, and what drives action.
+4. **General web research** — only to fill remaining gaps, and only from Tier 1 or Tier 2 sources.
+
+---
+
 ## Step 1: Define Audience Categories
 
 Identify up to three core audience groups based on the client's offering and context. Use intake documents or discovery interviews to understand:
