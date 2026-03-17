@@ -43,11 +43,12 @@ Wait for the user's response.
 
 Use the AskUserQuestion tool to ask:
 
-"Are you starting a new foundational brief or finalizing an existing draft?"
+"What would you like to do?"
 
 Options:
-1. **New Draft** — Starting from scratch for a new client
-2. **Finalize Existing** — Update a draft with new information (e.g., after a creative call)
+1. **New Draft** — Start a new foundational brief from scratch for a new client
+2. **Update Draft** — Continue working on an existing draft (add info, pick up edits, keep building)
+3. **Finalize** — Lock down a completed draft as the final authority document (typically after the creative call)
 
 Then invoke the `s3-foundational-brief` skill using the Skill tool, passing the user's choice. The foundational brief skill will take over from here.
 

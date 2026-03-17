@@ -18,10 +18,13 @@ The brief is built section by section with approval gates between sections. The 
 
 ## Step 0: Startup
 
-This skill supports two modes: **New Draft** and **Finalize Existing**. The brief selector passes the user's choice. If this skill is invoked directly (not via the selector), ask:
+This skill supports three modes: **New Draft**, **Update Draft**, and **Finalize**. The brief selector passes the user's choice. If this skill is invoked directly (not via the selector), ask:
 
 ```
-Are we starting a new foundational brief or finalizing an existing draft?
+What would you like to do?
+1. New Draft — Start a new foundational brief from scratch
+2. Update Draft — Continue working on an existing draft
+3. Finalize — Lock down a completed draft as the final authority document
 ```
 
 ---
@@ -90,60 +93,127 @@ Then continue to **Document Setup** below.
 
 ---
 
-### Step 0b: Finalize Existing — Review and Update Draft
+### Step 0b: Update Draft — Continue Working
 
-When finalizing an existing draft, ask for the client name:
+When updating an existing draft, ask for the client name:
 
 ```
-What is the client name? I will find the existing draft in Google Drive.
+What is the client name? I will find the current draft in Google Drive.
 ```
 
 Once the client name is provided:
 
 1. Search Google Drive for the client folder, then look in the `CREATIVE STRATEGY` subfolder for an existing foundational brief (match keywords: foundational, brief, draft)
-2. If found, read the document thoroughly
-3. Scan section 3.4 (Market Differentiators) for any items scored as **Unverified** or **Contradicted**
-4. Present a summary:
+2. If found, read the entire document as it currently exists in Google Drive — this is the source of truth, including any manual edits the user made outside of this session
+3. Present a brief summary of what the draft contains and its current state:
 
 ```
-I found the draft Foundational Brief for {Client Name}.
+I found the draft Foundational Brief for {Client Name}, last modified {date}.
 
-Items flagged for resolution:
+Current state:
+- Sections completed: {list}
+- Sections remaining: {list, if any}
+- Unverified items: {count}
+- Contradicted items: {count}
 
-Unverified:
-- {Differentiator title}: {what needs to be confirmed}
-
-Contradicted:
-- {Differentiator title}: {what conflicts with the client's claim}
-
-Do you have any updates? This could be creative call notes, new information about the client, resolved items from above, or anything else that should be reflected in the brief.
+What would you like to work on? You can:
+- Continue building remaining sections
+- Share new information to add or update
+- Tell me about edits you made in the document so I can align
 ```
 
-5. As the user provides new information, update the relevant sections:
+4. The user may:
+   - Ask to continue building sections that are incomplete — follow the normal section-by-section flow from where the draft left off
+   - Share new information (creative call notes, client updates, corrections) — update the relevant sections, confirm changes briefly
+   - Say they made edits in the document — re-read the document from Drive, identify what changed from the previous version, and acknowledge: "I see you updated {description of changes}. I will work from this updated version going forward."
+   - Ask for any combination of the above
+
+5. After each update session, save the updated document back to the `CREATIVE STRATEGY` folder in Google Drive. The document remains a draft until explicitly finalized.
+
+**Important**: Always read the document from Google Drive at the start of every update session. Never rely on a previous session's memory of the document contents. The user may have edited it between sessions.
+
+**Fallback**: If no existing draft is found, inform the user and offer to start a new draft instead.
+
+---
+
+### Step 0c: Finalize — Lock Down as Authority Document
+
+Finalizing is a deliberate act. It means the draft is complete, the creative call has happened, all gaps are resolved, and this document becomes the authority that all downstream work references. Once finalized, the document is relabeled and treated as the definitive source of truth.
+
+Ask for the client name:
+
+```
+What is the client name? I will find the draft to finalize.
+```
+
+Once the client name is provided:
+
+1. Search Google Drive for the client folder, then look in the `CREATIVE STRATEGY` subfolder for an existing foundational brief
+2. If found, read the entire document as it currently exists in Google Drive
+3. Run a completeness and verification check across the full document:
+   - Confirm all sections are present and populated
+   - Scan 3.4 for any remaining Unverified or Contradicted items
+   - Verify all links in the document are functional (social media, website, competitor URLs, source citations)
+   - Confirm all social media accounts have been discovered per the social media discovery protocol
+4. Present a finalization summary:
+
+```
+Finalization review for {Client Name}:
+
+Completeness: {all sections present / missing sections listed}
+Links verified: {count working} / {count total} ({any broken links listed})
+Confidence scores: {count Verified}, {count Corroborated}, {count Unverified}, {count Contradicted}
+
+{If Unverified or Contradicted items remain:}
+The following items are still unresolved:
+- {Differentiator title}: {status and what's needed}
+
+Do you want to resolve these before finalizing, or accept them as-is?
+
+{If everything is clean:}
+All sections complete, all links verified, all differentiators resolved. Ready to finalize.
+```
+
+5. If the user provides additional information, update the relevant sections:
    - Upgrade Unverified items to Verified or Corroborated if evidence is provided
-   - Resolve Contradicted items with new evidence, or remove them as differentiators if the contradiction stands
-   - Add new facts to the appropriate sections (new services, leadership changes, updated locations, new competitors, etc.)
-   - Re-verify any new claims using the same source quality tiers from the research protocols
-6. For each update, confirm the change briefly (do not reprint the full section)
-7. Once all items are resolved or the user confirms no further updates, finalize the document:
-   - Update the .docx in Google Drive (save as the final version, not a draft)
-   - Remove any "draft" designation from the filename
-   - Confirm: "Foundational Brief for {Client Name} has been finalized."
+   - Resolve Contradicted items with new evidence, or remove them as differentiators
+   - Add any final new information to the appropriate sections
+   - Re-verify any new claims using the same source quality tiers
+6. For each update, confirm the change briefly
+7. Once the user confirms finalization:
+   - Save the document to Google Drive with the finalized name: `{Client Name}_Foundational_Brief_FINAL.docx`
+   - If a draft version exists alongside it, leave it as an archive
+   - Confirm: "Foundational Brief for {Client Name} has been finalized and saved to Google Drive."
+   - Suggest: "To make this brief available as context in a Claude Project, add it to the relevant Project under Projects in the sidebar."
 
-**Fallback**: If no existing draft is found in Google Drive, inform the user and offer to start a new draft instead.
+**Fallback**: If no existing draft is found in Google Drive, inform the user and offer to start a new draft or update flow instead.
 
-Then continue to **Document Setup** below only if sections need to be regenerated. If the brief is complete and only confidence scores were updated, skip directly to **Final Output**.
+Do not continue to Document Setup. The finalize flow operates on the existing document only.
 
 ---
 
 ## Document Setup
 
-After files are uploaded, before writing 1.0 Intro, create a working .docx file:
-- Use the system docx skill. Read and follow `references/s3-docx-styles.md` before creating the document.
-- Name it `{Client Name}_Foundational_Brief.docx` and save to the outputs folder.
-- Build the document incrementally: append each approved section immediately after approval.
+After files are collected (Step 0a), ask the user which build mode they prefer:
 
-### Approval Gate Behavior
+```
+How would you like to build this brief?
+
+1. Guided — I will build each section and pause for your review before continuing
+2. Auto — I will build the complete brief with one checkpoint after Client Details, then generate the rest automatically
+```
+
+Create a working .docx file:
+- Use the system docx skill. Read and follow `references/s3-docx-styles.md` before creating the document.
+- Name it `{Client Name}_Foundational_Brief_DRAFT.docx` and save to the outputs folder.
+
+---
+
+### Guided Mode
+
+Build the document incrementally: append each approved section immediately after approval.
+
+**Approval Gate Behavior:**
 
 Each section has an approval gate. The user reviews the section in chat and either approves or requests edits.
 
@@ -160,6 +230,36 @@ Each section has an approval gate. The user reviews the section in chat and eith
 5. Only write to the .docx once, after final approval. Do not update the document on every small edit.
 
 **Do NOT regenerate the document preview after every edit or approval.** Only provide the document link after the final section (5.0) is approved and the brief is complete.
+
+---
+
+### Auto Mode
+
+Build the complete brief with one checkpoint:
+
+1. Generate sections 1.0, 1.1, and 2.1 (Client Details)
+2. **Checkpoint**: Present 2.1 for the user to review. This is the only stop — if the client name, location, service category, or leadership is wrong, everything downstream will be wrong. Wait for approval or edits before continuing.
+3. Once 2.1 is approved, generate all remaining sections (2.2 through 5.0) automatically without stopping. Apply the same research rigor, source quality tiers, and verification standards as guided mode.
+4. Run a full verification pass on the completed document:
+   - Verify all links are functional (social media, website, competitor URLs, source citations)
+   - Confirm all social media accounts have been discovered per the discovery protocol
+   - Confirm all differentiators in 3.4 have confidence scores
+5. Save the complete draft to Google Drive in the `CREATIVE STRATEGY` folder
+6. Present a completion summary:
+
+```
+Foundational Brief draft for {Client Name} is complete and saved to Google Drive.
+
+Summary:
+- {count} sections completed
+- {count} differentiators identified: {count Verified}, {count Corroborated}, {count Unverified}, {count Contradicted}
+- {count} links verified
+- {any issues found}
+
+You can review and edit the document directly in Google Drive. When you are ready, come back to update or finalize.
+```
+
+**Both modes produce the same document with the same quality standards.** The difference is only in how many times the user stops to review during generation.
 
 ---
 
