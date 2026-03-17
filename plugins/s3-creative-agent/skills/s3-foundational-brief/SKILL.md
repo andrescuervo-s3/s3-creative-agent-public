@@ -346,8 +346,15 @@ If everything looks good, reply "Approved" to confirm completion of the Foundati
 
 The document is built incrementally, so no compilation step is needed. After 5.0 is approved:
 1. Final review pass for formatting consistency per `references/s3-docx-styles.md`
-2. Confirm the Foundational Brief is complete
-3. Provide the final document link
+2. Save the completed brief to Google Drive:
+   - Use the same client folder found in Step 0
+   - Look for a `CREATIVE STRATEGY` subfolder inside the client folder (match case-insensitively: "Creative Strategy", "CREATIVE STRATEGY", etc.)
+   - If the subfolder exists, save the brief there
+   - If the subfolder does not exist, create a folder named `CREATIVE STRATEGY` inside the client folder, then save the brief there
+   - If the folder already contains an older version of the foundational brief, save alongside it (do not overwrite) with the current date appended: `{Client Name}_Foundational_Brief_{YYYY-MM-DD}.docx`
+3. Confirm the Foundational Brief is complete
+4. Provide the Google Drive link to the saved document
+5. Suggest: "To make this brief available as context in a Claude Project, add it to the relevant Project under Projects in the sidebar."
 
 ---
 
