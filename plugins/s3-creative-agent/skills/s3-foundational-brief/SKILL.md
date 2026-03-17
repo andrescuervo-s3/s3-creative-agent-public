@@ -16,9 +16,19 @@ The brief is built section by section with approval gates between sections. The 
 
 ---
 
-## Step 0: Startup and File Collection
+## Step 0: Startup
 
-When triggered, ask for the client name:
+This skill supports two modes: **New Draft** and **Finalize Existing**. The brief selector passes the user's choice. If this skill is invoked directly (not via the selector), ask:
+
+```
+Are we starting a new foundational brief or finalizing an existing draft?
+```
+
+---
+
+### Step 0a: New Draft — File Collection
+
+When starting a new draft, ask for the client name:
 
 ```
 What is the client name? I will search Google Drive for their onboarding documents.
@@ -75,6 +85,54 @@ If you are missing any, we can still proceed, but the brief may be less complete
 ```
 
 If files are already uploaded in the conversation, acknowledge and proceed.
+
+Then continue to **Document Setup** below.
+
+---
+
+### Step 0b: Finalize Existing — Review and Update Draft
+
+When finalizing an existing draft, ask for the client name:
+
+```
+What is the client name? I will find the existing draft in Google Drive.
+```
+
+Once the client name is provided:
+
+1. Search Google Drive for the client folder, then look in the `CREATIVE STRATEGY` subfolder for an existing foundational brief (match keywords: foundational, brief, draft)
+2. If found, read the document thoroughly
+3. Scan section 3.4 (Market Differentiators) for any items scored as **Unverified** or **Contradicted**
+4. Present a summary:
+
+```
+I found the draft Foundational Brief for {Client Name}.
+
+Items flagged for resolution:
+
+Unverified:
+- {Differentiator title}: {what needs to be confirmed}
+
+Contradicted:
+- {Differentiator title}: {what conflicts with the client's claim}
+
+Do you have any updates? This could be creative call notes, new information about the client, resolved items from above, or anything else that should be reflected in the brief.
+```
+
+5. As the user provides new information, update the relevant sections:
+   - Upgrade Unverified items to Verified or Corroborated if evidence is provided
+   - Resolve Contradicted items with new evidence, or remove them as differentiators if the contradiction stands
+   - Add new facts to the appropriate sections (new services, leadership changes, updated locations, new competitors, etc.)
+   - Re-verify any new claims using the same source quality tiers from the research protocols
+6. For each update, confirm the change briefly (do not reprint the full section)
+7. Once all items are resolved or the user confirms no further updates, finalize the document:
+   - Update the .docx in Google Drive (save as the final version, not a draft)
+   - Remove any "draft" designation from the filename
+   - Confirm: "Foundational Brief for {Client Name} has been finalized."
+
+**Fallback**: If no existing draft is found in Google Drive, inform the user and offer to start a new draft instead.
+
+Then continue to **Document Setup** below only if sections need to be regenerated. If the brief is complete and only confidence scores were updated, skip directly to **Final Output**.
 
 ---
 

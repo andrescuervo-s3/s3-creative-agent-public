@@ -41,7 +41,15 @@ Wait for the user's response.
 
 **If the user chooses Foundational Brief:**
 
-Invoke the `s3-foundational-brief` skill using the Skill tool. The foundational brief skill will take over from here. Do not ask any further questions — let the foundational brief skill handle its own startup workflow.
+Use the AskUserQuestion tool to ask:
+
+"Are you starting a new foundational brief or finalizing an existing draft?"
+
+Options:
+1. **New Draft** — Starting from scratch for a new client
+2. **Finalize Existing** — Update a draft with new information (e.g., after a creative call)
+
+Then invoke the `s3-foundational-brief` skill using the Skill tool, passing the user's choice. The foundational brief skill will take over from here.
 
 **If the user chooses Creative Brief:**
 
