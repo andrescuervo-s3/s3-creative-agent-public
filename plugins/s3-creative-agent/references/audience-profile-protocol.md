@@ -109,13 +109,33 @@ From each valid source:
 
 ## Step 5: Structure the Audience Profile
 
+Number each profile sequentially (Audience Profile 1, Audience Profile 2, etc.). The profile label and the audience name are separate: the label is the heading (e.g., "Audience Profile 1"), the audience name appears below it (e.g., "Referring Attorneys").
+
 For each audience segment, write a profile using this structure:
 
 1. **Demographics**: Geography, life stage, professional role, urgency context, and relevant qualifiers
 2. **Mindset**: What they are protecting, seeking, fearing, or motivated by
 3. **Attitude**: How they evaluate options, what they demand, and what they reject
 4. **Perception**: What must be true for trust to form; how they identify authority or safety
-5. **Evidence**: Include 2-3 plain-text source URLs to support claims -- focus on credibility, not volume
+5. **Evidence**: Sources that support the specific claims made in the sections above
+
+### Evidence Standards
+
+Evidence must be clear to the reader. Every item in the Evidence section must directly reference a specific claim in the profile and name the source it came from.
+
+**Format each evidence item as:**
+"{Specific claim from the profile}" — {Source document name or URL}
+
+**Example (good):**
+- "Nearly all high-value cases are sourced through attorney referrals" — Sales Turnover document (Shane Woodruff, Feb 2026)
+- "Solo practitioners and small-to-midsize firms (2-20 attorneys) are the primary referring segment" — ABA 2024 Profile of the Legal Profession, pg. 14
+- "Referring attorneys evaluate trial competency and referral fee transparency" — National Law Review, "What Attorneys Look for in a Referral Partner" (2024)
+
+**Example (bad — do not do this):**
+- Client intake data showing referral sources — needs verification
+- Attorney referral network list — needs verification
+
+If a claim in the profile cannot be tied to a specific source, either remove the claim, flag it inline as an assumption within the section where it appears, or note in Evidence exactly what verification is needed and where to find it.
 
 ---
 

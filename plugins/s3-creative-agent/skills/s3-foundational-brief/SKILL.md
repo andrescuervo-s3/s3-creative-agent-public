@@ -362,13 +362,24 @@ If everything looks good, reply "Approved" to continue to the next section: 2.4 
 
 ### 2.4 Digital Snapshot
 
-Compact performance data table from provided documents.
+**Source priority:**
 
-If SEO/keyword data: Keyword or Topic | Current Position | Search Volume (if provided) | Associated URL (if provided)
+1. **Client-provided data first** — SEO keyword reports, Google Analytics exports, paid media reports from intake documents. Present as a compact performance data table:
+   - If SEO/keyword data: Keyword or Topic | Current Position | Search Volume (if provided) | Associated URL (if provided)
+   - If analytics/paid media data: adapt columns (sessions, conversions, CPA, ROAS, etc.)
 
-If analytics/paid media data: adapt columns (sessions, conversions, CPA, ROAS, etc.).
+2. **Google Analytics (if connected)** — pull current site traffic, top landing pages, geographic distribution, referral sources, and device breakdown.
 
-Do not invent metrics. If client wants to deprioritize something that performs well, note: "Client request: deprioritize despite performance."
+3. **Independent SEO analysis (if no client data available)** — do not leave this section blank. Run a basic analysis using web search:
+   - Search for the client's primary keywords (derived from their case types and locations in 2.1) and note where the client's site ranks
+   - Check Google Business profiles for review counts and ratings
+   - Note which competitors appear above the client for key terms
+   - Check basic site health indicators if possible (mobile-friendliness, page speed via web search)
+   - Present findings in a table: Search Term | Client Ranking | Top Competitors Ranking | Notes
+
+4. **Social media baseline** — follower counts and posting frequency for all discovered social accounts (from the Social Media Discovery Protocol). Present as a simple table: Platform | Handle | Followers | Last Post Date | Posting Frequency
+
+Do not invent metrics. If client wants to deprioritize something that performs well, note: "Client request: deprioritize despite performance." If a data source is unavailable, state what was attempted and what would be needed to fill the gap.
 
 **Approval Gate**:
 ```
@@ -437,21 +448,30 @@ If everything looks good, reply "Approved" to continue to the next section: 3.3 
 
 ### 3.3 Competitors
 
-Up to 6 competitor profiles.
+Up to 6 competitor profiles, segmented by the audience channel they compete in.
 
 Read and follow the **Competitor Profile Research Protocol** in `references/competitor-profile-protocol.md`.
 
-**Parallelization**: Use subagents (Task tool) to research competitors in parallel. For example, spawn 2 subagents each researching 3 competitors, or 3 subagents each researching 2. Each subagent should:
+**Segmentation by audience channel**: Competitors must be grouped by which audience they compete for, based on the targeting defined in 2.1 and the audiences profiled in 3.2. A client with both B2B and B2C operations has different competitive sets for each. Do not mix them.
+
+For example, if a client's primary audience is attorney referrals (B2B) and secondary is direct consumers (B2C):
+- **Primary Competitors** — firms competing for the same primary audience (e.g., other referral-driven trial firms)
+- **Secondary Competitors** — firms competing for the secondary audience (e.g., billboard/volume firms competing for consumers)
+
+Label each group clearly with the audience channel it maps to.
+
+**Parallelization**: Use subagents (Task tool) to research competitors in parallel. Each subagent should:
 1. Read `references/competitor-profile-protocol.md`
 2. Perform search and validation for its assigned competitors
 3. Return the structured profiles
 
-Compile all returned profiles into the section output.
+Compile all returned profiles into the section output, organized by audience channel.
 
-Prefer competitor lists from client or SEO materials. If missing, identify competitors using search visibility for priority terms plus market prominence.
+Prefer competitor lists from client or SEO materials. If missing, identify competitors using search visibility for priority terms plus market prominence. Consider which audience each competitor actually serves — a firm that advertises on billboards is competing for consumers, not attorney referrals.
 
 For each competitor:
 - **Name**: Official brand or firm name
+- **Audience Channel**: Which audience this competitor competes for (maps to 3.2)
 - **URL**: Most relevant page (non-ad)
 - **Positioning**: 2 to 4 sentences on how they present themselves — their messaging, stated value proposition, and who they appear to target. This is what they claim, observed from their own channels.
 - **Proof Signals**: 2 to 5 concrete credibility indicators verified through third-party sources only (review platforms, licensing boards, media coverage, professional associations). Never cite the competitor's own website as proof.
@@ -481,9 +501,10 @@ If everything looks good, reply "Approved" to continue to the next section: 3.4 
 Structure:
 - **Differentiator Title**
 - **Confidence**: Verified | Corroborated | Unverified | Contradicted
+- **Competitive Set**: Which audience channel and competitor group this differentiator applies to (e.g., "B2B — Primary Competitors" or "B2C — Secondary Competitors" or "Both"). Maps to the segmentation in 3.3.
 - **Client Claim**: What the client states or implies
 - **Client Verification**: Source confirming or contradicting the claim
-- **Competitor Landscape**: What competitors claim and what is verified for them
+- **Competitor Landscape**: What competitors in the relevant set claim and what is verified for them
 - **Why It Matters**: The strategic significance of this difference (factual, not a recommendation)
 
 **Approval Gate**:

@@ -37,7 +37,7 @@ All headings use Open Sans Bold. Colors and sizes are exact values in half-point
 | H1 | Heading1 | 20pt | 40 | Bold | #000000 | 360 | 200 | Major sections: 1.0 Intro, 2.0 Client Overview, 3.0 The Brand, 4.0 Brand Voice, 5.0 Bright Idea |
 | H2 | Heading2 | 16pt | 32 | Bold | #333333 | 280 | 160 | Subsections: 2.1 Client Details, 2.2 From the Client, 3.1 Brand Essentials, 3.2 Audiences, 3.3 Competitors, 3.4 Market Differentiators |
 | H3 | Heading3 | 13pt | 26 | Bold | #333333 | 200 | 120 | Named blocks: Brand Values, Mission Statement, Brand Differentiators, competitor names, audience profile names, differentiator pattern titles |
-| H4 | Heading4 | 11pt | 22 | Italic (not bold) | #2E74B5 | 0 | 0 | Profile sub-categories: Demographics, Mindset, Attitude, Perception |
+| H4 | Heading4 | 11pt | 22 | Bold | #000000 | 80 | 20 | Profile sub-categories: Demographics, Mindset, Attitude, Perception, Evidence |
 
 All headings: line spacing 240 (single), left-aligned, no borders, no shading.
 
@@ -193,8 +193,8 @@ styles: {
     },
     {
       id: "Heading4", name: "Heading 4", basedOn: "Normal", next: "Normal", quickFormat: true,
-      run: { size: 22, italics: true, font: "Open Sans", color: "2E74B5" },
-      paragraph: { spacing: { before: 0, after: 0, line: 240, lineRule: "auto" } }
+      run: { size: 22, bold: true, font: "Open Sans", color: "000000" },
+      paragraph: { spacing: { before: 80, after: 20, line: 240, lineRule: "auto" } }
     }
   ]
 }
@@ -244,7 +244,8 @@ These rules govern how content is formatted, not what it says:
 
 - **Heading assignments are fixed.** H1 for x.0 sections, H2 for x.x subsections, H3 for named blocks, H4 for profile categories. Do not reassign.
 - **Competitor profiles use labeled fields, not bullets.** Bold label + colon + content. No bullet prefix.
-- **Audience profiles use H4 for category names** (Demographics, Mindset, Attitude, Perception) with bullet lists under each.
+- **Audience profiles are numbered** (Audience Profile 1, Audience Profile 2, etc.) with the audience name as a separate line below the profile label. Use H3 for the profile label and a bold paragraph for the audience name.
+- **Audience profiles use H4 for category names** (Demographics, Mindset, Attitude, Perception, Evidence) with content under each. H4 is bold black, not italic blue.
 - **Brand Voice traits use bullet lists** with bold trait name + description.
 - **Dividers separate major sections**, not every subsection.
 - **No blank lines between bullets** unless the section explicitly requires spacing.
