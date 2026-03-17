@@ -18,10 +18,52 @@ The brief is built section by section with approval gates between sections. The 
 
 ## Step 0: Startup and File Collection
 
-When triggered, request client files:
+When triggered, ask for the client name:
 
 ```
-Please upload any client files you have from this list:
+What is the client name? I will search Google Drive for their onboarding documents.
+```
+
+Once the client name is provided, automatically search Google Drive:
+
+1. Search for a folder matching the client name using `google_drive_search` with query: `name contains '{Client Name}' and mimeType = 'application/vnd.google-apps.folder'`
+2. Once the client folder is found, list all files inside it using `'{folder_id}' in parents`, then intelligently match each file to one of the five document types based on filename keywords:
+
+   | Document Type | Keywords to match |
+   |---|---|
+   | Creative Survey | survey, intake, questionnaire |
+   | Client Profile | profile, turnover, sales turnover |
+   | Creative Notes | notes, creative notes |
+   | Work Agreement | agreement, proposal, partnership |
+   | SEO Keywords | seo, keywords, rankings |
+
+   Do not require exact name matches. Use judgment: a file called "Jones_Intake_Form.pdf" is a Creative Survey, "Partnership_Proposal_v2.docx" is a Work Agreement, etc. If a file does not clearly match any type, skip it.
+
+   **When multiple files match the same type**: List all matches with their last modified dates. Flag them for the user to decide:
+   - If they appear to be versions of the same document (similar names, different dates), recommend the most recently modified one but ask the user to confirm
+   - If they appear to be independent documents (e.g., two surveys filled out by different people at the same company), recommend pulling in both and ask the user to confirm
+3. Present results as a checklist:
+
+```
+I found the following documents for {Client Name}:
+
+- [x] Creative Survey: {filename}
+- [x] Client Profile: {filename}
+- [ ] Creative Notes: not found
+- [x] Work Agreement: {filename}
+- [x] SEO Keywords: {filename}
+
+Missing documents will not block the brief, but those sections may be less complete.
+Should I proceed with what we have, or would you like to upload any missing files?
+```
+
+4. Once confirmed, read each found document thoroughly: parse all rows/columns in spreadsheets, all pages in PDFs, all text in Google Docs.
+
+**Fallback**: If Google Drive is not connected or the search returns no results, ask the user to upload files directly:
+
+```
+I was not able to find documents in Google Drive for this client.
+Please upload any client files you have:
 
 - Creative Survey (Client Intake Questionnaire)
 - Client Profile (Sales Turnover Document)
@@ -30,10 +72,9 @@ Please upload any client files you have from this list:
 - SEO Keywords and Rankings
 
 If you are missing any, we can still proceed, but the brief may be less complete.
-Please let me know when you are ready to proceed and we will begin writing 1.0 Intro and 1.1 Cover.
 ```
 
-If files are already uploaded, acknowledge and proceed. Read each file thoroughly: parse all rows/columns in spreadsheets, all pages in PDFs. Use Google Drive tools for shared links.
+If files are already uploaded in the conversation, acknowledge and proceed.
 
 ---
 
