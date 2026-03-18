@@ -36,29 +36,38 @@ Run `skills-ref validate` after creating/modifying any SKILL.md to catch schema 
 ## Project Structure
 
 ```
-s3-creative-agent/
-├── references/
-│   ├── audience-research-agent.md       ← Research agent for 3.2 Audience Profiles
-│   ├── competitor-research-agent.md     ← Research agent for 3.3 Competitors
-│   ├── confidence-scoring-spec.md       ← 5-level confidence scoring rules
-│   ├── foundational-brief-sections.md   ← Section templates for the Foundational Brief
-│   ├── research-validation-rules.md     ← 5 validation rules for Research Logs
-│   ├── s3-docx-styles.md               ← Document styling spec for .docx output
-│   ├── seo-digital-research-agent.md    ← Research agent for 2.3 Digital Snapshot
-│   └── social-media-discovery-agent.md  ← 6-platform social media discovery agent
-├── skills/
-│   ├── s3-brief-selector/SKILL.md       ← Routes ambiguous "brief" requests
-│   ├── s3-foundational-brief/SKILL.md   ← Orchestrator: Research → Validate → Write
-│   ├── s3-creative-brief-website/SKILL.md
-│   ├── s3-creative-brief-media/SKILL.md
-│   ├── s3-creative-brief-paid-ads/SKILL.md
-│   ├── s3-creative-brief-social-media/SKILL.md
-│   └── s3-recommendation-doc/SKILL.md
+s3-creative-agent/                          ← GitHub repo root
+├── .claude-plugin/
+│   ├── marketplace.json                    ← Plugin manifest (source: ./plugins/s3-creative-agent)
+│   └── plugin.json
+├── plugins/s3-creative-agent/              ← Plugin root (Cowork reads from here)
+│   ├── references/
+│   │   ├── audience-research-agent.md      ← Research agent for 3.2 Audience Profiles
+│   │   ├── competitor-research-agent.md    ← Research agent for 3.3 Competitors
+│   │   ├── confidence-scoring-spec.md      ← 5-level confidence scoring rules
+│   │   ├── foundational-brief-sections.md  ← Section templates for the Foundational Brief
+│   │   ├── research-validation-rules.md    ← 5 validation rules for Research Logs
+│   │   ├── s3-docx-styles.md              ← Document styling spec for .docx output
+│   │   ├── seo-digital-research-agent.md   ← Research agent for 2.3 Digital Snapshot
+│   │   └── social-media-discovery-agent.md ← 6-platform social media discovery agent
+│   └── skills/
+│       ├── s3-brief-selector/SKILL.md      ← Two-step routing: brief type then mode
+│       ├── s3-foundational-brief/SKILL.md  ← Orchestrator: Research → Validate → Write
+│       ├── s3-creative-brief-website/SKILL.md
+│       ├── s3-creative-brief-media/SKILL.md
+│       ├── s3-creative-brief-paid-ads/SKILL.md
+│       ├── s3-creative-brief-social-media/SKILL.md
+│       └── s3-recommendation-doc/SKILL.md
 ├── CLAUDE.md            ← This file
 ├── CONNECTORS.md
 ├── PLAN.md
 └── README.md
 ```
+
+## Current Status (2026-03-18)
+- Plugin live and syncing on Teams and Personal plans
+- First live test completed with real client (TMP/Turnbull)
+- 13 feedback items from live test queued for next session (see .claude/session-log.md)
 
 ## Writing Conventions
 - No em dashes — use commas, colons, or periods
