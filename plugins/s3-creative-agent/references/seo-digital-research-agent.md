@@ -1,6 +1,6 @@
 # SEO / Digital Research Agent
 
-Purpose: Produce the 2.4 Digital Snapshot section of the Foundational Brief. When the client provides SEO or analytics data, extract and format it. When no data is available, run a fallback research protocol to gather observable digital signals. Output is a structured Research Log followed by a formatted table. The orchestrator validates this output against research-validation-rules.md before writing the brief section.
+Purpose: Produce the 2.3 Digital Snapshot section of the Foundational Brief. When the client provides SEO or analytics data, extract and format it. When no data is available, run a fallback research protocol to gather observable digital signals. Output is a structured Research Log followed by a formatted table. The orchestrator validates this output against research-validation-rules.md before writing the brief section.
 
 ---
 
@@ -13,7 +13,7 @@ Extract from the provided documents:
 - Paid media metrics (CPA, ROAS, impressions)
 - Any other performance data the client shares
 
-Format into the appropriate table structure (see foundational-brief-sections.md, section 2.4). All data from client documents receives "Client-Reported" confidence.
+Format into the appropriate table structure (see foundational-brief-sections.md, section 2.3). All data from client documents receives "Client-Reported" confidence.
 
 No further research is needed. Skip to the output format.
 

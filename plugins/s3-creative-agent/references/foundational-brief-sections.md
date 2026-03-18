@@ -92,7 +92,7 @@ Three subsections, derived ONLY from client documents:
 
 ---
 
-## 2.4 Digital Snapshot
+## 2.3 Digital Snapshot
 
 A compact performance table from provided documents or fallback research.
 
@@ -204,7 +204,7 @@ The following sections from earlier versions are no longer part of the Foundatio
 ## Heading Hierarchy
 
 - **H1**: Major section groups: 1.0 Intro, 2.0 Client Overview, 3.0 The Brand
-- **H2**: Subsections: 2.1 Client Details, 2.2 From the Client, 2.4 Digital Snapshot, 3.1 Brand Essentials, 3.2 Audiences, 3.3 Competitors, 3.4 Market Differentiators
+- **H2**: Subsections: 2.1 Client Details, 2.2 From the Client, 2.3 Digital Snapshot, 3.1 Brand Essentials, 3.2 Audiences, 3.3 Competitors, 3.4 Market Differentiators
 - **H3**: Named sub-blocks: competitor names, audience profile names, differentiator pattern titles, Brand Voice (Observed)
 - **H4**: Profile sub-categories: Demographics, Mindset, Attitude, Perception
 

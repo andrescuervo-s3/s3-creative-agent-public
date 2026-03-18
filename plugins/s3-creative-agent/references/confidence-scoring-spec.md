@@ -68,7 +68,7 @@ Score: [Verified | Corroborated | Client-Reported | Unverified | Not Researched]
 
 Confidence scores appear in these sections:
 - **2.1 Client Details**: Year Founded, Organizational Structure, Social Media verification labels
-- **2.4 Digital Snapshot**: All SEO/performance metrics when sourced via fallback research
+- **2.3 Digital Snapshot**: All SEO/performance metrics when sourced via fallback research
 - **3.2 Audience Profiles**: Evidence supporting demographic and behavioral claims
 - **3.3 Competitors**: Proof Signals
 - **3.4 Market Differentiators**: Each differentiator claim
