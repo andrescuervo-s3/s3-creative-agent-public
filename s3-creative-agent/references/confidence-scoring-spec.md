@@ -74,3 +74,15 @@ Confidence scores appear in these sections:
 - **3.4 Market Differentiators**: Each differentiator claim
 
 Sections 1.0, 1.1, and 2.2 do not use confidence scoring (they are document-sourced or boilerplate).
+
+---
+
+## Prohibited Vocabulary
+
+Do NOT use any of these terms as confidence labels:
+- "High" / "Medium" / "Low"
+- "Strong" / "Weak"
+- "Likely" / "Probable" (as confidence labels)
+- "Confirmed" (use "Verified" instead)
+
+The ONLY acceptable confidence labels are the five defined above: Verified, Corroborated, Client-Reported, Unverified, Not Researched. Using any other vocabulary creates ambiguity about what the score actually means.

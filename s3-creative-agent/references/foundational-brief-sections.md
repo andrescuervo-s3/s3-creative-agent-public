@@ -70,25 +70,38 @@ Do NOT include administrators, firm managers, intake staff, coordinators, or sup
 
 **Current Website**: Canonical primary URL. If multiple sites exist, list Primary and Secondary with a one-line purpose for each.
 
-**Social Media Accounts**: Output from the social-media-discovery-agent.md. All 6 platforms listed as a vertical stack:
+**S3 Service Overview**: A table summarizing what Studio 3 provides for this client. Columns: Service | Details | Website. Derive from the work agreement, sales turnover document, or other intake docs. If no service details are available, state "S3 service details not provided in available documents."
 
-```
-Platform: URL (Verification Label)
-```
+**Social Media Accounts**: Output from the social-media-discovery-agent.md as a table:
 
-Verification labels: Confirmed Official, Probable Official, Personal / Brand-Adjacent, Not found.
+| Platform | Handle/URL | Status |
+|----------|-----------|--------|
+| Facebook | URL | Verified / Not Found |
+| Instagram | URL | Verified / Not Found |
+| LinkedIn | URL | Verified / Not Found |
+| YouTube | URL | Verified / Not Found |
+| TikTok | URL | Verified / Not Found |
+| X (Twitter) | URL | Verified / Not Found |
+
+Status values: Verified (backlink confirmed), Probable (name/branding match, no backlink), Personal/Brand-Adjacent, Not Found.
+
+If a platform is found, the URL in the table IS the citation. If not found, "Not Found" is the answer. No separate narrative research log is needed for social media. The table is the log.
 
 ---
 
 ## 2.2 From the Client
 
-Three subsections, derived ONLY from client documents:
+Five subsections, derived ONLY from client documents:
 
 **Client Goals**: Write goals as outcome statements, not tactics. Rewrite for clarity without changing intent. If none present: "Not provided in available documents."
 
 **Painpoints**: Capture current-state friction, constraints, risks, or past disappointments, exactly as evidenced by documents. Rewrite for clarity without changing intent. If none present: "Not provided in available documents."
 
 **Asks**: Capture must-haves, constraints, preferences, non-negotiables, and approval constraints, only when evidenced by documents. Rewrite for clarity without changing intent. If none present: "Not provided in available documents."
+
+**Firm Backstory**: A short narrative (1-2 paragraphs) summarizing the client's origin story, culture, and how the current team came together. Derive only from client documents. If the client's documents do not include backstory, state: "Not provided in available documents."
+
+**Business Model Notes**: Key operational details that inform strategy: how the client gets customers (referrals, advertising, organic, etc.), case management or CRM tools, revenue drivers, case/project volume, and any other structural details relevant to marketing. Derive only from client documents. If none present: "Not provided in available documents."
 
 ---
 
@@ -104,11 +117,19 @@ A compact performance table from provided documents or fallback research.
 
 Do not invent metrics. If the client explicitly wants to deprioritize something that performs well, add one short note: "Client request: deprioritize despite performance."
 
+**Research Log**: Required for fallback research only. Use the compact format defined in research-validation-rules.md.
+
 ---
 
 ## 3.1 Brand Essentials
 
-**Brand Values**: Use client-provided values from documents first. If not explicitly provided, only derive from clear statements on owned channels. If unclear, request input at the approval gate.
+**Brand Values**: Present as a table. Each value gets its own row with a description.
+
+| Value | Description |
+|-------|-------------|
+| [Value name] | What this means for the brand, how it shows up in their work |
+
+Use client-provided values from documents first. If not explicitly provided, only derive from clear statements on owned channels. If unclear, request input at the approval gate.
 
 **Mission Statement**:
 - If an official mission statement exists in documents or on the client's website, use it as written and label exactly: "Mission Statement"
@@ -117,12 +138,20 @@ Do not invent metrics. If the client explicitly wants to deprioritize something 
 - Do not introduce new claims, promises, outcomes, or unverifiable superlatives
 - Tone: clear, factual, client-appropriate
 
-**Brand Differentiators**: Each must be defensible and based on facts from documents or owned channels (credentials, capabilities, scope, proof signals, operating model, unique specialization). Write as: "Differentiator label: short explanation." Avoid subjective adjectives without support.
+**Brand Differentiators (Client-Reported)**: Each must be defensible and based on facts from documents or owned channels (credentials, capabilities, scope, proof signals, operating model, unique specialization). Write as: "Differentiator label: short explanation." Avoid subjective adjectives without support. These are what the client claims, not independently verified. Verification happens in 3.4.
 
-**Brand Voice (Observed)**: Observe the client's actual communication style across their website, social media, and any provided content samples. Write:
-- One summary paragraph describing the observed voice and tone
-- Bullet traits with boundaries, formatted as: "Trait: what it means, what it is not"
-- One closing sentence with "avoid" guidance tuned to the industry context
+**Brand Voice (Observed)**: Observe the client's actual communication style across their website, social media, and any provided content samples. Present as a table:
+
+| Dimension | Observation |
+|-----------|-------------|
+| Tone | Description of how the brand sounds |
+| Formality | Level of formality and when it shifts |
+| Pronouns | How the brand refers to itself and the audience |
+| Emotional Register | The emotional anchors and appeals used |
+| Sentence Structure | How language is constructed (short/long, active/passive) |
+| CTAs | How the brand asks people to take action |
+
+Follow with one summary paragraph noting any gaps between the observed voice and the client's stated brand attributes.
 
 This subsection captures what the brand voice IS based on observation, not what it SHOULD BE. Strategy comes later.
 
@@ -151,28 +180,48 @@ Execute the audience-research-agent.md for each selected audience. Each profile 
 2. **Mindset**: What they are protecting, seeking, fearing, or motivated by
 3. **Attitude**: How they evaluate options, what they demand, what they reject
 4. **Perception**: What must be true for trust to form; how they identify authority or safety
-5. **Evidence**: Claim-to-source mapping (not a vague list). Each significant claim maps to its source URL with a confidence score.
+5. **Evidence**: 2-5 key claims with live source links and confidence scores, formatted as:
+
+| Claim | Source | Confidence |
+|-------|--------|------------|
+| [Specific factual claim used in the profile] | [Source title](URL) | Verified / Client-Reported |
+
+**Research Log**: Required. Use the compact format defined in research-validation-rules.md. Must include live links.
 
 ---
 
 ## 3.3 Competitors
 
-Up to 6 competitor profiles from the competitor-research-agent.md. Segmented by audience channel:
+Up to 6 competitor profiles from the competitor-research-agent.md.
 
-### B2B Competitors (if applicable)
-Competitors targeting the client's B2B audience channel (referral sources, partners, professional buyers).
+### Channel Organization
 
-### B2C Competitors (if applicable)
-Competitors targeting the client's direct consumer audience channel.
+Competitors MUST be organized by the client's audience channels. Determine from 2.1 which channel is the client's primary focus (B2B or B2C), and present that group first.
+
+**If the client is primarily B2B**: B2B competitors first, then B2C.
+**If the client is primarily B2C**: B2C competitors first, then B2B.
+**If the client operates in only one channel**: No segmentation needed.
+
+Label each group clearly with the audience channel and a one-sentence description of what "competing" means in that channel (e.g., "Firms competing for attorney referrals nationally" or "Firms competing for direct consumer leads in Atlanta").
+
+### Profile Structure
 
 For each competitor:
-- **Name**: Official brand or firm name
-- **Source of Identification**: How this competitor was found (client docs, SEO discovery, independent search)
-- **Overview**: 2 to 4 sentences describing what they emphasize and how they present themselves
-- **URL**: Most relevant page (non-ad URL)
-- **Proof Signals**: 2 to 5 concrete credibility signals with confidence scores
+- **Name**: Official brand or firm name. Include [Client-Named] or [Independently Discovered] tag.
+- **Channel**: Which audience channel this competitor competes in
+- **Overview**: 2 to 4 sentences describing what they emphasize, their scale, and how they present themselves
+- **URL**: [Firm homepage](URL) -- clickable link
+- **Proof Signals**: 2 to 5 concrete credibility signals. Each must have a live source link:
 
-Must include independently discovered competitors, not just client-named ones.
+| Signal | Source | Confidence |
+|--------|--------|------------|
+| [Specific credibility claim] | [Source title](URL) | Verified |
+
+- **Relevance to Client**: 1-2 sentences on why this competitor matters to the client's competitive position
+
+Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
+
+**Research Log**: Required. Use the compact format defined in research-validation-rules.md.
 
 ---
 
@@ -183,12 +232,17 @@ Must include independently discovered competitors, not just client-named ones.
 
 4 to 6 differentiators written relative to the competitor set. Each must reference the competitor pattern established in 3.3. Do not introduce new facts. Do not make recommendations.
 
-Structure each differentiator with show-your-work confidence:
+Structure each differentiator:
 
-- **Pattern Title**
-- **Pattern Summary**: What the competitors do (cite specific competitors from 3.3)
-- **Client Difference and Why It Matters**: How the client differs, with confidence score
-- **Evidence Trail**: Claim, Source (section reference), Score
+- **Pattern Title**: Short, descriptive name for the differentiator
+- **Pattern Summary**: What the competitors do (cite specific competitors from 3.3 by name)
+- **Client Difference and Why It Matters**: How the client differs, stated as fact
+- **Evidence Trail**:
+
+| Claim | Source Section | Confidence |
+|-------|--------------|------------|
+| [Client claim] | 2.1 / 3.1 | Verified / Client-Reported |
+| [Competitor comparison] | 3.3 | Verified |
 
 ---
 
@@ -211,9 +265,10 @@ The following sections from earlier versions are no longer part of the Foundatio
 ## Formatting Standards
 
 - Bold for field labels and key phrases within body text
-- Clickable hyperlinks for all URLs
+- Clickable hyperlinks for all URLs (never raw URLs without link text)
 - Horizontal rules between major sections
 - Bullet lists only where the section template calls for them
+- Tables where the section template specifies them (Brand Values, Brand Voice, Social Media, S3 Service Overview, Evidence, Proof Signals)
 - No em dashes; use commas, colons, or periods
 - No code, HTML, or debug output in brief content
 - Clean, modern, agency-grade, client-ready appearance

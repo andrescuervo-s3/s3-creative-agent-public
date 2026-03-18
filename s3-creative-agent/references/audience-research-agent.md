@@ -89,19 +89,25 @@ For each audience, produce a Research Log in this exact structure BEFORE writing
 
 ## Profile Structure
 
-After the Research Log is validated, write the profile using this structure:
+After the Research Log is validated, write the profile using this EXACT structure. Do not rename these sections or use alternate labels like "Who They Are" or "What They Need."
 
 1. **Demographics**: Geography, life stage, professional role, urgency context, relevant qualifiers
 2. **Mindset**: What they are protecting, seeking, fearing, or motivated by
 3. **Attitude**: How they evaluate options, what they demand, what they reject
 4. **Perception**: What must be true for trust to form; how they identify authority or safety
-5. **Evidence**: Claim-to-source mapping. Each significant claim from the profile maps to its source:
+5. **Evidence**: A table of 2-5 key claims with live source links:
 
-```
-Claim: [Statement from the profile]
-Source: [URL from the Research Log]
-Score: [Confidence level]
-```
+| Claim | Source | Confidence |
+|-------|--------|------------|
+| [Specific factual claim used in the profile] | [Source title](URL) | Verified / Corroborated / Client-Reported / Unverified |
+
+Every claim with a statistic, percentage, or behavioral assertion MUST appear in this Evidence table with a clickable source link. Claims from client documents use the document name as the source and "Client-Reported" as confidence.
+
+---
+
+## Research Log in the Brief
+
+After the Evidence table, include a compact Research Log per the format in research-validation-rules.md. Only list sources that produced data used in the profile. 3-8 entries maximum. Each entry must have a live link.
 
 ---
 
@@ -112,4 +118,6 @@ Score: [Confidence level]
 - Cite an organization without fetching data from them. "According to the ABA" requires an ABA URL in the Research Log.
 - Write profile content before completing the Research Log.
 - Use client intake documents as independent verification. Client documents are always "Client-Reported" confidence.
-- Pad the Evidence section with volume. 2-3 well-sourced claims are better than 8 vague ones.
+- Pad the Evidence section with volume. 2-5 well-sourced claims are better than 8 vague ones.
+- Rename the profile sections. Use "Demographics," "Mindset," "Attitude," "Perception," "Evidence" exactly as specified.
+- Use "High/Medium/Low" as confidence labels. Use only: Verified, Corroborated, Client-Reported, Unverified, Not Researched.

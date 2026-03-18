@@ -71,74 +71,28 @@ Record: "Account belongs to [person name/title]. Professional content relevant t
 
 ---
 
-## Research Log Output Template
-
-```
-## Research Log: Social Media Discovery
-
-### Client Website Check
-URL fetched: [client homepage URL]
-Social icons found: [list all social URLs found on the site, or "None found"]
-
-### Platform Searches
-
-#### Instagram
-Search query: "[exact query]"
-Result: [URL found or "No results"]
-Alternate query (if needed): "[exact query]"
-Result: [URL found or "No results"]
-Verification: [Method and result]
-Status: [Confirmed Official | Probable Official | Personal / Brand-Adjacent | Not found]
-
-#### Facebook
-Search query: "[exact query]"
-Result: [URL found or "No results"]
-Verification: [Method and result]
-Status: [Confirmed Official | Probable Official | Personal / Brand-Adjacent | Not found]
-
-#### LinkedIn
-Search query: "[exact query]"
-Result: [URL found or "No results"]
-Verification: [Method and result]
-Status: [Confirmed Official | Probable Official | Personal / Brand-Adjacent | Not found]
-
-#### X (Twitter)
-Search query: "[exact query]"
-Result: [URL found or "No results"]
-Verification: [Method and result]
-Status: [Confirmed Official | Probable Official | Personal / Brand-Adjacent | Not found]
-
-#### YouTube
-Search query: "[exact query]"
-Result: [URL found or "No results"]
-Verification: [Method and result]
-Status: [Confirmed Official | Probable Official | Personal / Brand-Adjacent | Not found]
-
-#### TikTok
-Search query: "[exact query]"
-Result: [URL found or "No results"]
-Verification: [Method and result]
-Status: [Confirmed Official | Probable Official | Personal / Brand-Adjacent | Not found]
-```
-
----
-
 ## Output Format
 
-After the Research Log is validated, output a clean vertical stack for the brief:
+Output a table for the brief. The table IS the research log. No separate narrative log is needed.
 
-```
-Instagram: URL (Verification Label)
-Facebook: URL (Verification Label)
-LinkedIn: URL (Verification Label)
-X (Twitter): URL (Verification Label)
-YouTube: URL (Verification Label)
-TikTok: URL (Verification Label)
-```
+| Platform | Handle/URL | Notes | Status |
+|----------|-----------|-------|--------|
+| Facebook | [Handle](URL) | Follower count if visible. Active/inactive. | Verified |
+| Instagram | [Handle](URL) | Follower count, post count if visible. | Verified |
+| LinkedIn | [Company name](URL) | Company page. Note individual profiles if relevant. | Verified |
+| YouTube | [Channel name](URL) | Key content type (e.g., "Master Class series"). | Verified |
+| TikTok | Not found | | Not Found |
+| X (Twitter) | Not found | | Not Found |
 
-Use "Not found" when the platform was searched but no account was discovered.
+**Status values:**
+- **Verified**: Client website links to this account, or the account links back to the client's website
+- **Probable**: Name and branding match, but no cross-link verification
+- **Personal/Brand-Adjacent**: Belongs to a founder or principal, not the business
+- **Not Found**: All search queries returned no results for this platform
 
-If only a personal/founder account exists (no official business account), include it with the "Personal / Brand-Adjacent" label.
+If a personal or brand-adjacent account is relevant (e.g., a principal's professional Instagram), include it as an additional row below the main account with the Personal/Brand-Adjacent label.
+
+Add any important notes below the table (e.g., "Phil Pendergrass also maintains a separate Instagram account for the Georgia practice"). Keep notes to 1-2 sentences maximum.
 
 ---
 

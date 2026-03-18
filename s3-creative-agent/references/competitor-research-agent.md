@@ -62,15 +62,20 @@ At least 2 competitors must come from independent research (Steps 3-4), not sole
 
 ---
 
-## B2B vs B2C Channel Segmentation
+## Channel Segmentation and Ordering
 
-After identifying competitors, segment them by audience channel:
+After identifying competitors, segment them by audience channel. The client's PRIMARY channel (determined from 2.1 Client Details and the targeting field) comes first.
 
-**B2C Competitors**: Target the client's direct consumer audience. These are the firms consumers compare when shopping for the service.
+**Determine primary channel from the brief:**
+- If the client's primary revenue driver or stated marketing focus is B2B (referrals, partnerships, professional buyers), B2B competitors come first
+- If the client's primary revenue driver or stated marketing focus is B2C (direct consumers, retail, DTC), B2C competitors come first
+- If unclear, ask at the approval gate
 
-**B2B Competitors**: Target referral sources, professional partners, or institutional buyers. These may not be direct service competitors but compete for the same referral relationships or partnership channels.
+**Label each group** with the audience channel and a one-sentence description of what "competing" means in that channel. For example:
+- "B2B Competitors: Firms competing for attorney referrals nationally"
+- "B2C Competitors: Firms competing for direct consumer leads in the Atlanta market"
 
-If all competitors serve the same channel, note this and skip the segmentation. If the client only operates in one channel, segment is not needed.
+If all competitors serve the same channel, note this and skip the segmentation. If the client only operates in one channel, segmentation is not needed.
 
 ---
 
@@ -114,17 +119,17 @@ Page 1-2 organic results: [List of firms found]
 
 For each competitor:
 
-- **Name**: Official brand or firm name
-- **Source of Identification**: Client docs, SEO discovery, directory search, or Google organic
-- **Overview**: 2 to 4 sentences: primary service category, geographic focus, unique emphasis, stated value proposition
-- **URL**: Firm's homepage or most relevant service page (non-ad URL)
-- **Proof Signals**: 2 to 5 concrete credibility signals with specific language and confidence scores:
+- **Name**: Official brand or firm name. Tag as [Client-Named] or [Independently Discovered].
+- **Channel**: Which audience channel this competitor competes in (B2B, B2C, or Both)
+- **Overview**: 2 to 4 sentences: primary service category, geographic focus, scale, unique emphasis, stated value proposition
+- **URL**: [Firm name](homepage URL) -- must be a clickable link, not a raw URL
+- **Proof Signals**: 2 to 5 concrete credibility signals. Each must have a live clickable source link:
 
-```
-Signal: "Rated 4.8 stars from 215 reviews on Avvo"
-Source: [Avvo URL]
-Score: Verified
-```
+| Signal | Source | Confidence |
+|--------|--------|------------|
+| [Specific credibility claim] | [Source title](URL) | Verified |
+
+- **Relevance to Client**: 1-2 sentences on why this competitor matters to the client's competitive position
 
 ---
 

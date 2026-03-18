@@ -76,3 +76,29 @@ After each research agent completes its work:
 4. Only proceed to writing when the Research Log passes all five rules
 
 The user should see the Research Log before the written section. This makes the research process transparent and auditable.
+
+---
+
+## Compact Research Log Format
+
+Research Logs appear in the brief document itself. They must be compact and useful, not exhaustive. The format is a short list of the sources that produced data actually used in the section. Each entry is a live link the reader can click to verify the claim at its original source.
+
+```
+**Research Log**
+- [Source title](URL) -- what was found
+- [Source title](URL) -- what was found
+- [Document name, page/section] -- what was extracted (for client docs)
+```
+
+**Rules for Research Logs in the brief:**
+1. Only include sources that produced data used in the written section. Do not list every URL searched.
+2. Every entry must have a live, clickable link (or document reference for client files).
+3. Keep it to 3-8 entries. If you need more than 8, you are including too much detail.
+4. The log goes at the end of the section it supports, not in a separate appendix.
+5. Social media accounts do NOT need a Research Log. The social media table with Verified/Not Found status IS the log.
+
+**The Research Log is NOT:**
+- A narrative description of search methodology
+- A list of every search query attempted
+- A place to explain why searches failed (put that in confidence scores instead)
+- A duplicate of the Evidence table in the section above it

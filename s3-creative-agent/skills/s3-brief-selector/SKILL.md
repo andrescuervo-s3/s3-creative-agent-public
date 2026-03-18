@@ -10,7 +10,7 @@ description: |
 
 ## Purpose
 
-Studio 3 Marketing has two distinct brief types, and team members often just say "brief" or "creative brief" without specifying which one they need. This skill catches those ambiguous requests, asks one clarifying question, and routes to the correct skill.
+Studio 3 Marketing has two distinct brief types, and team members often just say "brief" or "creative brief" without specifying which one they need. This skill catches those ambiguous requests, asks two clarifying questions maximum, and routes to the correct skill.
 
 ## The Two Brief Types
 
@@ -29,21 +29,28 @@ Studio 3 Marketing has two distinct brief types, and team members often just say
 
 Use the AskUserQuestion tool to ask:
 
-"Which type of brief are you working on?"
+"What type of brief are you working on?"
 
 Options:
-1. **Foundational Brief: New (Draft)** -- Create a new client onboarding brief from scratch
-2. **Foundational Brief: Update (Draft)** -- Update an existing draft with new info or corrections
-3. **Foundational Brief: Finalize** -- Resolve open items and stamp an existing draft as FINAL
-4. **Creative Brief** -- Project-specific (Website, Media, Paid Ads, or Social Media)
+1. **Foundational Brief** -- the evergreen client research document
+2. **Creative Brief** -- strategy and execution for a specific channel
 
 Wait for the user's response.
 
 ### Step 2: Route based on their answer
 
-**If the user chooses any Foundational Brief option:**
+**If the user chooses Foundational Brief:**
 
-Invoke the `s3-foundational-brief` skill using the Skill tool. Pass the selected mode (New, Update, or Finalize) in your message so the foundational brief skill knows which mode to use. Do not ask any further questions.
+Use the AskUserQuestion tool to ask:
+
+"What would you like to do?"
+
+Options:
+1. **New (Draft)** -- Create a new client onboarding brief from scratch
+2. **Update (Draft)** -- Update an existing draft with new info or corrections
+3. **Finalize** -- Resolve open items and stamp an existing draft as final
+
+Then invoke the `s3-foundational-brief` skill using the Skill tool. Pass the selected mode (New, Update, or Finalize) in your message so the foundational brief skill knows which mode to use. Do not ask any further questions.
 
 **If the user chooses Creative Brief:**
 
@@ -71,7 +78,7 @@ Invoke the skill using the Skill tool. The creative brief skill will take over f
 ## Important
 
 - This skill is a router only. It does not produce any brief content itself.
-- Keep the interaction fast: one or two questions maximum, then hand off.
+- Keep the interaction fast: two questions maximum, then hand off.
 - If the user's original message already makes the brief type clear (e.g., they said "I need a website brief"), skip the questions and go straight to the appropriate skill.
 - Never start generating brief content. Your only job is to route.
 - Use the AskUserQuestion tool for the routing questions.

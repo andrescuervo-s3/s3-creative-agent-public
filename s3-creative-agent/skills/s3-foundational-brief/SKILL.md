@@ -96,12 +96,12 @@ Read `references/foundational-brief-sections.md` for the full template of each s
 Write directly from boilerplate and document metadata. Include DRAFT status badge, creation date, and client name.
 
 ### Section 2.1 Client Details (Document-sourced + social media research)
-Write all fields from documents. For Social Media Accounts:
+Write all fields from documents, including the S3 Service Overview table (derive from work agreement or sales turnover doc).
+
+For Social Media Accounts:
 1. Read `references/social-media-discovery-agent.md`
 2. Execute the full 6-platform search protocol
-3. Produce the Social Media Research Log
-4. Validate against research-validation-rules.md
-5. Write the social media stack into 2.1
+3. Output the social media table directly into 2.1. The table IS the log. No separate narrative Research Log needed for social media.
 
 For Year Founded, if not in documents:
 1. Fetch client website (About, Our Story, footer)
@@ -109,7 +109,7 @@ For Year Founded, if not in documents:
 3. Apply confidence scoring
 
 ### Section 2.2 From the Client (Document-sourced only)
-Extract Goals, Painpoints, and Asks from client documents only. No web research needed. No Research Log needed.
+Extract Goals, Painpoints, Asks, Firm Backstory, and Business Model Notes from client documents only. No web research needed. No Research Log needed.
 
 ### CHECKPOINT (Auto mode stops here)
 In Auto mode, stop after 2.1 and 2.2 are complete:
@@ -128,7 +128,7 @@ In Guided mode, use standard approval gates after each section.
 5. Validate and write
 
 ### Section 3.1 Brand Essentials (Document-sourced + brand voice observation)
-Write Brand Values, Mission Statement, and Brand Differentiators from documents.
+Write Brand Values as a table (Value | Description), Mission Statement, and Brand Differentiators from documents.
 
 For Brand Voice (Observed) subsection:
 1. Fetch the client's website and observe communication style
@@ -151,10 +151,10 @@ Present audience candidates from documents and brief context. User selects up to
 ### Section 3.3 Competitors (Research-intensive)
 1. Read `references/competitor-research-agent.md`
 2. Execute the mandatory search sequence
-3. Segment by B2B vs B2C channel
-4. Produce the Research Log
+3. Determine the client's primary channel from 2.1 (B2B or B2C) and organize competitors with that group first
+4. Produce the Research Log with live source links
 5. Validate
-6. Write profiles with proof signals and confidence scores
+6. Write profiles with proof signal tables (each signal must have a clickable source link)
 
 ### Section 3.4 Market Differentiators (Constrained section)
 **Before writing**: Re-read sections 2.1, 3.1, and 3.3 from the working document.
@@ -209,7 +209,9 @@ Create a working .docx document after Step 0 completes. Name it `{Client Name}_F
 - Last Updated: Most recent edit date
 
 ### Document Styling
-Read the docx skill for styling guidance. Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundational-brief-sections.md, bold field labels, clickable hyperlinks, horizontal rules between major sections.
+Read `references/foundational-brief-sections.md` BEFORE creating or appending to the document. It defines the exact structure, field order, table formats, and heading hierarchy for every section. Do not improvise your own layout. Follow the templates exactly.
+
+Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundational-brief-sections.md, bold field labels, clickable hyperlinks (never raw URLs), horizontal rules between major sections, tables where specified (Brand Values, Brand Voice, Social Media, S3 Service Overview, Evidence, Proof Signals).
 
 ---
 
@@ -223,6 +225,9 @@ Read the docx skill for styling guidance. Apply: clean sans-serif font (Arial or
 - **No em dashes**: Use commas, colons, or periods.
 - **No code or HTML**: Do not output code, scripts, HTML fragments, or debug text in brief content.
 - **Constrained sections (3.4)**: Re-read the referenced sections from the working document before writing. Do not rely solely on conversation memory.
+- **Confidence vocabulary**: Use ONLY these labels: Verified, Corroborated, Client-Reported, Unverified, Not Researched. Never use "High/Medium/Low" or any other scale.
+- **Citations need live links**: Every research-sourced claim in competitors (3.3) and audiences (3.2) must have a clickable source URL in its Evidence or Proof Signals table.
+- **Follow the section templates**: Read foundational-brief-sections.md before writing each section. Use the exact structure, tables, and field order specified. Do not invent your own layout.
 
 ---
 
