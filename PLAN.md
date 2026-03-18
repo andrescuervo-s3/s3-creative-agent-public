@@ -25,7 +25,7 @@ Orchestrator (SKILL.md)
   │
   ├── Step 4: Validate all research outputs (inline validation rules)
   │
-  └── Step 5: Write sections 2.4, 3.1, 3.2, 3.3, 3.4 using ONLY validated research
+  └── Step 5: Write sections 2.3, 3.1, 3.2, 3.3, 3.4 using ONLY validated research
 ```
 
 **Key rule**: The writing phase can ONLY use data that appears in a Research Log. No Research Log = no section content. Missing research = "Not Researched" confidence score visible in the output.
@@ -74,7 +74,7 @@ Five rules applied after every research phase:
 All section templates, field specs, formatting — extracted from the current SKILL.md to keep the orchestrator lean. Covers:
 - 1.0 Intro, 1.1 Cover (with status badge: DRAFT/FINAL, dates)
 - 2.1 Client Details, 2.2 From the Client
-- 2.4 Digital Snapshot (with SEO fallback)
+- 2.3 Digital Snapshot (with SEO fallback)
 - 3.1 Brand Essentials (includes Brand Voice Observed subsection)
 - 3.2 Audiences Selection + Profiles (evidence as claim-to-source mapping)
 - 3.3 Competitors (segmented by B2B vs B2C channel)
@@ -105,7 +105,7 @@ Replaces `social-media-discovery-protocol.md`. Additions:
 - Structured output: platform, URL, verification method, result, confidence label
 
 ### 7. `references/seo-digital-research-agent.md` (~100 lines) — NEW
-For section 2.4 Digital Snapshot:
+For section 2.3 Digital Snapshot:
 - When client provides data: extract and format
 - When no data available (the gap that failed in testing): fallback research protocol
   - `site:[domain]` search for indexed page count
@@ -157,7 +157,7 @@ and score every claim as "Not Researched."
 - 2.1: Document-sourced + social media discovery agent
 - 2.2: Document-sourced only
 - CHECKPOINT (Auto mode stops here for user review)
-- 2.4: SEO/digital research agent
+- 2.3: SEO/digital research agent
 - 3.1: Document-sourced + brand voice observation from web
 - 3.2: Audience research agent (parallel per audience)
 - 3.3: Competitor research agent
@@ -196,7 +196,7 @@ and score every claim as "Not Researched."
 | Restructure 3.3 | Segment competitors by audience channel (B2B vs B2C) |
 | Restructure 3.4 | Show-your-work confidence format with Competitive Set field |
 | Rework Evidence | Claim-to-source mapping, not vague list |
-| Add SEO fallback | 2.4 attempts its own research when no client data exists |
+| Add SEO fallback | 2.3 attempts its own research when no client data exists |
 | Add status badge | DRAFT/FINAL on cover page |
 | Add date tracking | Created + Last Updated on 1.1 Cover |
 

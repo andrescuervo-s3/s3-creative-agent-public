@@ -34,7 +34,7 @@ All headings use Open Sans Bold. Colors and sizes are exact values in half-point
 
 | Level | Style ID | Size (pt) | w:val | Weight | Color | Spacing Before | Spacing After | Use |
 |-------|----------|-----------|-------|--------|-------|----------------|---------------|-----|
-| H1 | Heading1 | 20pt | 40 | Bold | #000000 | 360 | 200 | Major sections: 1.0 Intro, 2.0 Client Overview, 3.0 The Brand, 4.0 Brand Voice, 5.0 Bright Idea |
+| H1 | Heading1 | 20pt | 40 | Bold | #000000 | 360 | 200 | Major sections: 1.0 Intro, 2.0 Client Overview, 3.0 The Brand |
 | H2 | Heading2 | 16pt | 32 | Bold | #333333 | 280 | 160 | Subsections: 2.1 Client Details, 2.2 From the Client, 3.1 Brand Essentials, 3.2 Audiences, 3.3 Competitors, 3.4 Market Differentiators |
 | H3 | Heading3 | 13pt | 26 | Bold | #333333 | 200 | 120 | Named blocks: Brand Values, Mission Statement, Brand Differentiators, competitor names, audience profile names, differentiator pattern titles |
 | H4 | Heading4 | 11pt | 22 | Bold | #000000 | 80 | 20 | Profile sub-categories: Demographics, Mindset, Attitude, Perception, Evidence |
