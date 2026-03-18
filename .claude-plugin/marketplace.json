@@ -8,16 +8,7 @@
       "name": "s3-creative-agent",
       "source": "./",
       "description": "Studio 3 Marketing's creative toolkit. Produce foundational briefs, creative briefs (website, media, paid ads, social media), and power creative workflows using S3's evidence-based protocols.",
-      "version": "1.4.0",
-      "skills": [
-        "./skills/s3-brief-selector",
-        "./skills/s3-foundational-brief",
-        "./skills/s3-creative-brief-website",
-        "./skills/s3-creative-brief-media",
-        "./skills/s3-creative-brief-paid-ads",
-        "./skills/s3-creative-brief-social-media",
-        "./skills/s3-recommendation-doc"
-      ]
+      "version": "1.3.0"
     }
   ]
 }
