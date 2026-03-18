@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "s3-creative-agent",
-      "source": "./",
+      "source": "./s3-creative-agent",
       "description": "Studio 3 Marketing's creative toolkit. Produce foundational briefs, creative briefs (website, media, paid ads, social media), and power creative workflows using S3's evidence-based protocols.",
       "version": "1.3.0"
     }
