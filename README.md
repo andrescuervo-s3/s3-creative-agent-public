@@ -28,4 +28,3 @@ If you just say "brief" without specifying, the Brief Selector will ask whether 
 - **Slack** — Share briefs with your team
 - **Figma** — Access design files and brand assets
 - **Google Drive** — Fetch client documents and intake files
-- **Google Analytics** — Cross-reference keyword targets with organic traffic data

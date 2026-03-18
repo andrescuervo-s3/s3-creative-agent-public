@@ -10,5 +10,4 @@ This plugin has been customized for Studio 3 Marketing.
 |----------|------|--------|
 | Chat | Slack | Configured |
 | Design | Figma | Configured |
-| Product analytics | Google Analytics | Configured |
 | Knowledge base | Google Docs, Google Drive | Configured |

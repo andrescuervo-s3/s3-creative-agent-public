@@ -37,24 +37,23 @@ Run `skills-ref validate` after creating/modifying any SKILL.md to catch schema 
 
 ```
 s3-creative-agent/
-├── plugins/s3-creative-agent/
-│   ├── references/
-│   │   ├── audience-research-agent.md       ← Research agent for 3.2 Audience Profiles
-│   │   ├── competitor-research-agent.md     ← Research agent for 3.3 Competitors
-│   │   ├── confidence-scoring-spec.md       ← 5-level confidence scoring rules
-│   │   ├── foundational-brief-sections.md   ← Section templates for the Foundational Brief
-│   │   ├── research-validation-rules.md     ← 5 validation rules for Research Logs
-│   │   ├── s3-docx-styles.md               ← Document styling spec for .docx output
-│   │   ├── seo-digital-research-agent.md    ← Research agent for 2.3 Digital Snapshot
-│   │   └── social-media-discovery-agent.md  ← 6-platform social media discovery agent
-│   └── skills/
-│       ├── s3-brief-selector/SKILL.md       ← Routes ambiguous "brief" requests
-│       ├── s3-foundational-brief/SKILL.md   ← Orchestrator: Research → Validate → Write
-│       ├── s3-creative-brief-website/SKILL.md
-│       ├── s3-creative-brief-media/SKILL.md
-│       ├── s3-creative-brief-paid-ads/SKILL.md
-│       ├── s3-creative-brief-social-media/SKILL.md
-│       └── s3-recommendation-doc/SKILL.md
+├── references/
+│   ├── audience-research-agent.md       ← Research agent for 3.2 Audience Profiles
+│   ├── competitor-research-agent.md     ← Research agent for 3.3 Competitors
+│   ├── confidence-scoring-spec.md       ← 5-level confidence scoring rules
+│   ├── foundational-brief-sections.md   ← Section templates for the Foundational Brief
+│   ├── research-validation-rules.md     ← 5 validation rules for Research Logs
+│   ├── s3-docx-styles.md               ← Document styling spec for .docx output
+│   ├── seo-digital-research-agent.md    ← Research agent for 2.3 Digital Snapshot
+│   └── social-media-discovery-agent.md  ← 6-platform social media discovery agent
+├── skills/
+│   ├── s3-brief-selector/SKILL.md       ← Routes ambiguous "brief" requests
+│   ├── s3-foundational-brief/SKILL.md   ← Orchestrator: Research → Validate → Write
+│   ├── s3-creative-brief-website/SKILL.md
+│   ├── s3-creative-brief-media/SKILL.md
+│   ├── s3-creative-brief-paid-ads/SKILL.md
+│   ├── s3-creative-brief-social-media/SKILL.md
+│   └── s3-recommendation-doc/SKILL.md
 ├── CLAUDE.md            ← This file
 ├── CONNECTORS.md
 ├── PLAN.md
