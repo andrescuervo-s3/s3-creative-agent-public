@@ -9,13 +9,15 @@ Andres Cuervo is the owner of Studio 3 Marketing. He builds and maintains this p
 ## Deployment Workflow
 
 1. Make changes locally
-2. Commit and push to GitHub — **both remotes**: `origin` (private, team) and `public` (personal account)
+2. Commit and push to `origin` (private repo) only — a GitHub Action automatically mirrors to the public repo
 3. In Cowork, click "Update" to pull the newest version
 4. Test in Cowork to verify
 
+**Do NOT push to the `public` remote manually.** The mirror workflow handles that. Pushing directly to public triggers a redundant workflow run that fails.
+
 Local changes have no effect in Cowork. Always push before testing.
 
-**IMPORTANT**: Every push must also update this MEMORY.md file with what changed (details, lessons learned, test status), then commit and push that update to both remotes too. This keeps the project portable across machines and sessions.
+**IMPORTANT**: Every push must also update this MEMORY.md file with what changed (details, lessons learned, test status), then commit and push that update too. This keeps the project portable across machines and sessions.
 
 ## Key Decisions
 
