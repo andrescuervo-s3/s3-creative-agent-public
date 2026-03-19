@@ -53,13 +53,29 @@ Please upload any client files you have:
 If you are missing any, we can still proceed, but the brief may be less complete.
 ```
 
-**PDF files in Google Drive cannot be read directly.** If PDFs are found in Drive, ask the user to upload them to the conversation instead.
-
 If the user has already uploaded files, acknowledge receipt and proceed.
 
 ### Reading Input Files
 
 Input files come in various formats: PDF, XLSX, CSV, Google Sheets, RTF, DOCX, TXT. Read each file carefully and extract all relevant information. For spreadsheets, parse all rows and columns. For PDFs, read all pages.
+
+**PDF handling — do not skip PDFs.** When you encounter a PDF:
+1. If it is in Google Drive, use google_drive_fetch to download it locally.
+2. Read the PDF with pdfplumber (handles both text and tables reliably):
+```python
+import pdfplumber
+with pdfplumber.open("document.pdf") as pdf:
+    for page in pdf.pages:
+        text = page.extract_text()
+        if text:
+            print(text)
+        tables = page.extract_tables()
+        for table in tables:
+            print(table)
+```
+3. If pdfplumber fails, fall back to pdftotext CLI: `pdftotext -layout document.pdf -`
+4. If the file cannot be obtained at all, ask the user to upload the PDF to the conversation.
+Never mark a PDF as "can't be read" and move on. Exhaust all options before proceeding without it.
 
 ---
 
@@ -221,7 +237,7 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 - **Social media**: All 6 platforms must be searched before marking any as "Not found." Do not stop after finding 2-3 accounts.
 - **Competitors**: Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
 - **Client claims are assumptions until verified**: Treat client-reported facts with the same skepticism as competitor claims. They get "Client-Reported" confidence, not "Verified."
-- **PDF files in Google Drive cannot be read**: Ask the user to upload PDFs directly to the conversation.
+- **Never skip PDFs**: Use google_drive_fetch to download from Drive, then pdfplumber to extract text and tables. Fall back to `pdftotext -layout`. Last resort: ask user to upload. Never say "can't be read" and move on.
 - **No em dashes**: Use commas, colons, or periods.
 - **No code or HTML**: Do not output code, scripts, HTML fragments, or debug text in brief content.
 - **Constrained sections (3.4)**: Re-read the referenced sections from the working document before writing. Do not rely solely on conversation memory.
