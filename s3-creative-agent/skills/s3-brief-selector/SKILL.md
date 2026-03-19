@@ -2,8 +2,9 @@
 name: s3-brief-selector
 description: |
   Routes users to the correct S3 brief skill when their request is ambiguous. Studio 3 has two brief types: Foundational Brief (evergreen onboarding) and Creative Brief (project-specific: Website, Media, Paid Ads, Social Media). Determines which one the user needs and hands off.
-  TRIGGERS: brief, creative brief, start a brief, get the brief going, campaign brief, project brief.
-  Do NOT trigger when user explicitly says "foundational brief," "onboarding brief," "client brief" (those go to s3-foundational-brief) or "website brief," "media brief," etc. (those go directly to the matching creative brief skill).
+  TRIGGERS: brief, creative brief, start a brief, get the brief going, campaign brief, project brief, create a brief, help me with a brief, do a brief, build a brief, work on a brief, new brief, client brief.
+  This skill MUST be the entry point whenever the user says "brief" without a specific type qualifier like "foundational" or "website." Even if context (like a turnover email or new client) suggests a foundational brief, the user must be asked to confirm the brief type first.
+  Do NOT trigger when user explicitly says "foundational brief" or "onboarding brief" (those go to s3-foundational-brief) or "website brief," "media brief," etc. (those go directly to the matching creative brief skill).
 ---
 
 # S3 Brief Selector
@@ -82,6 +83,6 @@ Invoke the skill using the Skill tool. The creative brief skill will take over f
 - This skill is a router only. It does not produce any brief content itself.
 - **Two separate questions, two separate AskUserQuestion calls.** Never combine them.
 - Do NOT add extra options like "Something else" or "Skip." Present only the options listed above.
-- If the user's original message already makes the brief type clear (e.g., they said "I need a website brief"), skip the questions and go straight to the appropriate skill.
+- Even if context strongly suggests which brief type the user needs (e.g., a turnover email implies foundational), always ask both confirmation questions. The two-step routing is a confirmation flow, not just a disambiguation flow.
 - Never start generating brief content. Your only job is to route.
 - Use the AskUserQuestion tool for the routing questions.
