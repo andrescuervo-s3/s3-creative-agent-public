@@ -25,46 +25,48 @@ Studio 3 Marketing has two distinct brief types, and team members often just say
 
 ## Routing Logic
 
+**CRITICAL: This is a strict two-step process. Do NOT combine steps or flatten options into a single question. Each step must be its own separate AskUserQuestion call. Wait for the user's response before proceeding to the next step.**
+
 ### Step 1: Determine the brief type
 
-Use the AskUserQuestion tool to ask:
+Use the AskUserQuestion tool to ask ONLY this question with ONLY these two options:
 
 "What type of brief are you working on?"
 
-Options:
+Options (exactly two, no more):
 1. **Foundational Brief** -- the evergreen client research document
 2. **Creative Brief** -- strategy and execution for a specific channel
 
-Wait for the user's response.
+Stop here. Wait for the user to respond. Do NOT add foundational sub-options (New, Update, Finalize) or creative sub-options (Website, Media, etc.) to this question. Do NOT add a "Something else" option.
 
-### Step 2: Route based on their answer
+### Step 2: Ask the follow-up based on their Step 1 answer
 
-**If the user chooses Foundational Brief:**
+**If the user chose Foundational Brief in Step 1:**
 
-Use the AskUserQuestion tool to ask:
+Use a SECOND AskUserQuestion tool call to ask:
 
 "What would you like to do?"
 
-Options:
+Options (exactly three, no more):
 1. **New (Draft)** -- Create a new client onboarding brief from scratch
 2. **Update (Draft)** -- Update an existing draft with new info or corrections
 3. **Finalize** -- Resolve open items and stamp an existing draft as final
 
-Then invoke the `s3-foundational-brief` skill using the Skill tool. Pass the selected mode (New, Update, or Finalize) in your message so the foundational brief skill knows which mode to use. Do not ask any further questions.
+Wait for the user to respond, then invoke the `s3-foundational-brief` skill using the Skill tool. Pass the selected mode (New, Update, or Finalize) in your message so the foundational brief skill knows which mode to use. Do not ask any further questions.
 
-**If the user chooses Creative Brief:**
+**If the user chose Creative Brief in Step 1:**
 
-Use the AskUserQuestion tool to ask:
+Use a SECOND AskUserQuestion tool call to ask:
 
 "What type of Creative Brief do you need?"
 
-Options:
+Options (exactly four, no more):
 1. **Website** -- Website design, redesign, or development
 2. **Media** -- Media planning, buying, or strategy
 3. **Paid Ads** -- PPC, display, programmatic, or paid campaigns
 4. **Social Media** -- Social media strategy, content, or campaigns
 
-Then route to the corresponding skill:
+Wait for the user to respond, then invoke the matching skill:
 
 | Subtype | Skill to invoke |
 |---------|----------------|
@@ -78,7 +80,8 @@ Invoke the skill using the Skill tool. The creative brief skill will take over f
 ## Important
 
 - This skill is a router only. It does not produce any brief content itself.
-- Keep the interaction fast: two questions maximum, then hand off.
+- **Two separate questions, two separate AskUserQuestion calls.** Never combine them.
+- Do NOT add extra options like "Something else" or "Skip." Present only the options listed above.
 - If the user's original message already makes the brief type clear (e.g., they said "I need a website brief"), skip the questions and go straight to the appropriate skill.
 - Never start generating brief content. Your only job is to route.
 - Use the AskUserQuestion tool for the routing questions.
