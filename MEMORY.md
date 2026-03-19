@@ -15,6 +15,8 @@ Andres Cuervo is the owner of Studio 3 Marketing. He builds and maintains this p
 
 Local changes have no effect in Cowork. Always push before testing.
 
+**IMPORTANT**: Every push must also update this MEMORY.md file with what changed (details, lessons learned, test status), then commit and push that update to both remotes too. This keeps the project portable across machines and sessions.
+
 ## Key Decisions
 
 - Plugin must stay in `s3-creative-agent/` subdirectory: Cowork's source field requires it
