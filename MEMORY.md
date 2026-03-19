@@ -9,7 +9,7 @@ Andres Cuervo is the owner of Studio 3 Marketing. He builds and maintains this p
 ## Deployment Workflow
 
 1. Make changes locally
-2. Commit and push to GitHub
+2. Commit and push to GitHub — **both remotes**: `origin` (private, team) and `public` (personal account)
 3. In Cowork, click "Update" to pull the newest version
 4. Test in Cowork to verify
 
@@ -27,6 +27,7 @@ Local changes have no effect in Cowork. Always push before testing.
 
 - **Skills must behave exactly as written.** When the brief selector said "two separate questions," the Cowork agent flattened it into one. Fix: use strong directive language (CRITICAL, Do NOT, ONLY these options) to prevent the agent from improvising. (2026-03-19)
 - **Do not add options not in the spec.** The agent added a "Something else" option on its own. Skills need to explicitly say "no more" after listing options. (2026-03-19)
+- **Cowork agents don't have Claude Code tools.** There is no Read/Edit/Write tool in Cowork. For PDFs, agents must use Python libraries (pdfplumber, pypdf) or CLI tools (pdftotext, pdftoppm). Referencing "the Read tool" caused agents to give up on PDFs entirely. (2026-03-19)
 
 ## Test History
 
