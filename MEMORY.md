@@ -40,6 +40,8 @@ Local changes have no effect in Cowork. Always push before testing.
 
 ## Build History
 
+- **2026-04-01 (follow-up 2)**: Removed `allowed-tools` from strategy brief frontmatter (suspected cause of skill not appearing in Cowork after sync). Bumped plugin version to 1.4.0 in both plugin manifests.
+
 - **2026-04-01 (follow-up)**: Created shared `references/pdf-reading-protocol.md` — never-fail PDF reading chain (pdfplumber → pdftotext → pypdf → OCR via pdftoppm+tesseract → ask user to paste). Updated Foundational Brief and Strategy Brief SKILL.md to reference it instead of inline blocks. Both skills now point to the protocol in their Gotchas and Reference Files sections. Pending Cowork test.
 
 

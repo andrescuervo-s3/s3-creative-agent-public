@@ -5,7 +5,6 @@ description: |
   TRIGGERS: strategy brief, strategic brief, strategy document, strategic plan, strategy doc, brand strategy brief.
   Do NOT trigger on: "foundational brief," "creative brief," "brief" alone, "recommendation doc," "wireframe," "turnover" -- those use other skills.
   IMPORTANT: Do NOT self-activate from context. User must say "strategy brief" or a listed trigger. If "brief" without "strategy," route through s3-brief-selector.
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, google_drive_search, google_drive_fetch, slack_search_public, slack_read_channel, slack_read_thread, notion-search, notion-fetch
 ---
 
 # S3 Strategy Brief Orchestrator
