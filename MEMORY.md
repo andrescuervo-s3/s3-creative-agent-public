@@ -34,6 +34,15 @@ Local changes have no effect in Cowork. Always push before testing.
 - **Cowork agents don't have Claude Code tools.** There is no Read/Edit/Write tool in Cowork. For PDFs, agents must use Python libraries (pdfplumber, pypdf) or CLI tools (pdftotext, pdftoppm). Referencing "the Read tool" caused agents to give up on PDFs entirely. (2026-03-19)
 - **Agents will skip steps if given an escape hatch.** The brief selector had a line saying "skip if the brief type is obvious." The agent used this to bypass routing entirely after reading a turnover email. Remove all shortcut language from routing skills. (2026-03-19)
 
+## Build History
+
+- **2026-04-01**: Strategy Brief skill (Stage 2) designed and built. Full design spec at `docs/superpowers/specs/2026-04-01-strategy-brief-design.md`. Implementation plan at `docs/superpowers/plans/2026-04-01-strategy-brief.md`. Four files created:
+  - `s3-creative-agent/skills/s3-strategy-brief/SKILL.md` (272 lines, orchestrator)
+  - `s3-creative-agent/references/strategy-brief-sections.md` (295 lines, section templates)
+  - `s3-creative-agent/references/s3-tech-stack.md` (71 lines, Tresio/DatoCMS/Mux platform reference)
+  - `s3-creative-agent/references/s3-docx-styles.md` updated with scope callout style
+  Key decisions: Structured Top + Freeform Bottom interaction model, `context: fork` for research agents, `allowed-tools` in frontmatter, auto-activatable (not disable-model-invocation), S3 Media Strategy = photo/video shoot production brief (not earned/owned/paid media), Work Agreement as scope anchor with inline + collected flagging, per-client CLAUDE.md/MEMORY.md creation. Pending Cowork test.
+
 ## Test History
 
 - **2026-03-18**: First live test with real client (TMP/Turnbull). Brief generated successfully but with formatting and structure issues. 13 feedback items logged in `.claude/session-log.md`.
