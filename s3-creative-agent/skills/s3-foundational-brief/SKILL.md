@@ -76,7 +76,7 @@ If the user has already uploaded files, acknowledge receipt and proceed.
 
 Input files come in various formats: PDF, XLSX, CSV, Google Sheets, RTF, DOCX, TXT. Read each file carefully and extract all relevant information. For spreadsheets, parse all rows and columns. For PDFs, read all pages.
 
-**PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. Follow the full method chain -- never skip a PDF and never ask the user to re-upload something they already provided.
+**PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. CRITICAL: one fetch attempt, one extraction attempt -- if either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
 
 ---
 
@@ -238,7 +238,7 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 - **Social media**: All 6 platforms must be searched before marking any as "Not found." Do not stop after finding 2-3 accounts.
 - **Competitors**: Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
 - **Client claims are assumptions until verified**: Treat client-reported facts with the same skepticism as competitor claims. They get "Client-Reported" confidence, not "Verified."
-- **Never skip PDFs**: Read `references/pdf-reading-protocol.md` and follow the full method chain (pdfplumber, pdftotext, pypdf, OCR). Last resort: ask user to paste content -- never say "can't be read" and move on.
+- **PDFs -- one attempt, no loops**: Read `references/pdf-reading-protocol.md`. Try google_drive_fetch once. If it fails, immediately say "Drop the file in chat" and wait. Do not retry, re-search, or explain. Once the user drops it, extract with pdfplumber.
 - **No em dashes**: Use commas, colons, or periods.
 - **No code or HTML**: Do not output code, scripts, HTML fragments, or debug text in brief content.
 - **Constrained sections (3.4)**: Re-read the referenced sections from the working document before writing. Do not rely solely on conversation memory.

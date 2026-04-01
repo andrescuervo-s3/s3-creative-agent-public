@@ -43,7 +43,7 @@ Here are the line items I found in the Work Agreement: [list]. Is this complete,
 
 **Important -- search by folder ID, not just by name.** When you locate a subfolder, use its folder ID to list its contents. Name-based keyword searches miss files with generic names (e.g., "Work Agreement.pdf" won't surface if you search "Big Auto work agreement"). If the user tells you a file is in a specific subfolder, fetch that subfolder by ID immediately.
 
-**PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. Follow the full method chain. Never skip a PDF and never ask the user to re-upload something they already provided.
+**PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. CRITICAL: one fetch attempt, one extraction attempt -- if either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
 
 ### Step 1: Connector Scans
 
