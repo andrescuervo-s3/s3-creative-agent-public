@@ -12,20 +12,23 @@ Every skill that ingests documents must follow this protocol.
 Before attempting to extract text, you must have the file accessible. Check in this order:
 
 1. **Already in session workspace:** Use `ls` or Glob to check. Files uploaded directly to the conversation are available locally. If found, skip to Step 2.
-2. **Google Drive — native Google Doc:** Use `google_drive_fetch` with the file ID or URL. This works for Google Docs, Sheets, and Slides. Skip to Step 2.
-3. **Google Drive — uploaded PDF (not a native Google Doc):** `google_drive_fetch` does NOT support uploaded binary files. Go to Step 1b below.
+2. **On Google Drive (any file type):** Use `google_drive_fetch` with the file ID or URL. This works for Google Docs, Sheets, Slides, and uploaded PDFs. If it returns content, skip to Step 2.
+3. **google_drive_fetch failed:** If the fetch returned an error or empty content, go to Step 1b.
 4. **Path unknown:** Ask the user where the file is. Do NOT skip it.
 
-### Step 1b: Google Drive PDF (uploaded file)
+### Step 1b: When google_drive_fetch Fails
 
-`google_drive_fetch` only works with native Google Docs, Sheets, and Slides. It cannot download uploaded PDFs. When it fails, go directly to this:
+First, check why it failed:
+- **Wrong file ID:** Extract the ID from the URL correctly. For `https://drive.google.com/file/d/FILE_ID/view` the ID is the segment between `/d/` and `/view`.
+- **Permissions:** The file may be restricted. Try fetching with the exact share URL the user provided rather than a reconstructed one.
+- **Retry once** with the corrected ID or URL before giving up.
 
-**Ask for a direct upload:**
+If it still fails after a retry, ask the user directly:
 ```
-I found [filename] on Google Drive but can't read it directly — the Drive connector only supports native Google Docs, not uploaded PDFs. Could you drop the file into this chat? (Drag and drop works.)
+I'm having trouble pulling [filename] from Google Drive. Could you drop the file into this chat? (Drag and drop works.)
 ```
 
-Do not attempt workarounds. Do not ask the user to change sharing permissions. Just ask for the drop. Once they upload the file to the chat, it is immediately available locally -- proceed to Step 2.
+Do not tell the user Drive "can't read PDFs" -- that is not accurate. Just ask for the drop. Once they upload the file to the chat, it is immediately available locally -- proceed to Step 2.
 
 ---
 
@@ -137,7 +140,7 @@ Do NOT say "the file can't be read" without this ask. Do NOT skip the document a
 |-----------|----------|
 | PDF uploaded directly to chat | Already local -- go to Step 2 |
 | PDF as native Google Doc (rare) | google_drive_fetch, then Step 2 |
-| PDF uploaded to Google Drive | Step 1b: google_drive_fetch fails → ask user to drop file into chat |
+| PDF uploaded to Google Drive | google_drive_fetch (works); if it fails, check file ID then retry, then ask user to drop into chat |
 | Text-based PDF | Methods 1-3 will work |
 | Scanned/image PDF | Method 4 (OCR) required |
 | Password-protected PDF | Ask the user to remove the password and re-share |
