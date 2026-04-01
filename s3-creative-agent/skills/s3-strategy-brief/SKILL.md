@@ -33,14 +33,16 @@ The Strategy Brief is collaborative, not autonomous. You organize and formalize 
 The skill will not proceed without both inputs.
 
 **Foundational Brief:**
-Search Google Drive for the client name (if connector available), fallback to user upload. Extract the "Created" date from section 1.1 to use as the time filter for all subsequent scans. Fallback chain: (1) "Created" field in section 1.1, (2) "Last Updated" field in section 1.1, (3) file modification date on Drive or filesystem. If no date can be determined, ask: "When was the foundational brief created? I need this to filter for new material."
+Search Google Drive for the client name. Locate the main client folder, note its folder ID, then search inside the `Creative Strategy` subfolder by ID for the brief file. Fallback to user upload if not found. Extract the "Created" date from section 1.1 to use as the time filter for all subsequent scans. Fallback chain: (1) "Created" field in section 1.1, (2) "Last Updated" field in section 1.1, (3) file modification date on Drive or filesystem. If no date can be determined, ask: "When was the foundational brief created? I need this to filter for new material."
 
 **Work Agreement:**
-Search Google Drive for the client name (if connector available), fallback to user upload. Can be .docx, .pdf, or any readable format. Extract line items and present for confirmation:
+Search Google Drive for the client name. The Work Agreement lives in the `Sales and Billing Info` subfolder of the main client folder -- search that subfolder by its folder ID directly. Fallback to user upload. Can be .docx, .pdf, or any readable format. Extract line items and present for confirmation:
 
 ```
 Here are the line items I found in the Work Agreement: [list]. Is this complete, or should I add anything?
 ```
+
+**Important -- search by folder ID, not just by name.** When you locate a subfolder, use its folder ID to list its contents. Name-based keyword searches miss files with generic names (e.g., "Work Agreement.pdf" won't surface if you search "Big Auto work agreement"). If the user tells you a file is in a specific subfolder, fetch that subfolder by ID immediately.
 
 **PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. Follow the full method chain. Never skip a PDF and never ask the user to re-upload something they already provided.
 

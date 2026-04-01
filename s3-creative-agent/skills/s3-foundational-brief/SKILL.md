@@ -37,9 +37,25 @@ Read existing DRAFT brief. Resolve all "Unverified" and "Client-Reported" items 
 Ask for the client name, then search for documents.
 
 **Google Drive search** (if connector available):
-- Search for the client name using fuzzy keyword matching
-- Look in common folder structures: client name folder, intake folder, onboarding folder
-- Present a checklist of found documents and ask user to confirm
+
+Search in two passes:
+
+**Pass 1 — Find the main client folder:**
+Search for the client name. Identify the primary client folder and note its folder ID. The folder ID appears in Drive URLs as the string after `/folders/`.
+
+**Pass 2 — Search inside the folder by ID:**
+Once you have the folder ID, search within it to find all files. Do NOT rely only on name-based keyword searches -- those miss files with generic names. Search the folder ID directly to see everything inside it.
+
+S3 folder structure is consistent. Look for these subfolders and search inside each by ID:
+- `Creative Survey` -- contains the Client Intake Questionnaire (often a PDF)
+- `Sales and Billing Info` -- contains the Work Agreement / Partnership Proposal
+- `Creative Strategy` -- contains briefs and strategy docs if this client has prior work
+- Root of the client folder -- Sales Turnover, Creative Call Notes, Creative Download, Website Notes
+
+When the user tells you a file is in a specific subfolder, search that subfolder by its folder ID immediately. Do not repeat a keyword search.
+
+**Present findings:**
+List every file found with its name, type, and which subfolder it came from. Ask the user to confirm the list is complete before proceeding.
 
 **If Google Drive is unavailable or finds nothing**:
 ```
