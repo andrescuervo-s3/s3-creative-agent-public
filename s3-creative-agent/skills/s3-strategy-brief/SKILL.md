@@ -42,7 +42,7 @@ Search Google Drive for the client name (if connector available), fallback to us
 Here are the line items I found in the Work Agreement: [list]. Is this complete, or should I add anything?
 ```
 
-**PDF handling:** Same protocol as the Foundational Brief. Use pdfplumber first, fall back to pdftotext, last resort ask user to upload. Never skip a PDF.
+**PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. Follow the full method chain. Never skip a PDF and never ask the user to re-upload something they already provided.
 
 ### Step 1: Connector Scans
 
@@ -270,3 +270,4 @@ Read these on demand, not all at once:
 - `references/competitor-research-agent.md` -- Read before dispatching competitor research.
 - `references/seo-digital-research-agent.md` -- Read before dispatching SEO research.
 - `references/social-media-discovery-agent.md` -- Read before dispatching social media research.
+- `references/pdf-reading-protocol.md` -- Read before attempting any PDF. Full method chain: pdfplumber, pdftotext, pypdf, OCR.

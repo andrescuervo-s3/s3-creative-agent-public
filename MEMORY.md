@@ -36,6 +36,9 @@ Local changes have no effect in Cowork. Always push before testing.
 
 ## Build History
 
+- **2026-04-01 (follow-up)**: Created shared `references/pdf-reading-protocol.md` — never-fail PDF reading chain (pdfplumber → pdftotext → pypdf → OCR via pdftoppm+tesseract → ask user to paste). Updated Foundational Brief and Strategy Brief SKILL.md to reference it instead of inline blocks. Both skills now point to the protocol in their Gotchas and Reference Files sections. Pending Cowork test.
+
+
 - **2026-04-01**: Strategy Brief skill (Stage 2) designed and built. Full design spec at `docs/superpowers/specs/2026-04-01-strategy-brief-design.md`. Implementation plan at `docs/superpowers/plans/2026-04-01-strategy-brief.md`. Four files created:
   - `s3-creative-agent/skills/s3-strategy-brief/SKILL.md` (272 lines, orchestrator)
   - `s3-creative-agent/references/strategy-brief-sections.md` (295 lines, section templates)
