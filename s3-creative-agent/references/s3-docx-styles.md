@@ -164,6 +164,41 @@ Column widths must sum to table width. Set both columnWidths on the table AND wi
 
 ---
 
+## Scope Callout
+
+Used in the Strategy Brief for flagging ideas outside the current Work Agreement scope.
+
+**Visual spec:**
+- Full content width (9360 DXA)
+- Left border: 3pt solid, orange (#E67E22)
+- Background: light gray (#F5F5F5) via shading
+- Text: italic, 11pt Open Sans, black
+- Padding: 115 DXA all sides (matches table cell margins)
+- Margin: 6pt above and below (spacing before/after: 120)
+
+**docx-js config:**
+```javascript
+// Scope callout as a styled paragraph with borders and shading
+new Paragraph({
+  children: [
+    new TextRun({
+      text: "Outside current scope — requires client approval",
+      italics: true,
+      font: "Open Sans",
+      size: 22, // 11pt
+    }),
+  ],
+  border: {
+    left: { style: BorderStyle.SINGLE, size: 6, color: "E67E22" }, // 3pt orange
+  },
+  shading: { type: ShadingType.SOLID, color: "F5F5F5" },
+  spacing: { before: 120, after: 120 },
+  indent: { left: 230 }, // ~115 DXA padding from border
+})
+```
+
+---
+
 ## Document Default Styles (docx-js)
 
 When creating new documents with docx-js, use this styles configuration:
