@@ -9,17 +9,43 @@ Every skill that ingests documents must follow this protocol.
 
 ## Step 1: Locate the File
 
-Before attempting to read, confirm you have the file. Check in this order:
+Before attempting to extract text, you must have the file accessible. Check in this order:
 
-1. **Already in session workspace:** Use `ls` or Glob to find it. Files uploaded to the conversation are available locally.
-2. **On Google Drive:** Use `google_drive_fetch` with the file ID or URL to download it to the local workspace.
-3. **Path unknown:** Ask the user where the file is -- do NOT skip it.
+1. **Already in session workspace:** Use `ls` or Glob to check. Files uploaded directly to the conversation are available locally. If found, skip to Step 2.
+2. **Google Drive — native Google Doc:** Use `google_drive_fetch` with the file ID or URL. This works for Google Docs, Sheets, and Slides. Skip to Step 2.
+3. **Google Drive — uploaded PDF (not a native Google Doc):** `google_drive_fetch` does NOT support uploaded binary files. Go to Step 1b below.
+4. **Path unknown:** Ask the user where the file is. Do NOT skip it.
 
-Once located, note the local file path and proceed to Step 2.
+### Step 1b: Google Drive PDF (uploaded file)
+
+`google_drive_fetch` cannot download uploaded PDFs. Use this fallback chain:
+
+**Option A — Chrome (preferred):**
+If the Claude in Chrome tool is available, navigate to the Google Drive URL and extract the text from the PDF viewer:
+1. Use the `navigate` tool with the Drive share link
+2. Use `get_page_text` or `read_page` to extract visible text from the rendered PDF
+3. Scroll through all pages to capture the full document
+
+**Option B — Curl with auth:**
+If Chrome is not available, attempt a direct download using the file ID:
+```bash
+# Extract file ID from URL: https://drive.google.com/file/d/FILE_ID/view
+curl -L "https://drive.google.com/uc?export=download&id=FILE_ID" -o document.pdf
+```
+Note: This only works for publicly accessible files. Private files will return an HTML auth page, not a PDF.
+
+**Option C — Ask for direct upload:**
+If neither Chrome nor curl works (private file, auth required), ask the user:
+```
+The file is in Google Drive but I can't download it directly — Drive's API only supports native Google Docs, not uploaded PDFs. Could you upload the file directly to this conversation? (Drag and drop into the chat works.)
+```
+Do NOT ask the user to "share" the file differently or change permissions unless they offer. Just ask for a direct upload to the chat.
+
+Once you have the file locally (from any option above), proceed to Step 2.
 
 ---
 
-## Step 2: Extract Text (in order -- stop when you get output)
+## Step 2: Extract Text (in order -- stop when you get usable output)
 
 ### Method 1: pdfplumber (handles text and tables)
 
@@ -68,7 +94,7 @@ If this produces text, use it. Proceed to Step 3.
 
 ### Method 4: Scanned PDF (image-based)
 
-If all three methods above return empty or near-empty text (fewer than 50 characters per page), the PDF is likely scanned or image-based. Use pdftoppm to convert pages to images, then extract text via tesseract:
+If all three methods above return empty or near-empty text (fewer than 50 characters per page), the PDF is likely scanned or image-based. Use pdftoppm to convert pages to images, then OCR:
 
 ```bash
 # Convert PDF pages to images
@@ -83,13 +109,14 @@ done
 If tesseract is unavailable, try the Python path:
 
 ```python
-import subprocess
-result = subprocess.run(
-    ["python3", "-c",
-     "from pdf2image import convert_from_path; imgs = convert_from_path('document.pdf'); [img.save(f'page_{i}.png') for i, img in enumerate(imgs)]"],
-    capture_output=True
-)
-# Then OCR each saved image
+from pdf2image import convert_from_path
+import pytesseract
+
+images = convert_from_path("document.pdf", dpi=300)
+for i, img in enumerate(images):
+    text = pytesseract.image_to_string(img)
+    print(f"--- Page {i+1} ---")
+    print(text)
 ```
 
 If OCR produces readable text, use it. Proceed to Step 3.
@@ -101,13 +128,13 @@ If OCR produces readable text, use it. Proceed to Step 3.
 After extraction, do a quick quality check:
 
 - **Looks good:** Recognizable sentences, headings, and structure present. Proceed to reading.
-- **Garbled or partial:** Try the next method in Step 2 before proceeding. Compare outputs and use the cleaner one.
-- **Tables missing:** pdfplumber is the best for tables. If a table-heavy document was read with pdftotext, re-run with pdfplumber specifically for table extraction.
-- **Headers/footers repeated:** Strip boilerplate page headers and footers before extracting content. pdfplumber page regions can help (`page.crop()`) if needed.
+- **Garbled or partial:** Try the next method in Step 2. Compare outputs and use the cleaner one.
+- **Tables missing:** pdfplumber is best for tables. If a table-heavy document was read with pdftotext, re-run with pdfplumber specifically for table extraction.
+- **Headers/footers repeated:** Strip boilerplate page headers and footers before extracting content. pdfplumber's `page.crop()` can isolate body regions if needed.
 
 ---
 
-## Step 4: If All Extraction Methods Fail
+## Step 4: If All Methods Fail
 
 Only reach this step if every method above returned empty or completely unreadable output.
 
@@ -120,15 +147,17 @@ Do NOT say "the file can't be read" without this ask. Do NOT skip the document a
 
 ---
 
-## File Format Notes
+## File Format Reference
 
-| Format | Approach |
-|--------|----------|
+| Situation | Approach |
+|-----------|----------|
+| PDF uploaded directly to chat | Already local -- go to Step 2 |
+| PDF as native Google Doc (rare) | google_drive_fetch, then Step 2 |
+| PDF uploaded to Google Drive | Step 1b (Chrome → curl → ask for upload) |
 | Text-based PDF | Methods 1-3 will work |
 | Scanned/image PDF | Method 4 (OCR) required |
 | Password-protected PDF | Ask the user to remove the password and re-share |
 | Corrupted PDF | Ask the user for a fresh copy |
-| PDF from Google Drive | Use google_drive_fetch first, then apply methods 1-4 to the downloaded file |
 
 ---
 

@@ -29,6 +29,9 @@ Local changes have no effect in Cowork. Always push before testing.
 
 ## Lessons Learned
 
+- **`google_drive_fetch` does NOT support uploaded PDFs.** It only works with native Google Docs/Sheets/Slides. A PDF uploaded to Drive (not created as a Google Doc) will fail silently or return an error. The agent must detect this and fall back to: (1) Chrome tool to render the Drive viewer, (2) curl download if the file is public, (3) ask user to upload directly to chat. (2026-04-01)
+
+
 - **Skills must behave exactly as written.** When the brief selector said "two separate questions," the Cowork agent flattened it into one. Fix: use strong directive language (CRITICAL, Do NOT, ONLY these options) to prevent the agent from improvising. (2026-03-19)
 - **Do not add options not in the spec.** The agent added a "Something else" option on its own. Skills need to explicitly say "no more" after listing options. (2026-03-19)
 - **Cowork agents don't have Claude Code tools.** There is no Read/Edit/Write tool in Cowork. For PDFs, agents must use Python libraries (pdfplumber, pypdf) or CLI tools (pdftotext, pdftoppm). Referencing "the Read tool" caused agents to give up on PDFs entirely. (2026-03-19)
