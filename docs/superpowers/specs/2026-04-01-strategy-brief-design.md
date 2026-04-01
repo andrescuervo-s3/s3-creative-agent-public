@@ -6,6 +6,20 @@
 **Output:** .docx document
 **Location:** `s3-creative-agent/skills/s3-strategy-brief/SKILL.md`
 
+## SKILL.md Frontmatter
+
+```yaml
+---
+name: s3-strategy-brief
+description: (see spec for full description with triggers)
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, google_drive_search, google_drive_fetch, slack_search_public, slack_read_channel, slack_read_thread, notion-search, notion-fetch
+---
+```
+
+- **`allowed-tools`**: Scopes the tools this skill can use. Includes file ops, research tools, and connectors.
+- **`context: fork`**: NOT set on the main skill (it's conversational and needs the chat context). Research agents dispatched from within the skill use `context: fork` via the Agent tool to run in isolation.
+- **`disable-model-invocation`**: Not set (default false). Claude auto-activates when trigger phrases match. Can be changed later if needed.
+
 ## Purpose
 
 The Strategy Brief formalizes foundational facts and creative call outputs into strategic recommendations. It is the first document where creative direction exists. It sits between the Foundational Brief (facts) and the Creative Briefs (channel-specific execution).
@@ -98,6 +112,8 @@ Research agents are not pre-scheduled. They fire when the user asks a question t
 - `competitor-research-agent.md`
 - `seo-digital-research-agent.md`
 - `social-media-discovery-agent.md`
+
+**Research agents run as forked subagents (`context: fork`).** This prevents long-running research from blocking the conversation. The agent dispatches the research task, the subagent executes it in isolation, and the results are returned to the main conversation when complete. The user can continue discussing other sections while research runs.
 
 **How research works in the freeform context:**
 
