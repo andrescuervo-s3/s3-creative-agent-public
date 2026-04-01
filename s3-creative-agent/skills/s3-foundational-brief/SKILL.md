@@ -38,24 +38,20 @@ Ask for the client name, then search for documents.
 
 **Google Drive search** (if connector available):
 
-Search in two passes:
+**Step 1: Find the main client folder and note its folder ID.**
+Search for the client name. Get the folder ID from the search result.
 
-**Pass 1 — Find the main client folder:**
-Search for the client name. Identify the primary client folder and note its folder ID. The folder ID appears in Drive URLs as the string after `/folders/`.
+**Step 2: Search inside the subfolders. This is mandatory -- do not skip.**
 
-**Pass 2 — Search inside the folder by ID:**
-Once you have the folder ID, search within it to find all files. Do NOT rely only on name-based keyword searches -- those miss files with generic names. Search the folder ID directly to see everything inside it.
+S3 folder structure is consistent across all clients. After finding the main folder, you MUST run a separate search inside each of these subfolders:
 
-S3 folder structure is consistent. Look for these subfolders and search inside each by ID:
-- `Creative Survey` -- contains the Client Intake Questionnaire (often a PDF)
-- `Sales and Billing Info` -- contains the Work Agreement / Partnership Proposal
-- `Creative Strategy` -- contains briefs and strategy docs if this client has prior work
-- Root of the client folder -- Sales Turnover, Creative Call Notes, Creative Download, Website Notes
+- `Creative Survey` subfolder -- contains the Client Intake Questionnaire
+- `Sales and Billing Info` subfolder -- contains the Work Agreement / Partnership Proposal
 
-When the user tells you a file is in a specific subfolder, search that subfolder by its folder ID immediately. Do not repeat a keyword search.
+**CRITICAL: Finding a folder in search results is NOT the same as finding the files inside it.** If a search result shows a folder named "Creative Survey," you have NOT found the survey. You must search inside that folder by its ID. Do NOT declare a document "not found" until you have searched inside its subfolder.
 
-**Present findings:**
-List every file found with its name, type, and which subfolder it came from. Ask the user to confirm the list is complete before proceeding.
+**Step 3: Compile the full list.**
+List every file found -- from the root folder AND from inside each subfolder -- with its name, type, and location. Ask the user to confirm the list is complete before proceeding.
 
 **If Google Drive is unavailable or finds nothing**:
 ```
@@ -234,6 +230,7 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 
 ## Gotchas
 
+- **Folders are not files**: If a Drive search returns a folder named "Creative Survey" or "Sales and Billing Info," that is NOT the document. Search inside that folder by its ID. Never declare a document "not found" until you have searched inside its subfolder.
 - **Year Founded**: Never use copyright dates or domain registration dates. Never use a founder's career start date or bar admission year unless documents explicitly state the firm was founded that year.
 - **Social media**: All 6 platforms must be searched before marking any as "Not found." Do not stop after finding 2-3 accounts.
 - **Competitors**: Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
