@@ -18,30 +18,14 @@ Before attempting to extract text, you must have the file accessible. Check in t
 
 ### Step 1b: Google Drive PDF (uploaded file)
 
-`google_drive_fetch` cannot download uploaded PDFs. Use this fallback chain:
+`google_drive_fetch` only works with native Google Docs, Sheets, and Slides. It cannot download uploaded PDFs. When it fails, go directly to this:
 
-**Option A — Chrome (preferred):**
-If the Claude in Chrome tool is available, navigate to the Google Drive URL and extract the text from the PDF viewer:
-1. Use the `navigate` tool with the Drive share link
-2. Use `get_page_text` or `read_page` to extract visible text from the rendered PDF
-3. Scroll through all pages to capture the full document
-
-**Option B — Curl with auth:**
-If Chrome is not available, attempt a direct download using the file ID:
-```bash
-# Extract file ID from URL: https://drive.google.com/file/d/FILE_ID/view
-curl -L "https://drive.google.com/uc?export=download&id=FILE_ID" -o document.pdf
+**Ask for a direct upload:**
 ```
-Note: This only works for publicly accessible files. Private files will return an HTML auth page, not a PDF.
-
-**Option C — Ask for direct upload:**
-If neither Chrome nor curl works (private file, auth required), ask the user:
+I found [filename] on Google Drive but can't read it directly — the Drive connector only supports native Google Docs, not uploaded PDFs. Could you drop the file into this chat? (Drag and drop works.)
 ```
-The file is in Google Drive but I can't download it directly — Drive's API only supports native Google Docs, not uploaded PDFs. Could you upload the file directly to this conversation? (Drag and drop into the chat works.)
-```
-Do NOT ask the user to "share" the file differently or change permissions unless they offer. Just ask for a direct upload to the chat.
 
-Once you have the file locally (from any option above), proceed to Step 2.
+Do not attempt workarounds. Do not ask the user to change sharing permissions. Just ask for the drop. Once they upload the file to the chat, it is immediately available locally -- proceed to Step 2.
 
 ---
 
@@ -153,7 +137,7 @@ Do NOT say "the file can't be read" without this ask. Do NOT skip the document a
 |-----------|----------|
 | PDF uploaded directly to chat | Already local -- go to Step 2 |
 | PDF as native Google Doc (rare) | google_drive_fetch, then Step 2 |
-| PDF uploaded to Google Drive | Step 1b (Chrome → curl → ask for upload) |
+| PDF uploaded to Google Drive | Step 1b: google_drive_fetch fails → ask user to drop file into chat |
 | Text-based PDF | Methods 1-3 will work |
 | Scanned/image PDF | Method 4 (OCR) required |
 | Password-protected PDF | Ask the user to remove the password and re-share |

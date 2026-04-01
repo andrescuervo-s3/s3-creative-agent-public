@@ -29,7 +29,7 @@ Local changes have no effect in Cowork. Always push before testing.
 
 ## Lessons Learned
 
-- **`google_drive_fetch` does NOT support uploaded PDFs.** It only works with native Google Docs/Sheets/Slides. A PDF uploaded to Drive (not created as a Google Doc) will fail silently or return an error. The agent must detect this and fall back to: (1) Chrome tool to render the Drive viewer, (2) curl download if the file is public, (3) ask user to upload directly to chat. (2026-04-01)
+- **`google_drive_fetch` does NOT support uploaded PDFs.** It only works with native Google Docs/Sheets/Slides. A PDF uploaded to Drive will fail. The agent must immediately ask the user to drop the file directly into the chat. No Chrome, no curl workarounds -- just a clear, direct ask. (2026-04-01)
 
 
 - **Skills must behave exactly as written.** When the brief selector said "two separate questions," the Cowork agent flattened it into one. Fix: use strong directive language (CRITICAL, Do NOT, ONLY these options) to prevent the agent from improvising. (2026-03-19)
