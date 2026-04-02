@@ -31,6 +31,12 @@ This plugin follows the [Agent Skills specification](https://github.com/agentski
 - Agent loads these on demand — smaller files = less context waste
 - Use relative paths from skill root: `references/filename.md`
 
+### Skill vs. Global Reference — Decide Before Writing
+Before adding any instruction, rule, or standard to a SKILL.md, ask: does this apply to more than one skill? If yes, it belongs in `references/` as a shared file, not inline in a skill. Skills point to the reference; they do not duplicate it.
+
+Examples of global references: `chat-formatting.md`, `pdf-reading-protocol.md`, `s3-docx-styles.md`, `confidence-scoring-spec.md`.
+Examples of skill-specific content: section templates, routing logic, skill-specific gotchas.
+
 ### Key Patterns
 
 **Research Log pattern**: Structured intermediate output that must exist before any writing step. Format: searches performed, URLs fetched, claims extracted with confidence scores. Makes shortcuts visible and fabrication impossible.

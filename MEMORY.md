@@ -27,6 +27,10 @@ Local changes have no effect in Cowork. Always push before testing.
 - Section 2.4 renumbered to 2.3 (no gap)
 - Two-step routing for brief selector: (1) Foundational or Creative, (2) mode or subtype as a separate question
 
+## Development Principles
+
+- **Skill vs. global reference — decide before writing.** Before adding any rule or standard to a SKILL.md, ask: does this apply to more than one skill? If yes, it goes in `references/` as a shared file. Skills point to it; they never duplicate it. Global references: `chat-formatting.md`, `pdf-reading-protocol.md`, `s3-docx-styles.md`, `confidence-scoring-spec.md`. Skill-specific: section templates, routing logic, skill-specific gotchas.
+
 ## Lessons Learned
 
 - **`google_drive_fetch` CAN read PDFs from Google Drive.** Cowork has done this successfully before. When it fails, check the file ID extraction first (ID lives between `/d/` and `/view` in the URL), then retry. Only ask the user to drop the file into chat after a retry fails. Do NOT tell the user Drive can't read PDFs. (2026-04-01)
