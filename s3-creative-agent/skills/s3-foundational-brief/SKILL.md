@@ -82,7 +82,7 @@ After documents are collected, ask the user which build mode to use:
 
 **Guided**: Approval gate after every section. Best for first-time clients or when the user wants close control.
 
-**Auto**: One checkpoint after 2.1 Client Details, then generate all remaining sections without stopping. Best for experienced users who want speed.
+**Auto**: No checkpoints. Generate all sections from 1.0 through 3.4 without stopping. Deliver the completed document. Best for experienced users who want speed.
 
 ---
 
@@ -124,14 +124,8 @@ For Year Founded, if not in documents:
 ### Section 2.2 From the Client (Document-sourced only)
 Extract Goals, Painpoints, Asks, Firm Backstory, and Business Model Notes from client documents only. No web research needed. No Research Log needed.
 
-### CHECKPOINT (Auto mode stops here)
-In Auto mode, stop after 2.1 and 2.2 are complete:
-```
-Please review sections 2.1 Client Details and 2.2 From the Client. Share any edits, notes, or missing information.
-When ready, reply "Continue" and I will generate all remaining sections.
-```
-
-In Guided mode, use standard approval gates after each section.
+In Guided mode, use standard approval gates after each section (see Approval Gate Standard below).
+In Auto mode, do NOT stop here. Continue directly to 2.3 without pausing.
 
 ### Section 2.3 Digital Snapshot (SEO/digital research)
 1. Read `references/seo-digital-research-agent.md`
