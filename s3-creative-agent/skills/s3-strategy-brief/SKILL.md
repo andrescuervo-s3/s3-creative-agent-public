@@ -272,3 +272,4 @@ Read these on demand, not all at once:
 - `references/seo-digital-research-agent.md` -- Read before dispatching SEO research.
 - `references/social-media-discovery-agent.md` -- Read before dispatching social media research.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF. Full method chain: pdfplumber, pdftotext, pypdf, OCR.
+- `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.

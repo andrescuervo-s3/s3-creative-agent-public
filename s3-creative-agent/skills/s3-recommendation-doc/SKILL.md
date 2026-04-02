@@ -469,3 +469,10 @@ The audience is an account manager who needs to walk into a client call feeling 
 ### Naming Convention
 
 `{Client_Name}_{Topic_Slug}.docx` — e.g., `Teitelbaum_S3_Gallery_Hub.docx`, `ClientName_Billboard_Strategy.docx`
+
+---
+
+## Reference Files
+
+- `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.
+- `references/s3-docx-styles.md` -- Read before creating the document. Defines all S3 document styles.
