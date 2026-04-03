@@ -17,9 +17,10 @@ Two or more independent sources fetched during this session support the claim.
 - **Example**: Founding year confirmed by both the firm's About page and state business filings
 
 ### Client-Reported
-The claim comes from client-provided documents only. No independent verification was performed or found.
-- **Requires**: Specific document name and location within the document
-- **Example**: "Serves 500+ clients annually" stated in the Creative Survey, page 2
+The claim comes from client-provided documents and independent verification was attempted but found nothing to confirm or contradict it.
+- **Requires**: Specific document name and location within the document, plus a note on what was searched
+- **Example**: "Serves 500+ clients annually" — stated in Creative Survey p.2; searched firm website and legal directories, no independent data found
+- **Important**: If you attempt research and find a source that supports the claim, score it Verified (one source) or Corroborated (two+ sources) — not Client-Reported. Client-Reported is only the final state when research comes up empty.
 
 ### Unverified
 Research was attempted but no confirming source was found.

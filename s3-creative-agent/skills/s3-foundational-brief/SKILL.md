@@ -34,26 +34,40 @@ Read existing DRAFT brief. Resolve all "Unverified" and "Client-Reported" items 
 
 ## Step 0: Document Collection
 
-Ask for the client name, then search for documents.
+Ask for the client name, then collect documents from two sources: Content Snare (creative surveys) and Google Drive (everything else).
+
+### Step 1: Pull Creative Survey from Content Snare
+
+Use the Content Snare MCP tools (if connector available):
+
+1. **Search**: Call `search_surveys` with the client name. Content Snare survey names may not match exactly -- search for the core business name, not the full S3 client folder name.
+2. **Present matches**: Show the user which surveys were found (there may be multiple if the client has multiple stakeholders). Let the user confirm which to pull.
+3. **Pull**: Call `get_full_survey` for each confirmed survey. This returns all questions and answers as structured data.
+
+If Content Snare is unavailable or finds nothing, fall back to the Google Drive Creative Survey subfolder (Step 2 below).
+
+### Step 2: Pull remaining documents from Google Drive
 
 **Google Drive search** (if connector available):
 
-**Step 1: Find the main client folder and note its folder ID.**
+**Step 2a: Find the main client folder and note its folder ID.**
 Search for the client name. Get the folder ID from the search result.
 
-**Step 2: Search inside the subfolders. This is mandatory -- do not skip.**
+**Step 2b: Search inside the subfolders. This is mandatory -- do not skip.**
 
 S3 folder structure is consistent across all clients. After finding the main folder, you MUST run a separate search inside each of these subfolders:
 
-- `Creative Survey` subfolder -- contains the Client Intake Questionnaire
 - `Sales and Billing Info` subfolder -- contains the Work Agreement / Partnership Proposal
 
-**CRITICAL: Finding a folder in search results is NOT the same as finding the files inside it.** If a search result shows a folder named "Creative Survey," you have NOT found the survey. You must search inside that folder by its ID. Do NOT declare a document "not found" until you have searched inside its subfolder.
+If Content Snare was unavailable in Step 1, also search:
+- `Creative Survey` subfolder -- contains the Client Intake Questionnaire (PDF fallback)
 
-**Step 3: Compile the full list.**
-List every file found -- from the root folder AND from inside each subfolder -- with its name, type, and location. Ask the user to confirm the list is complete before proceeding.
+**CRITICAL: Finding a folder in search results is NOT the same as finding the files inside it.** If a search result shows a folder named "Sales and Billing Info," you have NOT found the document. You must search inside that folder by its ID. Do NOT declare a document "not found" until you have searched inside its subfolder.
 
-**If Google Drive is unavailable or finds nothing**:
+**Step 2c: Compile the full list.**
+List every document collected -- from Content Snare AND from Google Drive -- with its name, source, and type. Ask the user to confirm the list is complete before proceeding.
+
+**If both Content Snare and Google Drive are unavailable or find nothing**:
 ```
 Please upload any client files you have:
 
@@ -83,6 +97,11 @@ After documents are collected, ask the user which build mode to use:
 **Guided**: Approval gate after every section. Best for first-time clients or when the user wants close control.
 
 **Auto**: No checkpoints. Generate all sections from 1.0 through 3.4 without stopping. Deliver the completed document. Best for experienced users who want speed.
+
+**Auto mode critical rules:**
+- Run ALL research protocols in full before writing each section. Do not defer research until after delivery.
+- Do NOT offer to run additional research after delivering the document. If research is in the protocol, it runs before delivery — not after.
+- If a research step fails, mark affected claims as Unverified and continue. Never hold up delivery.
 
 ---
 

@@ -2,6 +2,8 @@
 
 Read this file whenever you encounter a PDF. Follow it exactly.
 
+**Creative surveys**: Client creative surveys are available as structured data from the Content Snare API (via the `search_surveys` and `get_full_survey` MCP tools). Use Content Snare instead of reading the PDF export. This protocol is for all other document types (work agreements, proposals, etc.).
+
 **Non-negotiable rule:** Never loop on a PDF. One fetch attempt. One extraction attempt. If either fails, ask the user to drop the file in chat and move on immediately. Do not explain, re-search, or try workarounds.
 
 ---

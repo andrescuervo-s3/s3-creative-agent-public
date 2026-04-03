@@ -11,3 +11,4 @@ This plugin has been customized for Studio 3 Marketing.
 | Chat | Slack | Configured |
 | Design | Figma | Configured |
 | Knowledge base | Google Docs, Google Drive | Configured |
+| Client surveys | Content Snare (MCP) | Configured |
