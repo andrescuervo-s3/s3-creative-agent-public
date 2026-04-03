@@ -34,7 +34,9 @@ Read existing DRAFT brief. Resolve all "Unverified" and "Client-Reported" items 
 
 ## Step 0: Document Collection
 
-Ask for the client name, then collect documents. **Content Snare is always the first step** -- do not skip it, do not go to Google Drive first.
+Get the client name, then collect documents. **Content Snare is always the first step** -- do not skip it, do not go to Google Drive first.
+
+**Client name detection**: If the user is working inside a Google Drive folder or project that looks like a client name (e.g., "Big Auto Accident Attorneys" or "Accents Cosmetic Surgery"), suggest it: "Are we creating a foundational brief for [folder/project name]?" If the user confirms, use that name. Only ask for the client name if there is no context to infer it from.
 
 ### Step 1: Pull Creative Survey from Content Snare (MANDATORY)
 
