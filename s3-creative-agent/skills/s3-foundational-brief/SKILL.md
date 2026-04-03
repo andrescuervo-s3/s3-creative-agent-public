@@ -34,17 +34,17 @@ Read existing DRAFT brief. Resolve all "Unverified" and "Client-Reported" items 
 
 ## Step 0: Document Collection
 
-Ask for the client name, then collect documents from two sources: Content Snare (creative surveys) and Google Drive (everything else).
+Ask for the client name, then collect documents. **Content Snare is always the first step** -- do not skip it, do not go to Google Drive first.
 
-### Step 1: Pull Creative Survey from Content Snare
+### Step 1: Pull Creative Survey from Content Snare (MANDATORY)
 
-Use the Content Snare MCP tools (if connector available):
+**You MUST call `search_surveys` before doing anything else.** Do not search Google Drive first. Do not skip this step.
 
-1. **Search**: Call `search_surveys` with the client name. Content Snare survey names may not match exactly -- search for the core business name, not the full S3 client folder name.
+1. **Search**: Call the `search_surveys` tool with the client name. Content Snare survey names may not match exactly -- search for the core business name, not the full S3 client folder name.
 2. **Present matches**: Show the user which surveys were found (there may be multiple if the client has multiple stakeholders). Let the user confirm which to pull.
 3. **Pull**: Call `get_full_survey` for each confirmed survey. This returns all questions and answers as structured data.
 
-If Content Snare is unavailable or finds nothing, fall back to the Google Drive Creative Survey subfolder (Step 2 below).
+If `search_surveys` returns no results or the tool is unavailable, tell the user and fall back to the Google Drive Creative Survey subfolder (Step 2 below).
 
 ### Step 2: Pull remaining documents from Google Drive
 
