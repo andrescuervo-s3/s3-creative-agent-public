@@ -19,52 +19,75 @@ The brief is NOT a strategy document. It captures facts only: no recommendations
 
 ---
 
-## Modes
+## Workflow Overview
 
-### New (Draft)
-Full flow: document collection, all sections, Research Logs for every research-dependent section. Output receives a DRAFT status badge.
+The brief is built in three phases:
 
-### Update (Draft)
-Read existing brief from Google Drive or local file. Identify what has changed (new documents, corrections, additional research). Update only affected sections and their Research Logs. Status remains DRAFT.
+1. **Phase 1: Document Collection** — gather all client inputs from Content Snare and Google Drive
+2. **Phase 2: Build Mode Selection** — user chooses Guided or Auto
+3. **Phase 3: Section Writing** — write sections 1.0 through 3.4, running research protocols as needed
 
-### Finalize
-Read existing DRAFT brief. Resolve all "Unverified" and "Client-Reported" items where possible by running additional research. Re-validate all Research Logs. Stamp as FINAL with updated date.
+### Modes
+
+**New (Draft)**: Full flow through all three phases. Output receives a DRAFT status badge.
+
+**Update (Draft)**: Read existing brief from Google Drive or local file first. Identify what has changed (new documents, corrections, additional research). Update only affected sections and their Research Logs. Status remains DRAFT.
+
+**Finalize**: Read existing DRAFT brief. Resolve all "Unverified" and "Client-Reported" items where possible by running additional research. Re-validate all Research Logs. Stamp as FINAL with updated date.
 
 ---
 
-## Step 0: Document Collection
+## Phase 1: Document Collection
 
-Get the client name, then collect documents in the exact order below. **Do not reorder these steps.**
+**Client name**: Check if the conversation already has context that reveals the client name (e.g., a project name, folder name, or prior messages). If so, confirm: "Are we creating a foundational brief for [name]?" Only ask "What's the client name?" if there is no context to infer from.
 
-**Client name**: Check if the conversation already has context that reveals the client name (e.g., a project name, folder name, or prior messages). If so, confirm with the user: "Are we creating a foundational brief for [name]?" Only ask "What's the client name?" if there is no context to infer from.
+Once you have the client name, collect documents in the order below. Each source has its own subsection with full procedure.
 
-### Step 1: Content Snare (DO THIS FIRST)
+### 1a. Content Snare — Creative Survey
 
-**STOP. Before you search Google Drive, before you do anything else, call `search_surveys` with the client name.** This is not optional. The creative survey lives in Content Snare, not Google Drive.
+The creative survey is the primary client input document. It contains the client's own answers about their business, brand, audience, goals, and preferences. It lives in Content Snare, not Google Drive.
 
-1. Call `search_surveys` with the client name
-2. If surveys are found, show the user which ones and ask which to pull
-3. Call `get_full_survey` for each confirmed survey
+**Procedure:**
 
-Only after Step 1 is complete (whether it found surveys or not), move to Step 2.
+1. Call the `search_surveys` tool with the client name as the query. Survey names in Content Snare may not match the exact client folder name in Google Drive. Search by the core business name (e.g., "Big Auto" not "Big Auto Accident Attorneys | Creative Survey").
+2. If results are returned, show the user which surveys were found. Include the survey name, status, and due date. There may be multiple surveys if the client has multiple stakeholders.
+3. Ask the user to confirm which survey(s) to pull.
+4. Call `get_full_survey` for each confirmed survey. This returns every page with all questions and answers as structured data.
 
-### Step 2: Google Drive (AFTER Content Snare)
+**If no results**: Tell the user "No creative survey found in Content Snare for [name]." Then check the Google Drive `Creative Survey` subfolder in Phase 1b as a fallback.
 
-**Do not start this step until Step 1 is done.**
+**If the tool is unavailable**: Note it and fall back to Google Drive for the creative survey in Phase 1b.
 
-Search Google Drive for the remaining documents (NOT the creative survey -- that was Step 1):
+**GATE: Do not proceed to Phase 1b until this step is complete.**
 
-**Step 2a**: Find the main client folder. Search for the client name and get the folder ID.
+### 1b. Google Drive — Remaining Documents
 
-**Step 2b**: Search inside the `Sales and Billing Info` subfolder for the Work Agreement / Partnership Proposal. Also search the root folder for any other documents (Creative Call Notes, Creative Download, Website Notes, Sales Turnover, etc.).
+After Content Snare is done, search Google Drive for the remaining documents:
 
-**CRITICAL**: Finding a folder in search results is NOT the same as finding the files inside it. You must search inside the folder by its ID.
+- Work Agreement / Partnership Proposal (in the `Sales and Billing Info` subfolder)
+- Sales Turnover / Client Profile (root client folder)
+- Creative Call Notes (root client folder)
+- Creative Download (root client folder)
+- Website Notes (root client folder)
+- SEO Keywords / Rankings (may not exist for all clients)
 
-### Step 3: Compile and Confirm
+If Content Snare found nothing in Phase 1a, also search:
+- Creative Survey / Client Intake Questionnaire (in the `Creative Survey` subfolder)
+
+**Procedure:**
+
+1. Search for the client name to find the main client folder. Note its folder ID.
+2. Search inside the `Sales and Billing Info` subfolder by folder ID for the Work Agreement.
+3. Search the root client folder for remaining documents.
+
+**Subfolder rule**: Finding a folder in search results is NOT the same as finding the files inside it. If a search result shows a folder named "Sales and Billing Info," you have NOT found the work agreement. You must search inside that folder by its ID. Do not declare a document "not found" until you have searched inside its subfolder.
+
+### 1c. Compile and Confirm
 
 List every document collected from both sources:
-- Content Snare: [survey name(s)]
-- Google Drive: [document names]
+
+- **Content Snare**: [survey name(s) and who completed them]
+- **Google Drive**: [document names and locations]
 
 Ask the user to confirm the list is complete before proceeding.
 
@@ -87,11 +110,11 @@ If the user has already uploaded files, acknowledge receipt and proceed.
 
 Input files come in various formats: PDF, XLSX, CSV, Google Sheets, RTF, DOCX, TXT. Read each file carefully and extract all relevant information. For spreadsheets, parse all rows and columns. For PDFs, read all pages.
 
-**PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. CRITICAL: one fetch attempt, one extraction attempt -- if either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
+**PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. One fetch attempt, one extraction attempt. If either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
 
 ---
 
-## Build Mode Selection
+## Phase 2: Build Mode Selection
 
 After documents are collected, ask the user which build mode to use:
 
@@ -101,12 +124,14 @@ After documents are collected, ask the user which build mode to use:
 
 **Auto mode critical rules:**
 - Run ALL research protocols in full before writing each section. Do not defer research until after delivery.
-- Do NOT offer to run additional research after delivering the document. If research is in the protocol, it runs before delivery — not after.
+- Do NOT offer to run additional research after delivering the document. If research is in the protocol, it runs before delivery, not after.
 - If a research step fails, mark affected claims as Unverified and continue. Never hold up delivery.
 
 ---
 
-## Research Execution Contract
+## Phase 3: Section Writing
+
+### Research Execution Contract
 
 For every research-dependent section (2.1 social media, 2.3, 3.1 brand voice, 3.2, 3.3, 3.4), follow this contract:
 
@@ -119,16 +144,14 @@ For every research-dependent section (2.1 social media, 2.3, 3.1 brand voice, 3.
 
 If you cannot produce a Research Log, write "RESEARCH NOT PERFORMED" and score every claim as "Not Researched."
 
----
-
-## Section Sequence
+### Section Sequence
 
 Read `references/foundational-brief-sections.md` for the full template of each section.
 
-### Sections 1.0 and 1.1 (No research needed)
+#### Sections 1.0 and 1.1 (No research needed)
 Write directly from boilerplate and document metadata. Include DRAFT status badge, creation date, and client name.
 
-### Section 2.1 Client Details (Document-sourced + social media research)
+#### Section 2.1 Client Details (Document-sourced + social media research)
 Write all fields from documents, including the S3 Service Overview table (derive from work agreement or sales turnover doc).
 
 For Social Media Accounts:
@@ -141,20 +164,20 @@ For Year Founded, if not in documents:
 2. If not found, check state business filings
 3. Apply confidence scoring
 
-### Section 2.2 From the Client (Document-sourced only)
+#### Section 2.2 From the Client (Document-sourced only)
 Extract Goals, Painpoints, Asks, Firm Backstory, and Business Model Notes from client documents only. No web research needed. No Research Log needed.
 
 In Guided mode, use standard approval gates after each section (see Approval Gate Standard below).
 In Auto mode, do NOT stop here. Continue directly to 2.3 without pausing.
 
-### Section 2.3 Digital Snapshot (SEO/digital research)
+#### Section 2.3 Digital Snapshot (SEO/digital research)
 1. Read `references/seo-digital-research-agent.md`
 2. If client provided data: extract and format with "Client-Reported" confidence
 3. If no client data: execute the fallback research protocol
 4. Produce the Research Log
 5. Validate and write
 
-### Section 3.1 Brand Essentials (Document-sourced + brand voice observation)
+#### Section 3.1 Brand Essentials (Document-sourced + brand voice observation)
 Write Brand Values as a table (Value | Description), Mission Statement, and Brand Differentiators from documents.
 
 For Brand Voice (Observed) subsection:
@@ -163,19 +186,18 @@ For Brand Voice (Observed) subsection:
 3. Write the observed voice analysis
 4. This is observation, not recommendation
 
-### Section 3.2 Audiences (Research-intensive)
+#### Section 3.2 Audiences (Research-intensive)
 
-**Step 1: Audience Selection**
-Present audience candidates from documents and brief context. User selects up to 3.
+**Audience Selection**: Present audience candidates from documents and brief context. User selects up to 3.
 
-**Step 2: Audience Profiles** (for each selected audience)
+**Audience Profiles** (for each selected audience):
 1. Read `references/audience-research-agent.md`
 2. Execute mandatory search queries for the audience type
 3. Produce a Research Log per audience
 4. Validate each Research Log
 5. Write profiles with claim-to-source evidence mapping
 
-### Section 3.3 Competitors (Research-intensive)
+#### Section 3.3 Competitors (Research-intensive)
 1. Read `references/competitor-research-agent.md`
 2. Execute the mandatory search sequence
 3. Determine the client's primary channel from 2.1 (B2B or B2C) and organize competitors with that group first
@@ -183,7 +205,7 @@ Present audience candidates from documents and brief context. User selects up to
 5. Validate
 6. Write profiles with proof signal tables (each signal must have a clickable source link)
 
-### Section 3.4 Market Differentiators (Constrained section)
+#### Section 3.4 Market Differentiators (Constrained section)
 **Before writing**: Re-read sections 2.1, 3.1, and 3.3 from the working document.
 
 **Allowed Sources**: ONLY facts from 2.1, 3.1, and 3.3. No new research. No new facts.
@@ -221,7 +243,7 @@ If everything looks good, reply "Approved" to confirm completion of the Foundati
 ## Document Output
 
 ### Incremental Building
-Create a working .docx document after Step 0 completes. Name it `{Client Name}_Foundational_Brief_DRAFT.docx`. After each section is approved, append it to the document immediately.
+Create a working .docx document after Phase 1 completes. Name it `{Client Name}_Foundational_Brief_DRAFT.docx`. After each section is approved, append it to the document immediately.
 
 ### Save Location
 - **Google Drive** (if connector available): `{Client Folder}/CREATIVE STRATEGY/{Client}_Foundational_Brief_DRAFT.docx`
@@ -244,7 +266,7 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 
 ## Gotchas
 
-- **Folders are not files**: If a Drive search returns a folder named "Creative Survey" or "Sales and Billing Info," that is NOT the document. Search inside that folder by its ID. Never declare a document "not found" until you have searched inside its subfolder.
+- **Folders are not files**: If a Drive search returns a folder named "Sales and Billing Info," that is NOT the document. Search inside that folder by its ID. Never declare a document "not found" until you have searched inside its subfolder.
 - **Year Founded**: Never use copyright dates or domain registration dates. Never use a founder's career start date or bar admission year unless documents explicitly state the firm was founded that year.
 - **Social media**: All 6 platforms must be searched before marking any as "Not found." Do not stop after finding 2-3 accounts.
 - **Competitors**: Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
@@ -263,6 +285,7 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 
 Read these on demand, not all at once:
 
+- `references/document-sources.md` -- Source map: which document type lives where and which tool to use
 - `references/confidence-scoring-spec.md` -- Read at the start. Defines confidence levels and scoring rules.
 - `references/research-validation-rules.md` -- Read before validating any Research Log. Five validation rules.
 - `references/foundational-brief-sections.md` -- Read before writing each section. Full templates and field specs.
@@ -270,5 +293,5 @@ Read these on demand, not all at once:
 - `references/competitor-research-agent.md` -- Read before 3.3 Competitors. Research protocol and output template.
 - `references/social-media-discovery-agent.md` -- Read before 2.1 Social Media discovery. 6-platform search protocol.
 - `references/seo-digital-research-agent.md` -- Read before 2.3 Digital Snapshot. Fallback research protocol.
-- `references/pdf-reading-protocol.md` -- Read before attempting any PDF. Full method chain: pdfplumber, pdftotext, pypdf, OCR.
+- `references/pdf-reading-protocol.md` -- Read before attempting any PDF. One attempt, no loops.
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted (bullets, headers, tables, status lines). Never write dense paragraphs in the chat.
