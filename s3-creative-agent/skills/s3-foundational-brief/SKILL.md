@@ -34,40 +34,39 @@ Read existing DRAFT brief. Resolve all "Unverified" and "Client-Reported" items 
 
 ## Step 0: Document Collection
 
-Get the client name, then collect documents. **Content Snare is always the first step** -- do not skip it, do not go to Google Drive first.
+Get the client name, then collect documents in the exact order below. **Do not reorder these steps.**
 
-**Client name detection**: If the user is working inside a Google Drive folder or project that looks like a client name (e.g., "Big Auto Accident Attorneys" or "Accents Cosmetic Surgery"), suggest it: "Are we creating a foundational brief for [folder/project name]?" If the user confirms, use that name. Only ask for the client name if there is no context to infer it from.
+**Client name**: Check if the conversation already has context that reveals the client name (e.g., a project name, folder name, or prior messages). If so, confirm with the user: "Are we creating a foundational brief for [name]?" Only ask "What's the client name?" if there is no context to infer from.
 
-### Step 1: Pull Creative Survey from Content Snare (MANDATORY)
+### Step 1: Content Snare (DO THIS FIRST)
 
-**You MUST call `search_surveys` before doing anything else.** Do not search Google Drive first. Do not skip this step.
+**STOP. Before you search Google Drive, before you do anything else, call `search_surveys` with the client name.** This is not optional. The creative survey lives in Content Snare, not Google Drive.
 
-1. **Search**: Call the `search_surveys` tool with the client name. Content Snare survey names may not match exactly -- search for the core business name, not the full S3 client folder name.
-2. **Present matches**: Show the user which surveys were found (there may be multiple if the client has multiple stakeholders). Let the user confirm which to pull.
-3. **Pull**: Call `get_full_survey` for each confirmed survey. This returns all questions and answers as structured data.
+1. Call `search_surveys` with the client name
+2. If surveys are found, show the user which ones and ask which to pull
+3. Call `get_full_survey` for each confirmed survey
 
-If `search_surveys` returns no results or the tool is unavailable, tell the user and fall back to the Google Drive Creative Survey subfolder (Step 2 below).
+Only after Step 1 is complete (whether it found surveys or not), move to Step 2.
 
-### Step 2: Pull remaining documents from Google Drive
+### Step 2: Google Drive (AFTER Content Snare)
 
-**Google Drive search** (if connector available):
+**Do not start this step until Step 1 is done.**
 
-**Step 2a: Find the main client folder and note its folder ID.**
-Search for the client name. Get the folder ID from the search result.
+Search Google Drive for the remaining documents (NOT the creative survey -- that was Step 1):
 
-**Step 2b: Search inside the subfolders. This is mandatory -- do not skip.**
+**Step 2a**: Find the main client folder. Search for the client name and get the folder ID.
 
-S3 folder structure is consistent across all clients. After finding the main folder, you MUST run a separate search inside each of these subfolders:
+**Step 2b**: Search inside the `Sales and Billing Info` subfolder for the Work Agreement / Partnership Proposal. Also search the root folder for any other documents (Creative Call Notes, Creative Download, Website Notes, Sales Turnover, etc.).
 
-- `Sales and Billing Info` subfolder -- contains the Work Agreement / Partnership Proposal
+**CRITICAL**: Finding a folder in search results is NOT the same as finding the files inside it. You must search inside the folder by its ID.
 
-If Content Snare was unavailable in Step 1, also search:
-- `Creative Survey` subfolder -- contains the Client Intake Questionnaire (PDF fallback)
+### Step 3: Compile and Confirm
 
-**CRITICAL: Finding a folder in search results is NOT the same as finding the files inside it.** If a search result shows a folder named "Sales and Billing Info," you have NOT found the document. You must search inside that folder by its ID. Do NOT declare a document "not found" until you have searched inside its subfolder.
+List every document collected from both sources:
+- Content Snare: [survey name(s)]
+- Google Drive: [document names]
 
-**Step 2c: Compile the full list.**
-List every document collected -- from Content Snare AND from Google Drive -- with its name, source, and type. Ask the user to confirm the list is complete before proceeding.
+Ask the user to confirm the list is complete before proceeding.
 
 **If both Content Snare and Google Drive are unavailable or find nothing**:
 ```
