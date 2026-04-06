@@ -39,9 +39,14 @@ The brief is built in three phases:
 
 ## Phase 1: Document Collection
 
-**Client name**: Check if the conversation already has context that reveals the client name (e.g., a project name, folder name, or prior messages). If so, confirm: "Are we creating a foundational brief for [name]?" Only ask "What's the client name?" if there is no context to infer from.
+**Client name (FIRST STEP, BLOCKING)**: Before doing anything else (no todo lists, no reading reference files, no loading tools), determine the client name:
 
-Once you have the client name, collect documents in the order below. Each source has its own subsection with full procedure.
+1. Check if the conversation already has context that reveals the client name (e.g., a project name, folder name, or prior messages).
+2. If context exists, use the AskUserQuestion tool to confirm: "Are we creating a foundational brief for [name]?" This MUST be a popup prompt, not inline text.
+3. If no context exists, use the AskUserQuestion tool to ask: "What is the client name?"
+4. Wait for the user's response before proceeding to any other step.
+
+Once the client name is confirmed, collect documents in the order below. Each source has its own subsection with full procedure.
 
 ### 1a. Content Snare — Creative Survey
 
@@ -78,7 +83,8 @@ If Content Snare found nothing in Phase 1a, also search:
 
 1. Search for the client name to find the main client folder. Note its folder ID.
 2. Search inside the `Sales and Billing Info` subfolder by folder ID for the Work Agreement.
-3. Search the root client folder for remaining documents.
+3. Search the root client folder for remaining documents. Use the full client folder name as the search prefix (e.g., "Big Auto Accident Attorneys" not just "Big Auto") because documents are typically named "{Full Client Name} | {Document Type}".
+4. If any document is not found in the initial search, run a second search using just the document type keyword (e.g., "Creative Call Notes", "Sales Turnover", "Creative Download") within the client folder. Documents may be owned by different team members and may not appear in a name-only search.
 
 **Subfolder rule**: Finding a folder in search results is NOT the same as finding the files inside it. If a search result shows a folder named "Sales and Billing Info," you have NOT found the work agreement. You must search inside that folder by its ID. Do not declare a document "not found" until you have searched inside its subfolder.
 
@@ -267,6 +273,7 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 ## Gotchas
 
 - **Folders are not files**: If a Drive search returns a folder named "Sales and Billing Info," that is NOT the document. Search inside that folder by its ID. Never declare a document "not found" until you have searched inside its subfolder.
+- **Drive search misses**: Google Drive search can miss documents owned by other team members or with long names. Always search by the full client name AND by the document type keyword separately. If a document is still not found after two search attempts, then report it as not found.
 - **Year Founded**: Never use copyright dates or domain registration dates. Never use a founder's career start date or bar admission year unless documents explicitly state the firm was founded that year.
 - **Social media**: All 6 platforms must be searched before marking any as "Not found." Do not stop after finding 2-3 accounts.
 - **Competitors**: Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
