@@ -53,7 +53,18 @@ Options (exactly three, no more):
 2. **Update (Draft)** -- Update an existing draft with new info or corrections
 3. **Finalize** -- Resolve open items and stamp an existing draft as final
 
-Wait for the user to respond, then invoke the `s3-foundational-brief` skill using the Skill tool. Pass the selected mode (New, Update, or Finalize) in your message so the foundational brief skill knows which mode to use. Do not ask any further questions.
+Wait for the user to respond.
+
+### Step 3 (Foundational Brief only): Confirm the client name
+
+Before invoking the foundational brief skill, determine the client name:
+
+1. Check if the conversation has context that reveals the client name (e.g., a project name, workspace folder name, or prior messages).
+2. If context exists, use a THIRD AskUserQuestion call to confirm: "Are we creating a foundational brief for [name]?"
+3. If no context exists, use a THIRD AskUserQuestion call to ask: "What is the client name?"
+4. Wait for the user's response.
+
+Then invoke the `s3-foundational-brief` skill using the Skill tool. Pass BOTH the selected mode AND the confirmed client name in your message (e.g., "The user selected New (Draft) for client Big Auto Accident Attorneys"). Do not ask any further questions.
 
 **If the user chose Creative Brief in Step 1:**
 

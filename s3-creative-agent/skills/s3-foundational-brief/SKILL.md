@@ -39,12 +39,7 @@ The brief is built in three phases:
 
 ## Phase 1: Document Collection
 
-**Client name (ABSOLUTE FIRST STEP, BLOCKING)**: This is the very first action in the entire workflow. Do NOT read reference files, create todo lists, load tool schemas, or do any other setup before this step is complete.
-
-1. Check if the conversation already has context that reveals the client name (e.g., a project name, folder name, or prior messages).
-2. If context exists, use the AskUserQuestion tool to confirm: "Are we creating a foundational brief for [name]?" This MUST be a popup prompt, not inline text.
-3. If no context exists, use the AskUserQuestion tool to ask: "What is the client name?"
-4. Wait for the user's response. Do not proceed until the response is received. No parallel work.
+**Client name**: The brief selector passes the confirmed client name when invoking this skill. Extract it from the handoff message (e.g., "The user selected New (Draft) for client Big Auto Accident Attorneys"). If the client name was NOT provided in the handoff, use the AskUserQuestion tool to ask "What is the client name?" before doing anything else — no reference file reads, no todo lists, no tool loading until the name is confirmed.
 
 Once the client name is confirmed, check for an existing foundational brief before proceeding:
 
