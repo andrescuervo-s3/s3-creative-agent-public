@@ -188,11 +188,9 @@ For Brand Voice (Observed) subsection:
 
 #### Section 3.2 Audiences (Research-intensive)
 
-**Audience Selection**:
-- **Guided mode**: Present audience candidates from documents and brief context. User selects up to 3.
-- **Auto mode**: Select the top 3 most prominent audiences from the documents without asking. Choose based on frequency of mention, specificity, and strategic relevance. Do NOT stop to ask the user.
+**Audience Identification**: Identify all relevant audiences from client documents, the client's website, and independent research. Do not cap the number artificially or ask the user to select. If the research is sound, the number of audiences will be naturally reasonable (typically 3-6). The strategy brief is where audience targeting decisions are made — the foundational brief captures all relevant audiences as facts.
 
-**Audience Profiles** (for each selected audience):
+**Audience Profiles** (for each identified audience):
 1. Read `references/audience-research-agent.md`
 2. Execute mandatory search queries for the audience type
 3. Produce a Research Log per audience

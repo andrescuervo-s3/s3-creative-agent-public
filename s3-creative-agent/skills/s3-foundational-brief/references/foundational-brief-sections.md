@@ -159,19 +159,16 @@ This subsection captures what the brand voice IS based on observation, not what 
 
 ## 3.2 Audiences
 
-### Step 1: Audience Selection
+### Step 1: Audience Identification
 
-Output a list of potential audiences derived from documents and, if needed, reliable public sources aligned to the brand.
-
-Source order:
-1. Provided client documents
+Identify all relevant audiences from these sources, in this order:
+1. Provided client documents (primary)
 2. Client owned website language
 3. Reliable third-party sources (only to round out obvious audiences in the category)
 
 Output format: Each item includes Audience Name, one-sentence rationale, and evidence source type (Documents, Owned Website, Public Source).
 
-**Guided mode**: Present the list and let the user select up to 3 audiences to profile.
-**Auto mode**: Select the top 3 most prominent audiences automatically based on frequency of mention, specificity, and strategic relevance. Do not stop to ask.
+Profile every relevant audience identified. Do not cap the number or ask the user to select. If the research is sound, the count will be naturally reasonable (typically 3-6). Audience targeting decisions belong in the Strategy Brief, not here.
 
 ### Step 2: Audience Profiles
 
