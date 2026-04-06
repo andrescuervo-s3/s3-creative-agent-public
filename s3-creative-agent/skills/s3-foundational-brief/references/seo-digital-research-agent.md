@@ -26,11 +26,11 @@ Execute the fallback research protocol below. All metrics from fallback research
 
 When the client has not provided any SEO, analytics, or paid media data, gather what is publicly observable. This is not a full audit; it captures signals visible without tool access.
 
-### Step 1: Indexed Page Count
+### Step 1: Indexed Page Count and Site Structure
 Search: `site:[client domain]`
-Record the approximate number of indexed pages. This gives a rough sense of the site's content footprint.
+Record the approximate number of indexed pages. Also note the page types visible in results (e.g., "10 practice area pages, 3 location pages, ~20 blog posts, 1 about page"). This gives a strategist a quick picture of the site's content footprint and architecture.
 
-Confidence: Verified (Google's index count is directly observable).
+Confidence: Verified (Google's index and page types are directly observable).
 
 ### Step 2: Priority Keyword Observation
 Using the client's primary offerings and location from 2.1 Client Details:

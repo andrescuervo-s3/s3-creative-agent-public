@@ -199,6 +199,8 @@ For Brand Voice (Observed) subsection:
 
 **Audience Identification**: Identify all relevant audiences from client documents, the client's website, and independent research. Do not cap the number artificially or ask the user to select. If the research is sound, the number of audiences will be naturally reasonable (typically 3-6). The strategy brief is where audience targeting decisions are made — the foundational brief captures all relevant audiences as facts.
 
+**Language-based audience segments**: If client documents indicate a significant non-English-speaking client base AND the client has asked for or is investing in marketing to that language group (e.g., Spanish-language strategy, bilingual intake, translated materials), profile that audience separately. Research how that language group finds and evaluates services in the client's industry, what builds trust, and what channels they use. Do not treat language as a demographic footnote on another audience. Only create this segment when the client's own documents signal it is a priority — do not add it for every client in a multilingual market.
+
 **Audience Profiles** (for each identified audience):
 1. Read `references/audience-research-agent.md`
 2. Execute mandatory search queries for the audience type

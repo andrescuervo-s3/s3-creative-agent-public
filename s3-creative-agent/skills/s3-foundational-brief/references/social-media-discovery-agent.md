@@ -77,12 +77,17 @@ Output a table for the brief. The table IS the research log. No separate narrati
 
 | Platform | Handle/URL | Notes | Status |
 |----------|-----------|-------|--------|
-| Facebook | [Handle](URL) | Follower count if visible. Active/inactive. | Verified |
-| Instagram | [Handle](URL) | Follower count, post count if visible. | Verified |
-| LinkedIn | [Company name](URL) | Company page. Note individual profiles if relevant. | Verified |
-| YouTube | [Channel name](URL) | Key content type (e.g., "Master Class series"). | Verified |
+| Facebook | [Handle](URL) | Follower count if visible. Content themes. Recent activity. | Verified |
+| Instagram | [Handle](URL) | Follower count, post count. Content themes. Approximate recency (e.g., "last post ~2 weeks ago" or "posts 2-3x/week"). | Verified |
+| LinkedIn | [Company name](URL) | Company page. Content themes if visible. | Verified |
+| YouTube | [Channel name](URL) | Key content type (e.g., "Master Class series"). Approximate recency. | Verified |
 | TikTok | Not found | | Not Found |
 | X (Twitter) | Not found | | Not Found |
+
+For every found account, note in the Notes column:
+1. **Content themes**: What are the recent posts about? (e.g., "attorney spotlights, case results, community events")
+2. **Recency**: Approximate last post date or posting frequency based on what is visible in search results
+3. **Follower/post counts**: If visible in search result snippets
 
 **Status values:**
 - **Verified**: Client website links to this account, or the account links back to the client's website
