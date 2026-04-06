@@ -188,7 +188,9 @@ For Brand Voice (Observed) subsection:
 
 #### Section 3.2 Audiences (Research-intensive)
 
-**Audience Selection**: Present audience candidates from documents and brief context. User selects up to 3.
+**Audience Selection**:
+- **Guided mode**: Present audience candidates from documents and brief context. User selects up to 3.
+- **Auto mode**: Select the top 3 most prominent audiences from the documents without asking. Choose based on frequency of mention, specificity, and strategic relevance. Do NOT stop to ask the user.
 
 **Audience Profiles** (for each selected audience):
 1. Read `references/audience-research-agent.md`
