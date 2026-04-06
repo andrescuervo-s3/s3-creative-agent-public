@@ -39,12 +39,12 @@ The brief is built in three phases:
 
 ## Phase 1: Document Collection
 
-**Client name (FIRST STEP, BLOCKING)**: Before doing anything else (no todo lists, no reading reference files, no loading tools), determine the client name:
+**Client name (ABSOLUTE FIRST STEP, BLOCKING)**: This is the very first action in the entire workflow. Do NOT read reference files, create todo lists, load tool schemas, or do any other setup before this step is complete.
 
 1. Check if the conversation already has context that reveals the client name (e.g., a project name, folder name, or prior messages).
 2. If context exists, use the AskUserQuestion tool to confirm: "Are we creating a foundational brief for [name]?" This MUST be a popup prompt, not inline text.
 3. If no context exists, use the AskUserQuestion tool to ask: "What is the client name?"
-4. Wait for the user's response before proceeding to any other step.
+4. Wait for the user's response. Do not proceed until the response is received. No parallel work.
 
 Once the client name is confirmed, collect documents in the order below. Each source has its own subsection with full procedure.
 
@@ -182,9 +182,9 @@ In Auto mode, do NOT stop here. Continue directly to 2.3 without pausing.
 #### Section 2.3 Digital Snapshot (SEO/digital research)
 1. Read `references/seo-digital-research-agent.md`
 2. If client provided data: extract and format with "Client-Reported" confidence
-3. If no client data: execute the fallback research protocol
-4. Produce the Research Log
-5. Validate and write
+3. ALWAYS run the fallback research protocol as well, even when client data exists. Client-reported metrics are supplemented by independently verified signals (indexed pages, observable keyword positions, GBP check, site signals). This produces a richer snapshot and cross-checks client claims.
+4. Produce the Research Log (required for fallback research signals)
+5. Validate and write. Combine client-reported and independently verified rows in the same table, with the Confidence column distinguishing them.
 
 #### Section 3.1 Brand Essentials (Document-sourced + brand voice observation)
 Write Brand Values as a table (Value | Description), Mission Statement, and Brand Differentiators from documents.
@@ -288,6 +288,8 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 - **Confidence vocabulary**: Use ONLY these labels: Verified, Corroborated, Client-Reported, Unverified, Not Researched. Never use "High/Medium/Low" or any other scale.
 - **Citations need live links**: Every research-sourced claim in competitors (3.3) and audiences (3.2) must have a clickable source URL in its Evidence or Proof Signals table.
 - **Follow the section templates**: Read foundational-brief-sections.md before writing each section. Use the exact structure, tables, and field order specified. Do not invent your own layout.
+- **Brand Voice is observation, not recommendation**: The Brand Voice (Observed) subsection in 3.1 describes what the voice IS, not what it should become. Note gaps between observed voice and stated aspirations as a factual observation, but do not frame them as "opportunities" or suggest what the creative team should do about them. That belongs in the Strategy Brief.
+- **Horizontal rules in the .docx**: Insert a visible horizontal rule (page-width line) between every major section group (before 2.0, before 3.0). The foundational-brief-sections.md specifies this under Formatting Standards.
 
 ---
 

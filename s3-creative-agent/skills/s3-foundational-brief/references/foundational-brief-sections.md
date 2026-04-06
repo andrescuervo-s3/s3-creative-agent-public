@@ -74,14 +74,14 @@ Do NOT include administrators, firm managers, intake staff, coordinators, or sup
 
 **Social Media Accounts**: Output from the social-media-discovery-agent.md as a table:
 
-| Platform | Handle/URL | Status |
-|----------|-----------|--------|
-| Facebook | URL | Verified / Not Found |
-| Instagram | URL | Verified / Not Found |
-| LinkedIn | URL | Verified / Not Found |
-| YouTube | URL | Verified / Not Found |
-| TikTok | URL | Verified / Not Found |
-| X (Twitter) | URL | Verified / Not Found |
+| Platform | Handle/URL | Notes | Status |
+|----------|-----------|-------|--------|
+| Facebook | URL | Follower count, activity | Verified / Not Found |
+| Instagram | URL | Follower count, post count | Verified / Not Found |
+| LinkedIn | URL | Company page | Verified / Not Found |
+| YouTube | URL | Content type | Verified / Not Found |
+| TikTok | URL | | Verified / Not Found |
+| X (Twitter) | URL | | Verified / Not Found |
 
 Status values: Verified (backlink confirmed), Probable (name/branding match, no backlink), Personal/Brand-Adjacent, Not Found.
 

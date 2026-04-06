@@ -15,7 +15,7 @@ Extract from the provided documents:
 
 Format into the appropriate table structure (see foundational-brief-sections.md, section 2.3). All data from client documents receives "Client-Reported" confidence.
 
-No further research is needed. Skip to the output format.
+ALSO run the fallback research protocol below to supplement client data with independently verified signals. This cross-checks client claims and fills gaps (e.g., client reports Map Pack dominance but doesn't mention indexed page count). Combine both client-reported and verified rows in the final table.
 
 ### If No Client Data Exists
 Execute the fallback research protocol below. All metrics from fallback research carry confidence scores per confidence-scoring-spec.md.
