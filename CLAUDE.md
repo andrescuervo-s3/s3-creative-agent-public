@@ -31,10 +31,12 @@ This plugin follows the [Agent Skills specification](https://github.com/agentski
 - Agent loads these on demand — smaller files = less context waste
 - Use relative paths from skill root: `references/filename.md`
 
-### Skill vs. Global Reference — Decide Before Writing
-Before adding any instruction, rule, or standard to a SKILL.md, ask: does this apply to more than one skill? If yes, it belongs in `references/` as a shared file, not inline in a skill. Skills point to the reference; they do not duplicate it.
+### Skill vs. Shared Reference — Decide Before Writing
+Before adding any instruction, rule, or standard to a SKILL.md, ask: does this apply to more than one skill? If yes, it belongs in a reference file. Shared references are duplicated into each skill's `references/` directory (not at the plugin root) because Cowork copies plugins to a cache and cannot resolve paths outside the skill directory.
 
-Examples of global references: `chat-formatting.md`, `pdf-reading-protocol.md`, `s3-docx-styles.md`, `confidence-scoring-spec.md`.
+When updating a shared reference, update it in ALL skill directories that contain it.
+
+Examples of shared references: `chat-formatting.md`, `pdf-reading-protocol.md`, `s3-docx-styles.md`, `confidence-scoring-spec.md`.
 Examples of skill-specific content: section templates, routing logic, skill-specific gotchas.
 
 ### Key Patterns
@@ -62,23 +64,21 @@ s3-creative-agent/                          <- GitHub repo root
 ├── s3-creative-agent/                      <- Plugin root (Cowork reads from here)
 │   ├── .claude-plugin/plugin.json
 │   ├── CONNECTORS.md
-│   ├── references/
-│   │   ├── audience-research-agent.md      <- Research agent for 3.2 Audience Profiles
-│   │   ├── competitor-research-agent.md    <- Research agent for 3.3 Competitors
-│   │   ├── confidence-scoring-spec.md      <- 5-level confidence scoring rules
-│   │   ├── foundational-brief-sections.md  <- Section templates for the Foundational Brief
-│   │   ├── research-validation-rules.md    <- 5 validation rules for Research Logs
-│   │   ├── s3-docx-styles.md              <- Document styling spec for .docx output
-│   │   ├── seo-digital-research-agent.md   <- Research agent for 2.3 Digital Snapshot
-│   │   └── social-media-discovery-agent.md <- 6-platform social media discovery agent
 │   └── skills/
 │       ├── s3-brief-selector/SKILL.md      <- Two-step routing: brief type then mode
-│       ├── s3-foundational-brief/SKILL.md  <- Orchestrator: Research, Validate, Write
+│       ├── s3-foundational-brief/
+│       │   ├── SKILL.md                    <- Orchestrator: Research, Validate, Write
+│       │   └── references/                 <- 10 files (research agents, validation, sections, etc.)
+│       ├── s3-strategy-brief/
+│       │   ├── SKILL.md                    <- Strategy orchestrator
+│       │   └── references/                 <- 11 files (strategy sections, tech stack, shared refs)
+│       ├── s3-recommendation-doc/
+│       │   ├── SKILL.md                    <- B&W recommendation doc builder
+│       │   └── references/                 <- 3 files (rec-doc components, docx styles, formatting)
 │       ├── s3-creative-brief-website/SKILL.md
 │       ├── s3-creative-brief-media/SKILL.md
 │       ├── s3-creative-brief-paid-ads/SKILL.md
-│       ├── s3-creative-brief-social-media/SKILL.md
-│       └── s3-recommendation-doc/SKILL.md
+│       └── s3-creative-brief-social-media/SKILL.md
 ├── CLAUDE.md                               <- This file
 ├── CONNECTORS.md
 ├── PLAN.md

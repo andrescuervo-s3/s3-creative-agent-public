@@ -19,7 +19,7 @@ The visual identity is intentionally monochrome — black, white, and greys only
 ### Required Reading
 
 1. Read the system `docx` skill for the docx-js API reference and validation workflow
-2. Read the shared S3 document style system at the plugin's `references/s3-docx-styles.md` (one level up from this skill's directory) — this defines Open Sans, the heading hierarchy, table formatting, and all base styles
+2. Read the shared S3 document style system at `references/s3-docx-styles.md` — this defines Open Sans, the heading hierarchy, table formatting, and all base styles
 3. Read this skill's own `references/s3-rec-doc-components.md` for recommendation-specific components: alert boxes, metric cards, meta tables, bold-intro bullets, comparison tables, and the title block pattern
 
 The shared style system is the foundation. This skill's reference file adds the components unique to recommendation docs.
