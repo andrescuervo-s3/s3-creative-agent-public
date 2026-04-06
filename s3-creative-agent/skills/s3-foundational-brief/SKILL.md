@@ -46,7 +46,14 @@ The brief is built in three phases:
 3. If no context exists, use the AskUserQuestion tool to ask: "What is the client name?"
 4. Wait for the user's response. Do not proceed until the response is received. No parallel work.
 
-Once the client name is confirmed, collect documents in the order below. Each source has its own subsection with full procedure.
+Once the client name is confirmed, check for an existing foundational brief before proceeding:
+
+**Existing brief check**: Search Google Drive inside the client's main folder for a document with "Foundational" and "Brief" in the name (e.g., "Big Auto Foundational Brief DRAFT"). If found:
+- **If the user selected Update or Finalize**: Fetch the existing document and use it as the starting point. Confirm with the user: "I found [document name]. I'll use this as the base." No need to ask further.
+- **If the user selected New (Draft)**: Alert the user: "I found an existing foundational brief: [document name]. Do you want to update that one instead, or start fresh?" Use AskUserQuestion for this. If they say start fresh, proceed with New mode.
+- **If no existing brief is found and the user selected Update or Finalize**: Tell the user: "I couldn't find an existing foundational brief in Drive for [client name]. Would you like to create a new one instead?" Use AskUserQuestion for this.
+
+After the existing brief check, collect documents in the order below. Each source has its own subsection with full procedure.
 
 ### 1a. Content Snare — Creative Survey
 
