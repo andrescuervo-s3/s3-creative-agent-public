@@ -57,11 +57,12 @@ The creative survey is the primary client input document. It contains the client
 1. Call the `search_surveys` tool with the client name as the query. Survey names in Content Snare may not match the exact client folder name in Google Drive. Search by the core business name (e.g., "Big Auto" not "Big Auto Accident Attorneys | Creative Survey").
 2. If results are returned, show the user which surveys were found. Include the survey name, status, and due date. There may be multiple surveys if the client has multiple stakeholders.
 3. Ask the user to confirm which survey(s) to pull.
-4. Call `get_full_survey` for each confirmed survey. This returns every page with all questions and answers as structured data.
+4. For each confirmed survey, fetch the data page by page:
+   a. Call `get_survey` with the request ID. This returns the page list (fast).
+   b. Call `get_survey_page` for each page ID returned. Each call is small and reliable.
+   Do NOT use `get_full_survey` — it fetches all pages in one call and times out on large surveys.
 
 **If no results**: Tell the user "No creative survey found in Content Snare for [name]." Then check the Google Drive `Creative Survey` subfolder in Phase 1b as a fallback.
-
-**If the tool times out or errors**: The `get_full_survey` call fetches all pages at once and can time out on large surveys. If it fails, retry once. If it fails again, fall back to fetching pages individually: call `get_survey` first to get the page list, then call `get_survey_page` for each page one at a time. If that also fails, fall back to Google Drive.
 
 **If the tool is unavailable**: Note it and fall back to Google Drive for the creative survey in Phase 1b.
 
