@@ -95,7 +95,7 @@ List every document collected from both sources:
 - **Content Snare**: [survey name(s) and who completed them]
 - **Google Drive**: [document names and locations]
 
-Ask the user to confirm the list is complete before proceeding.
+Use the AskUserQuestion tool to ask: "Does this look complete, or are there any additional documents I should pull before we start building?" Wait for the user's response before proceeding.
 
 **If both Content Snare and Google Drive are unavailable or find nothing**:
 ```
