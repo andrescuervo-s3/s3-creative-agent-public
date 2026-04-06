@@ -61,6 +61,8 @@ The creative survey is the primary client input document. It contains the client
 
 **If no results**: Tell the user "No creative survey found in Content Snare for [name]." Then check the Google Drive `Creative Survey` subfolder in Phase 1b as a fallback.
 
+**If the tool times out or errors**: The `get_full_survey` call fetches all pages at once and can time out on large surveys. If it fails, retry once. If it fails again, fall back to fetching pages individually: call `get_survey` first to get the page list, then call `get_survey_page` for each page one at a time. If that also fails, fall back to Google Drive.
+
 **If the tool is unavailable**: Note it and fall back to Google Drive for the creative survey in Phase 1b.
 
 **GATE: Do not proceed to Phase 1b until this step is complete.**
