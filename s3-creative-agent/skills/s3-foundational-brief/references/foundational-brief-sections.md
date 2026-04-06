@@ -170,7 +170,8 @@ Source order:
 
 Output format: Each item includes Audience Name, one-sentence rationale, and evidence source type (Documents, Owned Website, Public Source).
 
-The user selects up to 3 audiences to profile.
+**Guided mode**: Present the list and let the user select up to 3 audiences to profile.
+**Auto mode**: Select the top 3 most prominent audiences automatically based on frequency of mention, specificity, and strategic relevance. Do not stop to ask.
 
 ### Step 2: Audience Profiles
 
