@@ -139,9 +139,50 @@ Research agents fire when the user asks a question requiring deeper data, not on
 
 **The distinction:** Facts carry confidence scores. Strategy does not. "The local PI market is dominated by Morgan & Morgan" is a fact (needs a score). "We should position against Morgan & Morgan by emphasizing personal attention" is strategy (no score needed).
 
+### Conversation Persistence
+
+The strategy brief conversation can be long — dozens of exchanges before a single section is locked in. If the context window compacts mid-conversation, everything discussed is lost unless it has been persisted to a file.
+
+**File:** `{Client Name}_strategy_notes.md` in the workspace. Create this file at the start of Phase 3.
+
+**Two levels of persistence:**
+
+1. **Discussion Log** — a running record of meaningful exchanges. Not a verbatim transcript, but the key points: what the user said, what direction they gave, what was explored, what was rejected and why. Updated at natural pauses (see below).
+
+2. **Locked Decisions** — when the user explicitly approves, confirms, or says "lock that in," mark the decision as settled. Separate from the discussion log so it's easy to scan.
+
+**Format for each section:**
+
+```
+## [Section Number] [Section Name] [STATUS: IN PROGRESS | SETTLED | DEFERRED]
+
+### Discussion Log
+- User: [key point or direction]
+- Agent: [response summary]
+- User: [refinement or pushback]
+- Agent: [updated position]
+
+### Locked Decisions
+- [Decision statement]
+- [Decision statement]
+
+### Open Threads
+- [Unresolved question or topic to revisit]
+```
+
+**When to save:** Do NOT save on a fixed schedule or interrupt the user to take notes. Instead, monitor conversation depth. When there have been 4-5 substantive exchanges since the last save, append to the notes file BEFORE responding to the next message. The user sees a brief pause while the file writes, then gets their answer. This feels like a natural beat, not an interruption.
+
+Also save at these moments:
+- When the user explicitly locks in a decision
+- When transitioning between subsections
+- When the user says "hold on" or signals they have more to add (capture what's been discussed so far)
+- Before dispatching a research agent (the conversation context might shift)
+
+**On session recovery:** If the conversation compacts or a new session starts, read `{Client Name}_strategy_notes.md` to reconstruct where things stand. Present the status of each section (settled, in progress, deferred) and ask how to proceed — do not repeat settled discussions.
+
 ### Incremental Document Building
 
-After the Brand Strategy section is settled, append it to the working .docx. Channel sections are appended as they are discussed and settled. This provides session recovery if the session disconnects.
+After the Brand Strategy section is settled, append it to the working .docx. Channel sections are appended as they are discussed and settled. This provides additional session recovery if the session disconnects.
 
 ---
 
