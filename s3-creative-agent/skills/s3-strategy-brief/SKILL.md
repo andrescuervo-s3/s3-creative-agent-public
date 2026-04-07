@@ -206,28 +206,64 @@ After the Brand Strategy section is settled, append it to the working .docx. Cha
 
 ---
 
-## Phase 4: Pressure Test + Output
+## Phase 4: Pressure Test (Before Output)
 
-When all applicable sections have content, initiate the pressure test. Four checks run sequentially. The user resolves flags from each check before moving to the next.
+**CRITICAL: The pressure test is a conversation, not a summary. It happens BEFORE generating the .docx, not after. Do NOT generate the document until the pressure test is complete and the user says to proceed.**
+
+The pressure test is the last opportunity to catch gaps, contradictions, and unrealistic assumptions before they get locked into a deliverable document. Run it honestly. If you find holes, say so. If everything checks out, show your work so the user can verify.
+
+When all applicable sections have content, initiate the pressure test. Present each check inline in the chat with clear visual indicators. The user resolves flags from each check before moving to the next.
+
+### How to Present Each Check
+
+For each check, show the results visually in the chat. Use a table or structured list with clear status indicators:
+
+- **PASS** — the check is satisfied, show the evidence
+- **FLAG** — something is missing, contradictory, or unverified. Describe the specific gap.
+- **RISK** — not a gap but a dependency, timeline, or resource concern worth acknowledging
+
+Do NOT mark everything as "Complete" or "PASS" without showing your reasoning. The user should be able to see WHY each item passed or was flagged. "Audience coverage: Complete" is not a pressure test. "Arizona MVA English track appears in 2.1, 2.2, 2.3 (recommended), 2.4 (recommended) with 'Big Auto vs Big Insurance' as the communication angle" is a pressure test.
 
 ### Check 1: Audience Coverage
 Every audience from the Foundational Brief (section 3.2) has a communication angle in 1.4 and appears in at least one channel strategy. Orphaned audiences are flagged.
 
+For each audience, show: audience name, communication angle from 1.4, which channel sections address them, and status.
+
 ### Check 2: Scope Coverage
 Every Work Agreement line item maps to a channel strategy section. If a sold service has no strategic direction, that is a flag.
+
+For each line item, show: service description, which strategy section(s) address it, and status.
 
 ### Check 3: Strategic Coherence
 The Bright Idea threads through channel strategies. Intentional divergence is fine (thought leadership overall, testimonials on social). Unexplained divergence is flagged for clarification.
 
-### Check 4: Feasibility Notes
-Timeline, resource, or dependency constraints surfaced during conversation are collected. Observations only (e.g., "Website build depends on photo shoot completing first").
+Walk through each channel strategy and show how the Bright Idea connects (or doesn't). Show where voice and tone is consistent and where it deliberately adapts (e.g., Spanish transcreation).
 
-### After Checks
+### Check 4: Feasibility and Assumptions
+Go beyond just listing timeline dependencies. Actively challenge what you wrote:
 
-- Clean passes get confirmation
-- Flags within each check are surfaced one at a time for the user to resolve, skip, or acknowledge
+- Are there claims in the strategy that assume something that hasn't been confirmed? (e.g., "10-15 testimonials in 90 days" — is that realistic given client volume?)
+- Are there infrastructure dependencies that aren't in scope? (e.g., S3 Hub — does it exist or does it need to be built?)
+- Are there content production bottlenecks? (e.g., 165 pages by end of May with zero pages currently marked complete)
+- Are there resource assumptions? (e.g., compliance review by one person, transcreation staffing)
+- Did you reference data that was not independently verified? Flag it.
+
+### After Each Check
+
+Present the results. Wait for the user to respond. The user may:
+- Confirm a pass
+- Discuss a flag (this opens conversation — stay in discussion as long as needed)
+- Acknowledge a risk without resolving it (it goes into the document as-is)
+- Add something you missed
+
+Do NOT rush through the checks. Each one is a conversation opportunity, not a box to tick.
+
+### After All Checks Are Resolved
+
 - Section 3.2 (Scope Expansion Opportunities) is populated with all inline flags collected during conversation
-- Once satisfied, generate the final .docx and update CLAUDE.md
+- Section 4.0 (Pressure Test Summary) reflects the actual results, including flags that were acknowledged but not resolved
+- THEN generate the final .docx and update CLAUDE.md
+- Do NOT generate the document until the user explicitly says to proceed after the pressure test
 
 ---
 
