@@ -216,43 +216,55 @@ When all applicable sections have content, initiate the pressure test. Present e
 
 ### How to Present Each Check
 
-For each check, show the results visually in the chat. Use a table or structured list with clear status indicators:
+**Scannable, not analytical.** The user is reading these in a chat window without the brief open. Every item must be scannable in under 5 seconds. Do NOT write dense paragraphs of analysis. Do NOT narrate your reasoning process ("I flagged this earlier," "After reading the reference doc," "I believe this came from"). State the result, not the journey.
 
-- **PASS** — the check is satisfied, show the evidence
-- **FLAG** — something is missing, contradictory, or unverified. Describe the specific gap.
-- **RISK** — not a gap but a dependency, timeline, or resource concern worth acknowledging
+**Format for each item:**
 
-Do NOT mark everything as "Complete" or "PASS" without showing your reasoning. The user should be able to see WHY each item passed or was flagged. "Audience coverage: Complete" is not a pressure test. "Arizona MVA English track appears in 2.1, 2.2, 2.3 (recommended), 2.4 (recommended) with 'Big Auto vs Big Insurance' as the communication angle" is a pressure test.
+```
+**PASS** Audience Name — one-line summary of where it appears
+**FLAG** Audience Name — one-line description of the gap
+**RISK** Item — one-line dependency or concern
+```
+
+One line per item. Two lines maximum if a FLAG needs a specific question. If the user wants more detail on any item, they will ask. Do not front-load detail they did not request.
+
+**Status indicators:**
+- **PASS** — the check is satisfied
+- **FLAG** — something is missing, contradictory, or unverified. State the gap and ask the question.
+- **RISK** — not a gap but a dependency, timeline, or resource concern worth noting
+
+**What "show your reasoning" means:** Name the sections where coverage exists. Do NOT restate the strategy, quote the brief back, or explain why a pass is a pass. "English-track AZ MVA — covered in 2.1, 2.2, 2.3 (rec), 2.4 (rec)" is sufficient. The user wrote the strategy; they know what it says.
 
 ### Check 1: Audience Coverage
 Every audience from the Foundational Brief (section 3.2) has a communication angle in 1.4 and appears in at least one channel strategy. Orphaned audiences are flagged.
 
-For each audience, show: audience name, communication angle from 1.4, which channel sections address them, and status.
+Present as a short list: audience name, which sections address them, status. One line each.
 
 ### Check 2: Scope Coverage
 Every Work Agreement line item maps to a channel strategy section. If a sold service has no strategic direction, that is a flag.
 
-For each line item, show: service description, which strategy section(s) address it, and status.
+Present as a short list: line item, which sections address it, status. One line each. Boilerplate operational deliverables (hosting, monthly meetings, analytics) are execution items, not strategy brief content. Do not flag them.
 
 ### Check 3: Strategic Coherence
-The Bright Idea threads through channel strategies. Intentional divergence is fine (thought leadership overall, testimonials on social). Unexplained divergence is flagged for clarification.
+The Bright Idea threads through channel strategies. Intentional divergence is fine. Unexplained divergence is flagged.
 
-Walk through each channel strategy and show how the Bright Idea connects (or doesn't). Show where voice and tone is consistent and where it deliberately adapts (e.g., Spanish transcreation).
+Present as a short list: channel, how the Bright Idea connects, status. One line each. Do not restate the Bright Idea in full. Do not narrate voice and tone consistency paragraph by paragraph.
 
 ### Check 4: Feasibility and Assumptions
-Go beyond just listing timeline dependencies. Actively challenge what you wrote:
+Challenge what you wrote. Look for:
 
-- Are there claims in the strategy that assume something that hasn't been confirmed? (e.g., "10-15 testimonials in 90 days" — is that realistic given client volume?)
-- Are there infrastructure dependencies that aren't in scope? (e.g., S3 Hub — does it exist or does it need to be built?)
-- Are there content production bottlenecks? (e.g., 165 pages by end of May with zero pages currently marked complete)
-- Are there resource assumptions? (e.g., compliance review by one person, transcreation staffing)
-- Did you reference data that was not independently verified? Flag it.
+- Unconfirmed assumptions stated as fact (numbers, targets, timelines)
+- Infrastructure or resource dependencies not in scope
+- Content production bottlenecks
+- Data referenced but not independently verified
+
+Present as a short list of FLAGS and RISKs only. Do not list items that pass feasibility — only surface concerns. Each item: one-line description, one-line question if the user needs to resolve it.
 
 ### After Each Check
 
 Present the results. Wait for the user to respond. The user may:
-- Confirm a pass
-- Discuss a flag (this opens conversation — stay in discussion as long as needed)
+- Confirm passes with a word or two
+- Discuss a flag (this opens conversation — stay in it as long as needed)
 - Acknowledge a risk without resolving it (it goes into the document as-is)
 - Add something you missed
 
