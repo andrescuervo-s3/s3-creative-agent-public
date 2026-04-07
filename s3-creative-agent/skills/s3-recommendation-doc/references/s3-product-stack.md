@@ -96,6 +96,17 @@ The parent framework underlying the S3 Hub. Referenced in the S3 Hub (Legal) doc
 
 ---
 
+## Detailed Product References
+
+Each product has a dedicated reference file with full architecture, capabilities, and implementation details. Read these on demand when a specific product comes up in the strategy conversation:
+
+- `references/s3-product-hub.md` -- Full Hub architecture, tagging matrix, dynamic injection, Legal and Aesthetics verticals
+- `references/s3-product-leadloop.md` -- Full platform overview, system architecture, integrations, automation, roadmap
+- `references/s3-product-answer-engine.md` -- Full technical approach, SEO strategy, implementation roadmap
+- `references/s3-product-multi-local.md` -- Full URL architecture, CMS model, mega menu, SEO safeguards
+
+---
+
 ## When to Reference These Products
 
 These products are relevant when:
