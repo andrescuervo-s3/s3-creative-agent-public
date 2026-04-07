@@ -146,14 +146,16 @@ After documents are collected, ask the user which build mode to use:
 
 For every research-dependent section (2.1 social media, 2.3, 3.1 brand voice, 3.2, 3.3, 3.4), follow this contract:
 
-1. Read the corresponding agent reference file
-2. Execute every research step specified in the agent protocol
-3. Output a structured Research Log (visible to the user)
-4. Apply validation rules from `references/research-validation-rules.md`
-5. Write the section using ONLY data from the validated Research Log
-6. Assign confidence scores per `references/confidence-scoring-spec.md`
+1. Read `references/research-tool-contract.md` FIRST. It defines what research is: WebSearch + WebFetch tool calls. Training data is not research. This is non-negotiable.
+2. Read the corresponding agent reference file
+3. Execute every research step as actual WebSearch and WebFetch tool calls
+4. Filter every search result against the source tiers in the agent file. Disqualify lawyer blogs, marketing content, SEO articles, and self-published brand content. Go to primary sources.
+5. Output a structured Research Log (visible to the user) showing the actual searches performed and URLs fetched
+6. Apply validation rules from `references/research-validation-rules.md`
+7. Write the section using ONLY data from the validated Research Log
+8. Assign confidence scores per `references/confidence-scoring-spec.md`
 
-If you cannot produce a Research Log, write "RESEARCH NOT PERFORMED" and score every claim as "Not Researched."
+If you cannot produce a Research Log based on actual tool calls, write "RESEARCH NOT PERFORMED" and score every claim as "Not Researched." Do NOT substitute training data and present it as research. Do NOT construct URLs from memory. Do NOT cite organizations you did not fetch data from.
 
 ### Section Sequence
 
@@ -302,8 +304,9 @@ Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundatio
 Read these on demand, not all at once:
 
 - `references/document-sources.md` -- Source map: which document type lives where and which tool to use
+- `references/research-tool-contract.md` -- Read FIRST before any research. Defines what research is (WebSearch + WebFetch calls, not training data). Non-negotiable.
 - `references/confidence-scoring-spec.md` -- Read at the start. Defines confidence levels and scoring rules.
-- `references/research-validation-rules.md` -- Read before validating any Research Log. Five validation rules.
+- `references/research-validation-rules.md` -- Read before validating any Research Log. Six validation rules.
 - `references/foundational-brief-sections.md` -- Read before writing each section. Full templates and field specs.
 - `references/audience-research-agent.md` -- Read before 3.2 Audience Profiles. Research protocol and output template.
 - `references/competitor-research-agent.md` -- Read before 3.3 Competitors. Research protocol and output template.

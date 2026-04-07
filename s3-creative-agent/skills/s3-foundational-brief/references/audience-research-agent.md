@@ -2,14 +2,18 @@
 
 Purpose: Produce evidence-based audience profiles for the Foundational Brief. Every claim must trace to a fetched source. Independent research is mandatory — client documents are a starting point, not a source.
 
+**PREREQUISITE: Read `references/research-tool-contract.md` before executing any research.** That contract defines what "research" means (WebSearch + WebFetch tool calls, never training data) and how to filter sources. Every rule in that contract applies here.
+
 ---
 
 ## Non-Negotiable Rules
 
-1. **Research before writing.** Complete all searches and fetch all sources before writing a single profile sentence.
-2. **Cross-reference every client-reported demographic claim.** If the client says "45-65 age cohort" or "50% Spanish-speaking," find a public source that confirms or contradicts it. Do not leave demographic claims as Client-Reported without attempting to verify them.
-3. **Public figures are fully researchable.** If an audience is defined by a media personality, influencer, podcast host, or public figure, research that person directly. Their audience demographics, reach, platform data, and media coverage are publicly available. There are no limits on publicly findable data about public figures.
-4. **Every factual claim gets a source and a confidence score.** If you cannot find a source, the claim is Unverified — not Client-Reported.
+1. **Research means tool calls.** Every search must be a WebSearch tool call. Every source must be fetched via WebFetch. Training data is not research. If you did not call the tool, you did not do the research.
+2. **Research before writing.** Complete all searches and fetch all sources before writing a single profile sentence.
+3. **Cross-reference every client-reported demographic claim.** If the client says "45-65 age cohort" or "50% Spanish-speaking," find a public source that confirms or contradicts it. Do not leave demographic claims as Client-Reported without attempting to verify them.
+4. **Public figures are fully researchable.** If an audience is defined by a media personality, influencer, podcast host, or public figure, research that person directly. Their audience demographics, reach, platform data, and media coverage are publicly available. There are no limits on publicly findable data about public figures.
+5. **Every factual claim gets a source and a confidence score.** If you cannot find a source, the claim is Unverified — not Client-Reported.
+6. **Filter sources before citing.** Check every search result against the Source Tiers below and the disqualification rules in research-tool-contract.md. Do not fetch or cite disqualified sources. Go to the primary source.
 
 ---
 

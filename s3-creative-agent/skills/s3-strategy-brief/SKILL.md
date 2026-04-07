@@ -127,7 +127,11 @@ When the conversation naturally winds down, prompt about untouched sections: "We
 
 Research agents fire when the user asks a question requiring deeper data, not on a pre-set schedule. The same agent reference files from the Foundational Brief apply.
 
+**CRITICAL: Read `references/research-tool-contract.md` before any research.** Research means WebSearch + WebFetch tool calls. Training data is not research. Do NOT present training knowledge as sourced data. Do NOT construct URLs from memory. Do NOT cite organizations without fetching their actual pages. If research tools are unavailable, say so and score everything as "Not Researched." Never fabricate a research process.
+
 **Before researching, check the Foundational Brief first.** Only research what is genuinely new or needs updating. Redundant research wastes time and context.
+
+**Source filtering:** When search results come back, filter them against the source tiers in the relevant agent reference file BEFORE citing. Disqualify law firm blogs, marketing agency content, SEO articles, AI-generated listicles, and self-published brand content. These are not authoritative. Go to the primary source. If a blog says "according to ADOT," find and fetch the actual ADOT page.
 
 **Dispatch as forked subagents** via the Agent tool (`context: fork`). This prevents long-running research from blocking the conversation. Present Research Log inline when complete (3-8 entries with live clickable links).
 
@@ -265,6 +269,7 @@ Read these on demand, not all at once:
 - `references/strategy-brief-sections.md` -- Read before writing ANY section. Section templates and field specs.
 - `references/s3-tech-stack.md` -- Read before writing section 2.1.2. S3 platform details.
 - `references/s3-docx-styles.md` -- Read before creating or formatting the document.
+- `references/research-tool-contract.md` -- Read FIRST before any research. Defines what research is (WebSearch + WebFetch calls, not training data). Non-negotiable.
 - `references/confidence-scoring-spec.md` -- Read before scoring any research-backed claims.
 - `references/research-validation-rules.md` -- Read before validating any Research Log.
 - `references/audience-research-agent.md` -- Read before dispatching audience research.

@@ -11,6 +11,15 @@ This plugin is distributed through the Claude marketplace. The deployment cycle 
 
 **Every change must be pushed to GitHub before it can be tested in Cowork.**
 
+## Reference Material — READ BEFORE BUILDING
+
+The `.reference/` directory contains two repos that must be consulted before creating or modifying any skill:
+
+- **`.reference/anthropic-skills/`** — Anthropic's official example skills. Study the `skills/` examples, `spec/`, and `template/` before building. Match their patterns, structure, and conventions.
+- **`.reference/agentskills/`** — The Agent Skills spec repo. Contains the full specification in `docs/` and the `skills-ref` CLI validator.
+
+**When creating a new skill or modifying an existing one, always check the Anthropic examples first.** Do not guess at conventions or invent structure. Follow what Anthropic demonstrates.
+
 ## Agent Skills Spec Summary
 
 This plugin follows the [Agent Skills specification](https://github.com/agentskills/agentskills). Key constraints:

@@ -4,13 +4,23 @@ Purpose: Five rules applied after every research phase, before any writing begin
 
 ---
 
+## Rule 0: Tool Call Proof
+
+Research means WebSearch + WebFetch tool calls. Training data is not research.
+
+**Pass**: The Research Log entries correspond to actual WebSearch and WebFetch tool calls made during this session. Search queries were sent to WebSearch. Result URLs were loaded via WebFetch. Data was extracted from fetched page content.
+
+**Fail**: The Research Log contains searches, URLs, or data points that were produced from training knowledge without corresponding tool calls. This includes: URLs constructed from memory ("I expect this data lives at..."), statistics recalled from training, or citations to organizations whose websites were not actually fetched. This is fabrication, not research. The entire Research Log is invalid.
+
+---
+
 ## Rule 1: Source Fetch Proof
 
-Every cited URL must appear in the Research Log as fetched during this session.
+Every cited URL must appear in the Research Log as fetched during this session via a WebFetch tool call.
 
-**Pass**: The Research Log contains a "URLs Fetched" entry showing the URL was loaded and data was extracted.
+**Pass**: The Research Log contains a "URLs Fetched" entry showing the URL was loaded via WebFetch and data was extracted from the actual page content.
 
-**Fail**: A URL appears in the written section but not in the Research Log. This is a phantom citation.
+**Fail**: A URL appears in the written section but was not fetched via WebFetch during this session. This is a phantom citation.
 
 ---
 
@@ -23,6 +33,8 @@ You cannot name a specific organization (BLS, Pew, ABA, CDC, Avvo, Super Lawyers
 **Fail**: The section says "according to Pew Research" but the Research Log does not contain any Pew Research URL. Remove the citation and downgrade the confidence score to "Unverified" or "Not Researched."
 
 **Why this matters**: Models frequently generate plausible-sounding citations to authoritative organizations without actually consulting them. This rule makes that shortcut visible and traceable.
+
+**Source tier check**: Even when a URL was fetched, check whether the source is eligible. Disqualified sources (law firm blogs, marketing agency content, SEO articles, AI-generated listicles) must not appear as citations. If the data originated at a primary source (e.g., ADOT, Census Bureau), cite the primary source, not a blog that repackaged it.
 
 ---
 

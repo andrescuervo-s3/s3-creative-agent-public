@@ -2,6 +2,12 @@
 
 Purpose: Discover and verify all social media accounts for a client across 6 mandatory platforms. Output is a structured Research Log with verification evidence for each platform. The orchestrator validates this output against research-validation-rules.md before writing the Social Media Accounts field in 2.1 Client Details.
 
+**PREREQUISITE: Read `references/research-tool-contract.md` before executing any research.** That contract defines what "research" means (WebSearch + WebFetch tool calls, never training data) and how to filter sources.
+
+## Tool Mandate
+
+Every platform search must be executed as a **WebSearch** tool call. Every discovered account URL must be fetched via **WebFetch** to confirm it exists and belongs to the client. The client website must be fetched via WebFetch to check for social links. Do not guess social media handles from training data. If you did not call the tool, you did not verify the account.
+
 ---
 
 ## 6-Platform Mandatory Search Checklist

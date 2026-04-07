@@ -2,6 +2,12 @@
 
 Purpose: Discover and verify all social media accounts for a client across 6 mandatory platforms. Output is a structured Research Log with verification evidence for each platform. The orchestrator validates this output against research-validation-rules.md before writing the Social Media Accounts field in 2.1 Client Details.
 
+**PREREQUISITE: Read `references/research-tool-contract.md` before executing any research.** That contract defines what "research" means (WebSearch + WebFetch tool calls, never training data) and how to filter sources.
+
+## Tool Mandate
+
+Every platform search must be executed as a **WebSearch** tool call. Every discovered account URL must be fetched via **WebFetch** to confirm it exists and belongs to the client. The client website must be fetched via WebFetch to check for social links. Do not guess social media handles from training data. If you did not call the tool, you did not verify the account.
+
 ---
 
 ## 6-Platform Mandatory Search Checklist
@@ -77,12 +83,17 @@ Output a table for the brief. The table IS the research log. No separate narrati
 
 | Platform | Handle/URL | Notes | Status |
 |----------|-----------|-------|--------|
-| Facebook | [Handle](URL) | Follower count if visible. Active/inactive. | Verified |
-| Instagram | [Handle](URL) | Follower count, post count if visible. | Verified |
-| LinkedIn | [Company name](URL) | Company page. Note individual profiles if relevant. | Verified |
-| YouTube | [Channel name](URL) | Key content type (e.g., "Master Class series"). | Verified |
+| Facebook | [Handle](URL) | Follower count if visible. Content themes. Recent activity. | Verified |
+| Instagram | [Handle](URL) | Follower count, post count. Content themes. Approximate recency (e.g., "last post ~2 weeks ago" or "posts 2-3x/week"). | Verified |
+| LinkedIn | [Company name](URL) | Company page. Content themes if visible. | Verified |
+| YouTube | [Channel name](URL) | Key content type (e.g., "Master Class series"). Approximate recency. | Verified |
 | TikTok | Not found | | Not Found |
 | X (Twitter) | Not found | | Not Found |
+
+For every found account, note in the Notes column:
+1. **Content themes**: What are the recent posts about? (e.g., "attorney spotlights, case results, community events")
+2. **Recency**: Approximate last post date or posting frequency based on what is visible in search results
+3. **Follower/post counts**: If visible in search result snippets
 
 **Status values:**
 - **Verified**: Client website links to this account, or the account links back to the client's website

@@ -2,6 +2,14 @@
 
 Purpose: Produce up to 6 evidence-based competitor profiles for the Foundational Brief, segmented by audience channel (B2B vs B2C). Every profile must trace to fetched sources. Output is a structured Research Log followed by profile content. The orchestrator validates this output against research-validation-rules.md before writing the brief section.
 
+**PREREQUISITE: Read `references/research-tool-contract.md` before executing any research.** That contract defines what "research" means (WebSearch + WebFetch tool calls, never training data) and how to filter sources. Every rule in that contract applies here.
+
+---
+
+## Tool Mandate
+
+Every search in the Mandatory Search Sequence must be executed as a **WebSearch** tool call. Every URL cited must be fetched via **WebFetch** to confirm the page exists and contains the claimed data. Training knowledge is not research. If you did not call the tool, you did not do the research.
+
 ---
 
 ## Source Eligibility
