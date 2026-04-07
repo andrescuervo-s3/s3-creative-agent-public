@@ -134,19 +134,18 @@ Each channel section follows this structure unless noted otherwise:
 
 **Heading:** H2
 
-#### 2.1.1 Creative Direction
+**Section flow (top to bottom):**
 
-**Heading:** H3
+1. **Objectives** (2-4 bullets: what success looks like)
+2. **Strategic Direction** (1-2 paragraphs: the approach, what we're building and why)
+3. **Creative Direction** (design language, UX priorities, content hierarchy, visual direction for the site. Stands alone as readable strategy, not a pointer to 1.5)
+4. **Audience Alignment** (which audiences from 1.4, restated in context)
+5. **Bright Idea Application** (how 1.7 manifests on the website)
+6. **Technical Direction** (platform, integrations, dev approach. Comes LAST because it supports the strategy above, not the other way around)
 
-**Fields:** Design language, UX priorities, content hierarchy, user experience goals, visual direction for the site specifically.
+**Technical Direction data source:** `references/s3-tech-stack.md`, user input
 
-#### 2.1.2 Technical Direction
-
-**Heading:** H3
-
-**Data source:** `references/s3-tech-stack.md`, user input
-
-**Fields:** Platform notes (Tresio baseline), CMS considerations (DatoCMS), integrations needed, performance requirements, development approach, any platform-specific constraints.
+**Technical Direction fields:** Platform notes (Tresio baseline), CMS considerations (DatoCMS), integrations needed, performance requirements, development approach, any platform-specific constraints. Technical detail is welcome but must be readable: lead with the strategic rationale, use tables and bullets for structured information, and avoid dense paragraphs that list 10+ items in a single sentence.
 
 ---
 
@@ -191,30 +190,9 @@ Each channel section follows this structure unless noted otherwise:
 
 **Format:** This section plus a mood board becomes the S3 Media team handoff package.
 
----
-
-### 2.6 Creative Direction
-
-**Heading:** H2
-
-**IMPORTANT:** This is the overall design system, NOT the website creative direction (2.1.1) or shoot direction (2.5).
-
-**Fields:**
-- Visual Tone (paragraph: the overarching look and feel)
-- Photography Style (how photography should look across all uses)
-- Color Application (how the brand colors are used in practice)
-- Typography Expression (how type is used beyond just font choice)
-- Design System Notes (patterns, components, or visual rules that apply across all channels)
-
-**Format:** Prose paragraphs. This informs 2.5 (shoot should reflect design system) and 2.1.1 (website should express design system).
+**Scope rule:** Only label deliverables as "in scope" if they map directly to a Work Agreement line item. Strategic recommendations that were discussed, even at length, are scope expansion opportunities (3.2) unless the Work Agreement explicitly covers them.
 
 ---
-
-### 2.7 Content Strategy
-
-**Heading:** H2
-
-**Fields:** Follow general channel pattern. Key Tactics should include content pillars, editorial voice notes, content types and formats, blog/resource strategy.
 
 ---
 
@@ -293,3 +271,11 @@ When a channel strategy does not apply to the engagement:
 - No em dashes; use commas, colons, or periods
 - No code, HTML, or debug output in brief content
 - Clean, modern, agency-grade, client-ready appearance
+
+## Readability Rules
+
+- **Each section stands alone.** A reader opening to any section should understand it without reading previous sections first. Restate relevant context rather than writing "as established in 1.1" or "refer to section X."
+- **No redirect sections.** If a section's content is just "see [other section]," it should not exist.
+- **Lead with strategy, end with technical detail.** Within any section, strategic direction comes first, creative direction next, technical supporting detail last.
+- **Break up density.** No paragraph should run more than 5-6 lines. No sentence should list 10+ items separated by commas. Use tables for structured data, bullets for lists, prose for reasoning.
+- **No cross-reference scavenger hunts.** If the brand voice matters to the SEO strategy, describe the relevant aspects in the SEO section. Do not send the reader elsewhere.

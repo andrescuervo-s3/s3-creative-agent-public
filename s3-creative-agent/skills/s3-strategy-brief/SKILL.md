@@ -284,15 +284,11 @@ Created: [date]  |  Last Updated: [date]
   1.7  The Bright Idea
 
 2.0  Channel Strategies
-  2.1  Website Strategy
-    2.1.1  Creative Direction (design language, UX priorities, content hierarchy)
-    2.1.2  Technical Direction (platform, integrations, dev approach)
+  2.1  Website Strategy (strategy, creative direction, technical direction)
   2.2  SEO Strategy
   2.3  Paid Advertising Strategy
   2.4  Social Media Strategy
   2.5  S3 Media Strategy (photo/video shoot direction, turnover to S3 Media team)
-  2.6  Creative Direction (overall visual tone, photography style, design system)
-  2.7  Content Strategy
 
 3.0  Scope Alignment
   3.1  Work Agreement Coverage (line items mapped to sections)
@@ -307,7 +303,7 @@ Created: [date]  |  Last Updated: [date]
 
 Sections without content are marked "Not applicable to this engagement" rather than omitted. The structure is always the same. Section order in the document is fixed; conversation order is not.
 
-Heading level mapping: 1.0 = H1, 1.1/2.1 = H2, 2.1.1/2.1.2 = H3, sub-fields = H4.
+Heading level mapping: 1.0 = H1, 1.1/2.1 = H2, sub-fields = H4.
 
 ---
 
@@ -326,7 +322,7 @@ Scope flags are additive, not blocking. An out-of-scope idea is flagged and coll
 
 Section 2.5 is the **production brief** for photo/video shoots: what to shoot, where, talent considerations, location notes, visual references. This section, paired with a mood board, becomes the handoff for the S3 Media team.
 
-Section 2.6 (Creative Direction) is the **design system**: how the brand shows up visually across all touchpoints. 2.6 informs 2.5, but they are different scopes: 2.5 is production logistics, 2.6 is overarching visual language.
+**Scope rule:** Only label deliverables as "in scope" if they map directly to a Work Agreement line item. Ideas that were discussed at length, recommended, or even agreed upon strategically are still scope expansion opportunities (3.2) unless the Work Agreement explicitly covers them. "We talked about it" is not the same as "it's sold."
 
 ---
 
@@ -343,6 +339,20 @@ Read `references/s3-docx-styles.md` before creating or formatting the document.
 
 ---
 
+## Writing Style
+
+**Each section must stand on its own.** A reader who opens to 2.2 SEO Strategy should understand the relevant creative direction and audience context without being told to go read 1.5 and 2.1 first. Some overlap between sections is better than constant cross-references. A strategy brief is a narrative, not a database.
+
+**Do NOT write redirect sections.** If a section's only content is "refer to [other section] for the complete [topic]," that section should not exist. Either give it real content or remove it from the skeleton.
+
+**Lead with strategy, support with technical detail.** Within any section, the flow is: what we're doing and why, how it looks and feels, who it serves, then how the platform makes it possible. Technical detail comes last because it supports the strategy. A reader who stops before the technical section still understands the strategy.
+
+**Readability over density.** Do not pack 10+ items into a single comma-separated sentence. Use tables for structured information (URL patterns, platform specs). Use short bullets for lists of capabilities. Use prose for strategic reasoning. Break up dense paragraphs. If a paragraph runs more than 5-6 lines, it probably needs to be split or reformatted.
+
+**No constant back-references.** Phrases like "as established in 1.1," "per the voice defined in 1.5," and "refer to those sections" make the document feel like metadata. State what the reader needs to know in context. If the brand voice matters to the SEO strategy, describe the relevant aspects of the voice in the SEO section. Do not send the reader on a scavenger hunt.
+
+---
+
 ## Gotchas
 
 1. **Do NOT hallucinate strategic recommendations.** If a section has no input, mark "No input yet." Do not fill with generic advice.
@@ -355,7 +365,8 @@ Read `references/s3-docx-styles.md` before creating or formatting the document.
 8. **Section order in document is fixed; conversation order is not.** Output always follows the skeleton regardless of discussion order.
 9. **No em dashes.** Use commas, colons, or periods.
 10. **No code, HTML, or debug output in brief content.**
-11. **For Technical Direction (2.1.2):** Read `references/s3-tech-stack.md` before writing. S3 builds on Tresio, DatoCMS, Mux, with specific component conventions.
+11. **Technical direction goes at the bottom of the section it supports.** It is not a peer to creative direction or strategic direction. It is supporting detail. Read `references/s3-tech-stack.md` before writing technical content. S3 builds on Tresio, DatoCMS, Mux, with specific component conventions.
+12. **Scope means the Work Agreement, not the conversation.** Only label deliverables as "in scope" if they map to a Work Agreement line item. Strategic recommendations, even ones the user loves, go in 3.2 (Scope Expansion Opportunities) unless the Work Agreement covers them.
 
 ---
 
