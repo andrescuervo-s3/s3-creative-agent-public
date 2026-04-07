@@ -329,6 +329,7 @@ Read these on demand, not all at once:
 
 - `references/strategy-brief-sections.md` -- Read before writing ANY section. Section templates and field specs.
 - `references/s3-tech-stack.md` -- Read before writing section 2.1.2. S3 platform details.
+- `references/s3-product-stack.md` -- Read when a channel strategy involves an S3 product (Hub, LeadLoop, Answer Engine, Multi-Local). Do not inject products unless the engagement calls for them.
 - `references/s3-docx-styles.md` -- Read before creating or formatting the document.
 - `references/research-tool-contract.md` -- Read FIRST before any research. Defines what research is (WebSearch + WebFetch calls, not training data). Non-negotiable.
 - `references/confidence-scoring-spec.md` -- Read before scoring any research-backed claims.
