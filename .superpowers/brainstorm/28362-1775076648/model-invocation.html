@@ -1,0 +1,77 @@
+<h2>disable-model-invocation — What It Means</h2>
+<p class="subtitle">Should Claude decide when to activate the Strategy Brief skill, or should only the user trigger it?</p>
+
+<div class="mockup">
+  <div class="mockup-header">How skill activation works</div>
+  <div class="mockup-body" style="font-family: system-ui; font-size: 13px; line-height: 1.7; padding: 24px;">
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+
+      <div style="background: #1a1a2e; padding: 20px; border-radius: 8px; border-left: 3px solid #44ff88;">
+        <div style="font-weight: 700; margin-bottom: 12px;">Default: Claude CAN auto-activate</div>
+        <div style="color: #aaa; font-size: 12px; margin-bottom: 16px;">disable-model-invocation: false (or omitted)</div>
+
+        <div style="background: #111; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+          <div style="color: #888; font-size: 11px; margin-bottom: 4px;">USER SAYS:</div>
+          <div>"I need to formalize the strategy for the Popok project"</div>
+        </div>
+        <div style="text-align: center; color: #888; margin: 8px 0;">↓ Claude reads the description, decides this matches ↓</div>
+        <div style="background: #111; padding: 12px; border-radius: 6px;">
+          <div style="color: #888; font-size: 11px; margin-bottom: 4px;">CLAUDE DOES:</div>
+          <div>Automatically loads s3-strategy-brief SKILL.md and starts the flow</div>
+        </div>
+
+        <div style="margin-top: 16px; color: #aaa; font-size: 12px;">
+          <strong>Good for:</strong> Skills that are safe to trigger automatically. Like the foundational brief — if someone says "foundational brief," Claude should just start it.
+        </div>
+      </div>
+
+      <div style="background: #1a1a2e; padding: 20px; border-radius: 8px; border-left: 3px solid #ff6666;">
+        <div style="font-weight: 700; margin-bottom: 12px;">Disabled: ONLY user can trigger</div>
+        <div style="color: #aaa; font-size: 12px; margin-bottom: 16px;">disable-model-invocation: true</div>
+
+        <div style="background: #111; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+          <div style="color: #888; font-size: 11px; margin-bottom: 4px;">USER SAYS:</div>
+          <div>"I need to formalize the strategy for the Popok project"</div>
+        </div>
+        <div style="text-align: center; color: #888; margin: 8px 0;">↓ Claude does NOT auto-activate — user must explicitly type ↓</div>
+        <div style="background: #111; padding: 12px; border-radius: 6px;">
+          <div style="color: #888; font-size: 11px; margin-bottom: 4px;">USER TYPES:</div>
+          <div style="font-family: monospace;">/s3-creative-agent:s3-strategy-brief</div>
+        </div>
+
+        <div style="margin-top: 16px; color: #aaa; font-size: 12px;">
+          <strong>Good for:</strong> Skills with side effects you want to control timing on — deployments, sending messages, destructive operations.
+        </div>
+      </div>
+
+    </div>
+
+    <div style="border-top: 1px solid #333; margin: 24px 0;"></div>
+
+    <div style="color: #ccc;">
+      <strong>For the Strategy Brief:</strong> Since the brief selector already routes users here, and the foundational brief uses auto-activation with trigger phrases ("strategy brief", "strategic brief", etc.), I'd recommend keeping it auto-activatable (default). The brief selector + trigger phrases in the description handle routing. There's no risk of accidental activation because the TRIGGERS list is specific.
+    </div>
+
+  </div>
+</div>
+
+<div style="margin-top: 24px;"></div>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Keep auto-activatable (Recommended)</h3>
+      <p>Claude activates when user says "strategy brief" or similar trigger phrases. Same pattern as the foundational brief. Brief selector also routes here.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>User-trigger only</h3>
+      <p>User must type the slash command or be routed by the brief selector. Claude never auto-activates even if the conversation is clearly about strategy.</p>
+    </div>
+  </div>
+</div>

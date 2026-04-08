@@ -1,0 +1,34 @@
+<h2>Strategy Brief — Interaction Model</h2>
+<p class="subtitle">How should the skill move through ingestion → synthesis → conversation → document?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Phase-Gated (like Foundational Brief)</h3>
+      <p><strong>Ingestion → Auto-Summary → Section-by-section conversation → Pressure test → Output</strong></p>
+      <p>After ingestion, the agent presents its synthesis of the brand strategy section. You approve or revise it. Then it moves to the next section (SEO, Paid, Social, etc.), each with its own approval gate. Pressure test runs at the end. Produces .docx incrementally.</p>
+      <p style="margin-top: 12px; color: #888;">Predictable. Every section gets explicit approval. But rigid — hard to riff across sections or change direction mid-stream.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Structured Top, Freeform Bottom (Recommended)</h3>
+      <p><strong>Ingestion → Auto-Summary → Brand Strategy (guided) → Channel Strategies (conversational) → Pressure test → Output</strong></p>
+      <p>Brand Strategy (mission, value prop, audiences, messaging) follows a structured flow with approval. Then channel strategies open up — you riff freely, the agent organizes your thinking into the right sections. Scope flags appear inline as you go. Pressure test at the end collects everything. Document generated after pressure test passes.</p>
+      <p style="margin-top: 12px; color: #888;">Matches how you described working — structured where it's repeatable, conversational where it's creative. Agent drives the brand section, you drive the channel sections.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Fully Conversational</h3>
+      <p><strong>Ingestion → Auto-Summary → Open conversation → Agent organizes everything → Pressure test → Output</strong></p>
+      <p>After the summary, you just talk. No section-by-section gates at all. The agent listens, synthesizes, and continuously reorganizes your input into the document skeleton. You can jump between brand strategy and channel strategies freely. Document materializes from the conversation.</p>
+      <p style="margin-top: 12px; color: #888;">Maximum flexibility. But the agent might miss things or organize poorly without checkpoints. Harder to ensure completeness.</p>
+    </div>
+  </div>
+</div>
