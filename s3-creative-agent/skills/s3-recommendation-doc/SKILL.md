@@ -478,3 +478,4 @@ The audience is an account manager who needs to walk into a client call feeling 
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.
 - `references/s3-docx-styles.md` -- Read before creating the document. Defines all S3 document styles.
 - `references/per-client-context-files.md` -- Read at the start. Check for and update CLAUDE.md and MEMORY.md in the client working folder.
+- `references/pipeline-routing.md` -- Read after the document is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.

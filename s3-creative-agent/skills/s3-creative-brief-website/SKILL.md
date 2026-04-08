@@ -438,3 +438,4 @@ Read these on demand, not all at once:
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF.
 - `references/per-client-context-files.md` -- Read during Phase 1. Defines CLAUDE.md, MEMORY.md, and document output logging.
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted.
+- `references/pipeline-routing.md` -- Read after the brief is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.

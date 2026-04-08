@@ -42,3 +42,4 @@ This skill will reference the client's Foundational Brief (produced by the `s3-f
 ## Reference Files
 
 - `references/per-client-context-files.md` -- Read at the start. Check for and update CLAUDE.md and MEMORY.md in the client working folder.
+- `references/pipeline-routing.md` -- Read after the brief is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.
