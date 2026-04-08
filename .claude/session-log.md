@@ -1,3 +1,39 @@
+# Session Log — 2026-04-08
+
+## What was worked on
+- Reviewed Big Auto Strategy Brief DRAFT against SKILL.md and section templates
+- Identified and fixed scope misattribution (discussed recommendations labeled as "in scope")
+- Removed sections 2.6 (Creative Direction) and 2.7 (Content Strategy) from skeleton — they were redirect sections
+- Restructured 2.1 Website Strategy flow: strategy first, creative direction second, technical detail last
+- Added Writing Style section to SKILL.md: no redirects, no cross-references, each section stands alone
+- Added Readability Rules to strategy-brief-sections.md reference
+- Rewrote pressure test presentation: scannable one-line format, no dense analytical paragraphs
+- Updated all memory files for machine transition
+- Created project_next_phase.md capturing creative briefs, Netlify wireframes, Popok use case
+
+## Key decisions
+- 2.6 and 2.7 eliminated from the strategy brief skeleton permanently — creative direction lives in 2.1, content strategy lives in 2.1 and 2.2
+- Technical direction goes at the bottom of sections it supports, not as a peer to strategy/creative
+- "In scope" means Work Agreement line items only — discussed recommendations go to 3.2 regardless of how much conversation they got
+- Pressure test items must be scannable in under 5 seconds — one line per PASS/FLAG/RISK
+- Check 2 ignores boilerplate operational deliverables (hosting, meetings, analytics)
+- Check 4 only surfaces concerns, doesn't list items that pass
+
+## Current state
+- Plugin at v3.12.0, pushed to GitHub
+- Strategy Brief skill has been through 3 rounds of live testing and iteration
+- All memory files updated for cold-start on work machine
+- 4 creative brief skills remain as ~40-line placeholders
+
+## Next steps
+- Build creative brief skills (website first as the template, then adapt for media, paid ads, social)
+- Popok use case — informs how creative briefs handle partner/alliance relationships
+- Netlify wireframe option — Phase 2 after text-based creative brief works
+- Fix ingestion catalog formatting (still dumping as dense paragraph)
+- Audit the 13 feedback items from March 18 session — unclear which are still open
+
+---
+
 # Session Log — 2026-03-18
 
 ## What was worked on

@@ -62,7 +62,30 @@ Note: Gmail is not currently configured as a connector. The user can upload or p
 
 ### Step 3: Ingestion Catalog
 
-Present sources, themes, and confirmed line items. Then ask:
+Present what was found using this exact structure:
+
+**Documents Ingested**
+
+| # | Source | Type | Key Themes |
+|---|--------|------|------------|
+| 1 | _filename or description_ | PDF/DOCX/Slack/Upload | _2-5 word summary_ |
+
+One row per source. If a connector returned nothing, add a row: "No results from [connector]."
+
+**Work Agreement Line Items**
+
+Checklist format, one item per line:
+
+- [ ] _Line item as written in the agreement_
+
+**Themes Identified**
+
+Bullets, one theme per line. No narrative. Each theme is one sentence max.
+
+- _Theme_
+- _Theme_
+
+Then ask:
 
 ```
 Does this cover everything, or do you have more to add before I start building the summary?
