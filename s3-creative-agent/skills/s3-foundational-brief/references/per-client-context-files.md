@@ -89,8 +89,8 @@ When a skill produces a .docx file, follow these rules:
 
 ### Google Drive Upload Reminder
 
-- **First completion** of a document type (no prior entry in MEMORY.md for this brief type): Remind the user to upload to Google Drive.
-  > "Please upload {filename} to the client's Google Drive folder when you're ready."
+- **First completion** of a document type (no prior entry in MEMORY.md for this brief type): Remind the user to save to the client's Google Drive folder.
+  > "Your {document type} is ready. When you open it in Google Drive (from the dropdown above), it will land in My Drive. Remember to move it to the client's Google Drive folder."
 - **Updates** to an existing document (MEMORY.md already has an entry for this brief type): Log the updated date. No upload reminder.
 
 ### Reference Section in the .docx
