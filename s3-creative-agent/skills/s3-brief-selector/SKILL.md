@@ -13,6 +13,8 @@ description: |
 
 Studio 3 Marketing has three distinct brief types, and team members often just say "brief" or "creative brief" without specifying which one they need. This skill catches those ambiguous requests, confirms the client, checks what already exists, and routes to the correct skill.
 
+The selector is pipeline-aware. It checks what documents exist for the client and adapts the options to show where the client is in the pipeline, with a recommended next step. It never blocks a choice, just provides context.
+
 ## The Three Brief Types
 
 **Foundational Brief** -- An evergreen, fact-based onboarding document created when a new client comes on board. It captures who the client is: their details, goals, pain points, brand essentials, audiences, competitors, and market differentiators. It is NOT a strategy document. It does not change per project.
@@ -39,46 +41,52 @@ Before anything else, determine the client name so we can check what already exi
 3. If no context exists, use AskUserQuestion to ask: "What is the client name?"
 4. Wait for the user's response.
 
-### Step 2: Check for an existing foundational brief
+### Step 2: Check for existing documents
 
-Search two locations for a foundational brief for this client:
+Search two locations for existing briefs for this client:
 
-1. **Local working folder** -- check the workspace/project folder for a foundational brief file (e.g., `{Client Name}_Foundational_Brief_DRAFT.docx` or similar)
-2. **Google Drive** -- search the client's main folder for a document with "Foundational" and "Brief" in the name
+1. **Local working folder** -- check the workspace/project folder for brief files
+2. **Google Drive** -- search the client's main folder and Creative Strategy subfolder
 
-If either location has a foundational brief, proceed to Step 3A. If neither has one, proceed to Step 3B.
+Check for BOTH:
+- A foundational brief (e.g., `{Client}_Foundational_Brief_DRAFT.docx` or `_FINAL.docx`)
+- A strategy brief (e.g., `{Client}_Strategy_Brief_DRAFT.docx` or `_FINAL.docx`)
 
-Do NOT present results to the user. This is an internal check that determines which options to show.
+Record which exist. Do NOT present results to the user. This is an internal check that determines which options and labels to show.
 
-### Step 3A: Foundational brief EXISTS — show three options
+### Step 3: Present options based on pipeline state
 
-Use AskUserQuestion to ask:
+Use AskUserQuestion to ask: "What type of brief are you working on?"
 
-"What type of brief are you working on?"
+The options depend on what exists:
 
-Options (exactly three, no more):
+**Scenario A: Neither foundational nor strategy brief exists**
+
+Options (exactly two):
+1. **Foundational Brief** -- recommended starting point for a new client
+2. **Other**
+
+Do not offer Strategy or Creative when no foundational brief exists. Strategy requires a foundational brief as input, and creative briefs benefit from one. If the user picks Other, handle in Step 4.
+
+**Scenario B: Foundational brief exists, no strategy brief**
+
+Options (exactly three):
 1. **Foundational Brief** -- update or finalize the existing onboarding document
-2. **Strategy Brief** -- strategic recommendations built on the foundational brief
+2. **Strategy Brief** -- recommended next step: strategic recommendations built on the foundational brief
 3. **Creative Brief** -- strategy and execution for a specific channel
 
-Wait for the user to respond.
+**Scenario C: Both foundational and strategy briefs exist**
 
-### Step 3B: No foundational brief found — show three options
-
-Use AskUserQuestion to ask:
-
-"What type of brief are you working on?"
-
-Options (exactly three, no more):
-1. **Foundational Brief** -- the evergreen client research document
-2. **Creative Brief** -- strategy and execution for a specific channel
-3. **Other**
+Options (exactly three):
+1. **Foundational Brief** -- update or finalize the existing onboarding document
+2. **Strategy Brief** -- update the existing strategy document
+3. **Creative Brief** -- recommended next step: execution brief for a specific channel
 
 Wait for the user to respond.
 
 ### Step 4: Follow-up based on their answer
 
-**If the user chose Foundational Brief (from either 3A or 3B):**
+**If the user chose Foundational Brief:**
 
 Use AskUserQuestion to ask:
 
@@ -93,11 +101,11 @@ Wait for the user to respond.
 
 Then invoke the `s3-foundational-brief` skill using the Skill tool. Pass BOTH the selected mode AND the confirmed client name in your message (e.g., "The user selected New (Draft) for client Big Auto Accident Attorneys"). Do not ask any further questions.
 
-**If the user chose Strategy Brief (from 3A only):**
+**If the user chose Strategy Brief:**
 
 Invoke the `s3-strategy-brief` skill using the Skill tool. Pass the confirmed client name in your message (e.g., "The user wants to create a strategy brief for Big Auto Accident Attorneys"). Do not ask any further questions.
 
-**If the user chose Creative Brief (from either 3A or 3B):**
+**If the user chose Creative Brief:**
 
 Use AskUserQuestion to ask:
 
@@ -120,7 +128,7 @@ Wait for the user to respond, then invoke the matching skill:
 
 Invoke the skill using the Skill tool. The creative brief skill will take over from here.
 
-**If the user chose Other (from 3B only):**
+**If the user chose Other (Scenario A only):**
 
 Use AskUserQuestion with a freeform text input: "What are you looking to create?" Then route based on the response. If they describe a strategy brief, invoke `s3-strategy-brief`. If they describe a recommendation document, invoke `s3-recommendation-doc`. If unclear, ask a follow-up.
 
@@ -129,7 +137,8 @@ Use AskUserQuestion with a freeform text input: "What are you looking to create?
 - This skill is a router only. It does not produce any brief content itself.
 - **Each step gets its own AskUserQuestion call.** Never combine steps.
 - Do NOT add extra options beyond what is listed above for each step.
-- The foundational brief check in Step 2 is silent. Do not tell the user whether you found one or not. It only determines which option set to show.
+- The document check in Step 2 is silent. Do not tell the user whether you found documents or not. It only determines which option set and labels to show.
+- The "recommended next step" label guides users through the pipeline without blocking. A user can always pick any available option regardless of the label.
 - Even if context strongly suggests which brief type the user needs (e.g., a turnover email implies foundational), always ask the confirmation questions. The routing is a confirmation flow, not just a disambiguation flow.
 - Never start generating brief content. Your only job is to route.
 - Use the AskUserQuestion tool for all routing questions.
