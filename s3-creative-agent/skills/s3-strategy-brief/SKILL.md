@@ -158,7 +158,7 @@ After brand strategy is settled, present channel summaries and ask: "Where do yo
 The user drives. You:
 - Listen to riffing and organize into the right sections
 - Ask follow-up questions when something is vague or incomplete
-- Flag scope expansion inline: "This is outside the current Work Agreement, flagging for 3.2"
+- Flag scope expansion inline: "This is outside the current Work Agreement, flagging for 4.0 Recommendations"
 - Dispatch research agents on demand when the user asks questions requiring deeper data
 - Handle section-jumping without losing context
 - Track what has been discussed and what has not
@@ -229,9 +229,9 @@ After the Brand Strategy section is settled, append it to the working .docx. Cha
 
 ---
 
-## Phase 4: Pressure Test (Before Output)
+## Phase 4: Pressure Test (Conversation-Only Quality Gate)
 
-**CRITICAL: The pressure test is a conversation, not a summary. It happens BEFORE generating the .docx, not after. Do NOT generate the document until the pressure test is complete and the user says to proceed.**
+**CRITICAL: The pressure test is a conversation, not a document section. It happens BEFORE generating the .docx, not after. Do NOT generate the document until the pressure test is complete and the user says to proceed. The pressure test does NOT appear in the output document.**
 
 The pressure test is the last opportunity to catch gaps, contradictions, and unrealistic assumptions before they get locked into a deliverable document. Run it honestly. If you find holes, say so. If everything checks out, show your work so the user can verify.
 
@@ -295,9 +295,8 @@ Do NOT rush through the checks. Each one is a conversation opportunity, not a bo
 
 ### After All Checks Are Resolved
 
-- Section 3.2 (Scope Expansion Opportunities) is populated with all inline flags collected during conversation
-- Section 4.0 (Pressure Test Summary) reflects the actual results, including flags that were acknowledged but not resolved
-- THEN generate the final .docx and update CLAUDE.md
+- Section 4.0 (Recommendations) is populated with all out-of-scope ideas collected during conversation, each with its own subsection, scope callout, and strategic rationale
+- THEN generate the final .docx with embedded fonts and update CLAUDE.md
 - Do NOT generate the document until the user explicitly says to proceed after the pressure test
 
 ---
@@ -318,27 +317,27 @@ Created: [date]  |  Last Updated: [date]
   1.6  Messaging Framework (examples per audience)
   1.7  The Bright Idea
 
-2.0  Channel Strategies
+2.0  Channel Strategies (in-scope work only)
   2.1  Website Strategy (strategy, creative direction, technical direction)
   2.2  SEO Strategy
-  2.3  Paid Advertising Strategy
-  2.4  Social Media Strategy
-  2.5  S3 Media Strategy (photo/video shoot direction, turnover to S3 Media team)
+  2.3  S3 Media Strategy (photo/video production direction)
 
 3.0  Scope Alignment
   3.1  Work Agreement Coverage (line items mapped to sections)
-  3.2  Scope Expansion Opportunities (collected inline flags with status)
 
-4.0  Pressure Test Summary
-  4.1  Audience Coverage Check
-  4.2  Scope Coverage Check
-  4.3  Strategic Coherence Check
-  4.4  Feasibility Notes
+4.0  Recommendations (not in current scope)
+  4.1+ One subsection per recommendation (Paid Ads, Social Media, etc.)
 ```
 
-Sections without content are marked "Not applicable to this engagement" rather than omitted. The structure is always the same. Section order in the document is fixed; conversation order is not.
+**Section 2.0 contains only committed, in-scope work.** Channel strategies that are not in the Work Agreement do not appear in 2.0. They appear in 4.0 as recommendations with strategic rationale.
 
-Heading level mapping: 1.0 = H1, 1.1/2.1 = H2, sub-fields = H4.
+**Section 4.0 is the upsell close.** The reader finishes the document with what we recommend adding. Each recommendation gets its own H2 subsection with a scope callout, the strategic rationale, and enough context for the client to make a decision. This is where all inline scope flags from the conversation are collected and formalized.
+
+**The pressure test is a conversation-only quality gate.** It runs before document generation (see Phase 4) but does NOT appear as a section in the output document.
+
+Sections without content are marked "Not applicable to this engagement" rather than omitted. Section order in the document is fixed; conversation order is not.
+
+Heading level mapping: 1.0 = H1, 1.1/2.1 = H2, named blocks within sections = H3, sub-fields = H4.
 
 ---
 
@@ -346,8 +345,8 @@ Heading level mapping: 1.0 = H1, 1.1/2.1 = H2, sub-fields = H4.
 
 When an idea surfaces that falls outside the Work Agreement line items:
 
-- **Inline:** The idea lives in the relevant channel section with a callout: "Outside current scope, requires client approval" (styled as a bordered callout box per s3-docx-styles.md)
-- **Collected:** Section 3.2 aggregates all flagged items as a checklist
+- **During conversation:** Flag inline: "This is outside the current Work Agreement, flagging for 4.0 Recommendations"
+- **In the document:** The idea does NOT appear in section 2.0 (Channel Strategies). Instead, it gets its own subsection in 4.0 (Recommendations) with a scope callout, strategic rationale, and enough context for the client to make a decision.
 
 Scope flags are additive, not blocking. An out-of-scope idea is flagged and collected, not rejected. The user decides what to do with it.
 
@@ -357,7 +356,7 @@ Scope flags are additive, not blocking. An out-of-scope idea is flagged and coll
 
 Section 2.5 is the **production brief** for photo/video shoots: what to shoot, where, talent considerations, location notes, visual references. This section, paired with a mood board, becomes the handoff for the S3 Media team.
 
-**Scope rule:** Only label deliverables as "in scope" if they map directly to a Work Agreement line item. Ideas that were discussed at length, recommended, or even agreed upon strategically are still scope expansion opportunities (3.2) unless the Work Agreement explicitly covers them. "We talked about it" is not the same as "it's sold."
+**Scope rule:** Only label deliverables as "in scope" if they map directly to a Work Agreement line item. Ideas that were discussed at length, recommended, or even agreed upon strategically are still recommendations (4.0) unless the Work Agreement explicitly covers them. "We talked about it" is not the same as "it's sold."
 
 ---
 
@@ -365,12 +364,23 @@ Section 2.5 is the **production brief** for photo/video shoots: what to shoot, w
 
 Read `references/s3-docx-styles.md` before creating or formatting the document.
 
-- Format: .docx
+- Format: .docx with embedded Open Sans fonts
 - Status badge: DRAFT (black outline on cover page)
 - Dates: Created, Last Updated
 - Location: Google Drive `{Client Folder}/CREATIVE STRATEGY/` (if available) or local outputs
 - No em dashes, no code/HTML in content
 - Scope callout styling: bordered box, light gray background, left orange border, italic text
+- Section dividers (gray bottom border) between every subsection, not just between major sections
+
+### Font Embedding (Required)
+
+After generating the .docx with docx-js, run the font embedding script to ensure Open Sans renders on all machines:
+
+```bash
+python3 assets/embed-fonts.py output.docx
+```
+
+This embeds Regular, Bold, Italic, and BoldItalic weights of Open Sans directly into the file. Without this step, the document falls back to Aptos or Calibri on machines without Open Sans installed. The script overwrites the input file in place (pass a second argument for a different output path). Adds approximately 500KB to file size.
 
 ---
 

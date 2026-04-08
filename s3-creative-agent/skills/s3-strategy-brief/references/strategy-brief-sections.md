@@ -9,8 +9,8 @@ Purpose: Defines the structure, fields, and formatting for every section of the 
 | Skeleton Level | Heading | Example |
 |---------------|---------|---------|
 | 1.0, 2.0, 3.0, 4.0 | H1 | Brand Strategy |
-| 1.1-1.7, 2.1-2.7, 3.1-3.2, 4.1-4.4 | H2 | Brand Positioning |
-| 2.1.1, 2.1.2 | H3 | Creative Direction |
+| 1.1-1.7, 2.1-2.3, 3.1, 4.1+ | H2 | Brand Positioning |
+| Named blocks within sections | H3 | Competitive Framing, English Track, Client-Facing |
 | Sub-fields within sections | H4 | Demographics |
 
 ---
@@ -118,6 +118,8 @@ Purpose: Defines the structure, fields, and formatting for every section of the 
 
 ## 2.0 Channel Strategies
 
+**Section 2.0 contains only in-scope work.** Channels not covered by the Work Agreement do not appear here. They appear in 4.0 Recommendations.
+
 ### General Pattern
 
 Each channel section follows this structure unless noted otherwise:
@@ -126,7 +128,6 @@ Each channel section follows this structure unless noted otherwise:
 - **Key Tactics** (bulleted list: specific actions or initiatives)
 - **Audience Alignment** (which audiences from 1.4 this channel serves)
 - **Bright Idea Application** (how 1.7 manifests in this channel)
-- **Scope callout** (if applicable: inline flag per s3-docx-styles.md scope callout style)
 
 ---
 
@@ -159,27 +160,11 @@ Each channel section follows this structure unless noted otherwise:
 
 ---
 
-### 2.3 Paid Advertising Strategy
+### 2.3 S3 Media Strategy
 
 **Heading:** H2
 
-**Fields:** Follow general channel pattern. Key Tactics should include platform selection, budget allocation direction, audience targeting approach, campaign structure.
-
----
-
-### 2.4 Social Media Strategy
-
-**Heading:** H2
-
-**Fields:** Follow general channel pattern. Key Tactics should include platform prioritization, content pillars, posting cadence direction, community approach.
-
----
-
-### 2.5 S3 Media Strategy
-
-**Heading:** H2
-
-**IMPORTANT:** This is the production brief for photo/video shoots, NOT earned/owned/paid media mix.
+**IMPORTANT:** This is the production brief for photo/video shoots, NOT earned/owned/paid media mix. Paid Advertising and Social Media, if not in the Work Agreement, belong in 4.0 Recommendations.
 
 **Fields:**
 - Shoot Objectives (what the shoot needs to produce and why)
@@ -190,7 +175,7 @@ Each channel section follows this structure unless noted otherwise:
 
 **Format:** This section plus a mood board becomes the S3 Media team handoff package.
 
-**Scope rule:** Only label deliverables as "in scope" if they map directly to a Work Agreement line item. Strategic recommendations that were discussed, even at length, are scope expansion opportunities (3.2) unless the Work Agreement explicitly covers them.
+**Scope rule:** Only label deliverables as "in scope" if they map directly to a Work Agreement line item. Strategic recommendations that were discussed, even at length, are recommendations (4.0) unless the Work Agreement explicitly covers them.
 
 ---
 
@@ -204,51 +189,31 @@ Each channel section follows this structure unless noted otherwise:
 
 **Data source:** Work Agreement line items (extracted and confirmed in Phase 1)
 
-**Format:** Table with columns: Line Item | Addressed In | Status (Covered / Partial / Not Addressed)
+**Format:** Intro paragraph identifying the Work Agreement and execution date, followed by a table with columns: Line Item | Monthly Cost | Addressed In | Status (Covered / Partial / Not Addressed). After the table, a brief paragraph listing what the monthly services include.
 
 ---
 
-### 3.2 Scope Expansion Opportunities
+## 4.0 Recommendations
+
+**Heading:** H1
+
+**Purpose:** This is where all out-of-scope strategic recommendations live. Ideas that emerged during the strategy conversation but are not covered by the Work Agreement. The reader finishes the document here, with the upsell.
+
+**Intro paragraph:** One paragraph framing the section: "The following strategic recommendations emerged during the strategy development process. They are not included in the current Work Agreement but represent opportunities to extend the engagement based on the direction established in this brief."
+
+### 4.x [Recommendation Name] (one subsection per recommendation)
 
 **Heading:** H2
 
-**Data source:** Collected inline scope flags from sections 2.1-2.7
+**Format per recommendation:**
+1. Scope callout (styled per s3-docx-styles.md): "Outside current scope. Requires client approval and separate agreement."
+2. Current state paragraph: what exists today (data, metrics, vendor situation)
+3. Strategic rationale: 1-2 paragraphs explaining why this matters and how it connects to the strategy established in the brief
+4. Recommended approach: what S3 would do if engaged
 
-**Format:** Bulleted checklist. Each item includes the idea, which section it appeared in, and status (Pending Confirmation / Approved / Removed). This is the last thing read before moving to a creative brief.
+**Example subsections:** 4.1 Paid Advertising Management, 4.2 Social Media Management, 4.3 Ongoing Video Production. The specific subsections depend on what emerged during the strategy conversation.
 
----
-
-## 4.0 Pressure Test Summary
-
-### 4.1 Audience Coverage Check
-
-**Heading:** H2
-
-**Format:** Table with columns: Audience (from Foundational 3.2) | Communication Angle (1.4) | Channel Coverage (which 2.x sections address it) | Status (Complete / Gap)
-
----
-
-### 4.2 Scope Coverage Check
-
-**Heading:** H2
-
-**Format:** Table with columns: Work Agreement Line Item | Strategy Section(s) | Status (Covered / Gap)
-
----
-
-### 4.3 Strategic Coherence Check
-
-**Heading:** H2
-
-**Format:** Paragraph summary. States the Bright Idea(s) and how they thread. Notes any intentional divergence by channel with rationale. Flags any unexplained divergence that was resolved during the pressure test conversation.
-
----
-
-### 4.4 Feasibility Notes
-
-**Heading:** H2
-
-**Format:** Bulleted list. Timeline, resource, or dependency observations. Not a blocker, awareness items only.
+**Key rule:** Each recommendation must carry enough context for the client to evaluate it independently. Do not write "as discussed" or "per our conversation." State the case as if the reader is seeing it for the first time.
 
 ---
 
@@ -265,12 +230,13 @@ When a channel strategy does not apply to the engagement:
 
 - Bold for field labels and key phrases within body text
 - Clickable hyperlinks for all URLs (never raw URLs without link text)
-- Horizontal rules between major sections
+- Section dividers (gray bottom border, #999999) between every subsection, not just between major sections. Each H2 section ends with a divider.
 - Bullet lists only where the section template calls for them
 - Tables where the section template specifies them
 - No em dashes; use commas, colons, or periods
 - No code, HTML, or debug output in brief content
 - Clean, modern, agency-grade, client-ready appearance
+- Font embedding: run `assets/embed-fonts.py` on every generated .docx to embed Open Sans
 
 ## Readability Rules
 
