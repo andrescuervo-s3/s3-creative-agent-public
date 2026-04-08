@@ -461,10 +461,11 @@ The audience is an account manager who needs to walk into a client call feeling 
 1. Write the content first — get alignment on the position and structure before touching code
 2. Build the docx-js script using the shared styles from `s3-docx-styles.md` and the components from `references/s3-rec-doc-components.md`
 3. Run it: `node script.js`
-4. Validate: `python scripts/office/validate.py output.docx`
-5. Convert to PDF for preview: `python scripts/office/soffice.py --headless --convert-to pdf output.docx`
-6. Preview pages: `pdftoppm -jpeg -r 150 output.pdf preview`
-7. Save the final .docx to the outputs folder
+4. Embed fonts: `python3 assets/embed-fonts.py output.docx`
+5. Validate: `python scripts/office/validate.py output.docx`
+6. Convert to PDF for preview: `python scripts/office/soffice.py --headless --convert-to pdf output.docx`
+7. Preview pages: `pdftoppm -jpeg -r 150 output.pdf preview`
+8. Save the final .docx to the outputs folder
 
 ### Naming Convention
 

@@ -11,6 +11,19 @@ This plugin is distributed through the Claude marketplace. The deployment cycle 
 
 **Every change must be pushed to GitHub before it can be tested in Cowork.**
 
+### Version Bumping
+
+When bumping the plugin version, update BOTH files:
+- `.claude-plugin/marketplace.json` (root level)
+- `s3-creative-agent/.claude-plugin/plugin.json` (plugin subdirectory — this is what Cowork displays)
+
+### Cache Clear Command
+
+After pushing, always share the exact command (no wildcard):
+```
+rm -rf ~/Library/Caches/cowork/plugins/s3-creative-agent
+```
+
 ## Reference Material — READ BEFORE BUILDING
 
 The `.reference/` directory contains two repos that must be consulted before creating or modifying any skill:
@@ -80,6 +93,7 @@ s3-creative-agent/                          <- GitHub repo root
 │       │   └── references/                 <- 10 files (research agents, validation, sections, etc.)
 │       ├── s3-strategy-brief/
 │       │   ├── SKILL.md                    <- Strategy orchestrator
+│       │   ├── assets/                     <- Font files + embed-fonts.py script
 │       │   └── references/                 <- 11 files (strategy sections, tech stack, shared refs)
 │       ├── s3-recommendation-doc/
 │       │   ├── SKILL.md                    <- B&W recommendation doc builder
@@ -98,7 +112,7 @@ s3-creative-agent/                          <- GitHub repo root
 
 ### Brief Selector (router)
 Entry point when user says "brief" without specifying type. Two-step routing:
-1. Ask: Foundational Brief or Creative Brief (two options only, separate question)
+1. Ask: Foundational Brief, Strategy Brief, or Creative Brief
 2. Ask the follow-up based on answer (mode for foundational, subtype for creative)
 
 ### Foundational Brief
@@ -106,8 +120,11 @@ Evergreen client onboarding document. Three modes: New (Draft), Update (Draft), 
 Full flow: Document Collection, Build Mode (Guided/Auto), then sections 1.0 through 3.4.
 Research agents run for: social media (2.1), SEO/digital (2.3), audiences (3.2), competitors (3.3).
 
+### Strategy Brief
+Formalizes foundational facts + creative call outputs into strategic recommendations. Collaborative conversation. Document structure: 1.0 Brand Strategy, 2.0 Channel Strategies (in-scope only), 3.0 Scope Alignment, 4.0 Recommendations (out-of-scope upsell). Pressure test is a conversation-only quality gate. Output: .docx with embedded Open Sans fonts.
+
 ### Creative Briefs (4 subtypes)
-Project-specific briefs: Website, Media, Paid Ads, Social Media.
+Project-specific briefs: Website, Media, Paid Ads, Social Media. These are next to be built.
 
 ### Recommendation Document
 Short (2-6 page) internal B&W strategy doc for client meetings. Not a brief.

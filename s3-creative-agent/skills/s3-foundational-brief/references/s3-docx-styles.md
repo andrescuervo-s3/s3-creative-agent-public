@@ -144,7 +144,7 @@ Implemented as empty paragraphs with a bottom border.
 | Border size | 6 (3/4 pt line) |
 | Border space | 1 |
 
-Place a divider between each major section (after each x.0 group completes, between competitor profiles in 3.3, and between audience profiles in 3.2).
+Place a divider after every H2 subsection. Each subsection (1.1, 1.2, 2.1, 3.1, 4.1, etc.) ends with a divider. This gives the document a clean, scannable rhythm where each topic is visually separated from the next.
 
 ---
 
@@ -172,7 +172,7 @@ Column widths must sum to table width. Set both columnWidths on the table AND wi
 
 ## Scope Callout
 
-Used in the Strategy Brief for flagging ideas outside the current Work Agreement scope.
+Used in the Strategy Brief section 4.0 (Recommendations) to flag ideas outside the current Work Agreement scope. Each recommendation subsection opens with a scope callout.
 
 **Visual spec:**
 - Full content width (9360 DXA)

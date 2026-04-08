@@ -273,9 +273,16 @@ Create a working .docx document after Phase 1 completes. Name it `{Client Name}_
 - Last Updated: Most recent edit date
 
 ### Document Styling
-Read `references/foundational-brief-sections.md` BEFORE creating or appending to the document. It defines the exact structure, field order, table formats, and heading hierarchy for every section. Do not improvise your own layout. Follow the templates exactly.
+Read `references/s3-docx-styles.md` for font, heading, table, and layout specifications. Read `references/foundational-brief-sections.md` for the exact structure, field order, table formats, and heading hierarchy for every section. Do not improvise your own layout. Follow the templates exactly.
 
-Apply: clean sans-serif font (Arial or Calibri), heading hierarchy per foundational-brief-sections.md, bold field labels, clickable hyperlinks (never raw URLs), horizontal rules between major sections, tables where specified (Brand Values, Brand Voice, Social Media, S3 Service Overview, Evidence, Proof Signals).
+### Font Embedding (Required)
+After generating the .docx with docx-js, run the font embedding script to ensure Open Sans renders on all machines:
+
+```bash
+python3 assets/embed-fonts.py output.docx
+```
+
+This embeds Open Sans directly into the file. Without this step, the document falls back to Aptos or Calibri on machines without Open Sans installed.
 
 ---
 
