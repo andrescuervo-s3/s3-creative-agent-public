@@ -38,3 +38,7 @@ Since this skill is still being developed, when triggered:
 ## Dependencies
 
 This skill will reference the client's Foundational Brief (produced by the `s3-foundational-brief` skill) as a source of established facts about the client, audiences, competitors, and brand voice. The Foundational Brief should ideally exist before a Creative Brief is started, but it is not strictly required.
+
+## Reference Files
+
+- `references/per-client-context-files.md` -- Read at the start. Check for and update CLAUDE.md and MEMORY.md in the client working folder.

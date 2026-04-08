@@ -99,7 +99,7 @@ Create `{Client Name}_Strategy_Brief_DRAFT.docx` with cover page and DRAFT badge
 
 ### Step 5: Per-Client Context Files
 
-Check for existing CLAUDE.md and MEMORY.md in the client project folder. If they exist, update with strategy brief context. If not, create them with client name, key people, documents produced, Work Agreement line items, and connectors used.
+Read `references/per-client-context-files.md`. Check for existing CLAUDE.md and MEMORY.md in the client working folder. If they exist, read and update them. If not, create them per the reference spec.
 
 ---
 
@@ -431,4 +431,5 @@ Read these on demand, not all at once:
 - `references/seo-digital-research-agent.md` -- Read before dispatching SEO research.
 - `references/social-media-discovery-agent.md` -- Read before dispatching social media research.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF. Full method chain: pdfplumber, pdftotext, pypdf, OCR.
+- `references/per-client-context-files.md` -- Read during Phase 1. Defines how to create and update CLAUDE.md and MEMORY.md in the client working folder.
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.

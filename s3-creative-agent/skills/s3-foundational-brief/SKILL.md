@@ -123,6 +123,10 @@ Input files come in various formats: PDF, XLSX, CSV, Google Sheets, RTF, DOCX, T
 
 **PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. One fetch attempt, one extraction attempt. If either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
 
+### Per-Client Context Files
+
+Read `references/per-client-context-files.md`. Check for existing CLAUDE.md and MEMORY.md in the client working folder. If they exist, read and update them. If not, create them per the reference spec. This is the first skill in the pipeline, so for new clients you will be creating these files.
+
 ---
 
 ## Phase 2: Build Mode Selection
@@ -320,4 +324,5 @@ Read these on demand, not all at once:
 - `references/social-media-discovery-agent.md` -- Read before 2.1 Social Media discovery. 6-platform search protocol.
 - `references/seo-digital-research-agent.md` -- Read before 2.3 Digital Snapshot. Fallback research protocol.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF. One attempt, no loops.
+- `references/per-client-context-files.md` -- Read after document collection. Defines how to create and update CLAUDE.md and MEMORY.md in the client working folder.
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted (bullets, headers, tables, status lines). Never write dense paragraphs in the chat.
