@@ -55,8 +55,8 @@ Every client project maintains two persistent files in the working folder. These
 # {Client Name} — Project Memory
 
 ## Documents
-- Foundational Brief — {status} — {date}
-- Strategy Brief — {status} — {date}
+- Foundational Brief: {filename}.docx (created {date}, updated {date})
+- Strategy Brief: {filename}.docx (created {date})
 
 ## Key Context
 - {One-line summary of something learned that future skills need}
@@ -72,6 +72,37 @@ Every client project maintains two persistent files in the working folder. These
 - Add open items when something is deferred or unresolved
 - Mark open items as resolved when they are addressed
 - Keep it scannable. One line per entry. No paragraphs.
+
+---
+
+## Document Output Logging
+
+When a skill produces a .docx file, follow these rules:
+
+### After Producing a .docx
+
+1. **Log to MEMORY.md** — Add or update the entry in the Documents section with the filename and date.
+   - New document: `- Strategy Brief: TMP_Strategy_Brief.docx (created 2026-04-08)`
+   - Updated document: Update the existing entry's date — `(created 2026-03-18, updated 2026-04-08)`
+
+2. **Log to CLAUDE.md** — Add or update the entry in the Documents Produced section with the filename, status, and date.
+
+### Google Drive Upload Reminder
+
+- **First completion** of a document type (no prior entry in MEMORY.md for this brief type): Remind the user to upload to Google Drive.
+  > "Please upload {filename} to the client's Google Drive folder when you're ready."
+- **Updates** to an existing document (MEMORY.md already has an entry for this brief type): Log the updated date. No upload reminder.
+
+### Reference Section in the .docx
+
+Every brief includes a **Reference / Source Documents** section at the end of the document. This section is inherited and additive across the pipeline:
+
+- Read MEMORY.md to find all previously produced documents and source materials.
+- Include every known document with its filename and date.
+- Each pipeline stage adds its own references on top of what it inherits.
+- At the creative brief stage, present the accumulated list to the user and ask: "Here's what I have. Anything missing?"
+
+The reference section uses local filenames during the pipeline. Google Drive links get finalized at the turnover stage.
 
 ---
 
