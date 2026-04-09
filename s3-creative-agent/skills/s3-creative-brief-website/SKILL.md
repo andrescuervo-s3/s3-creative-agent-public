@@ -347,6 +347,7 @@ After the user confirms:
    - Update CLAUDE.md (add document to Documents Produced)
    - Delete `{Client}_progress.json` — skill completed successfully
    - Google Drive reminder if first completion (no prior entry in MEMORY.md for this brief type)
+4. **Pipeline routing:** Read `references/pipeline-routing.md` and present the recommended next step.
 
 ---
 

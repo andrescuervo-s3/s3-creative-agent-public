@@ -57,7 +57,7 @@ Here are the line items I found in the Work Agreement: [list]. Is this complete,
 
 **PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. CRITICAL: one fetch attempt, one extraction attempt -- if either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
 
-### Step 1: Connector Scans (Run in Parallel)
+### Step 2: Connector Scans (Run in Parallel)
 
 All scans filter to material created or modified since the Foundational Brief's created date. For threaded sources (Slack), this means threads with new messages since that date.
 
@@ -70,11 +70,11 @@ These scans are independent of each other. Run them in parallel:
 
 Note: Gmail is not currently configured as a connector. The user can upload or paste relevant email content manually.
 
-### Step 2: User Prompt
+### Step 3: User Prompt
 
 > "Anything else to add? Verbal notes, transcripts, attachments, data exports?"
 
-### Step 3: Ingestion Catalog
+### Step 4: Ingestion Catalog
 
 Present what was found using this exact structure:
 
@@ -107,11 +107,11 @@ Does this cover everything, or do you have more to add before I start building t
 
 Proceed to Phase 2 only after the user confirms. If the user adds more material, update the catalog and ask again.
 
-### Step 4: Create Working Document
+### Step 5: Create Working Document
 
 Create `{Client Name}_Strategy_Brief_DRAFT.docx` with cover page and DRAFT badge. Read `references/s3-docx-styles.md` before creating the document.
 
-### Step 5: Checkpoint — Ingestion Complete
+### Step 6: Checkpoint — Ingestion Complete
 
 Save `{Client}_progress.json` with: skill name, client, documents collected, phase = "ingestion-complete". Update CLAUDE.md with any new connectors used.
 
@@ -368,7 +368,7 @@ Scope flags are additive, not blocking. An out-of-scope idea is flagged and coll
 
 ## S3 Media Strategy -- Key Distinction
 
-Section 2.5 is the **production brief** for photo/video shoots: what to shoot, where, talent considerations, location notes, visual references. This section, paired with a mood board, becomes the handoff for the S3 Media team.
+Section 2.3 (S3 Media Strategy) is the **production brief** for photo/video shoots: what to shoot, where, talent considerations, location notes, visual references. This section, paired with a mood board, becomes the handoff for the S3 Media team.
 
 **Scope rule:** Only label deliverables as "in scope" if they map directly to a Work Agreement line item. Ideas that were discussed at length, recommended, or even agreed upon strategically are still recommendations (4.0) unless the Work Agreement explicitly covers them. "We talked about it" is not the same as "it's sold."
 
@@ -434,7 +434,7 @@ After the .docx is saved:
 9. **No em dashes.** Use commas, colons, or periods.
 10. **No code, HTML, or debug output in brief content.**
 11. **Technical direction goes at the bottom of the section it supports.** It is not a peer to creative direction or strategic direction. It is supporting detail. Read `references/s3-tech-stack.md` before writing technical content. S3 builds on Tresio, DatoCMS, Mux, with specific component conventions.
-12. **Scope means the Work Agreement, not the conversation.** Only label deliverables as "in scope" if they map to a Work Agreement line item. Strategic recommendations, even ones the user loves, go in 3.2 (Scope Expansion Opportunities) unless the Work Agreement covers them.
+12. **Scope means the Work Agreement, not the conversation.** Only label deliverables as "in scope" if they map to a Work Agreement line item. Strategic recommendations, even ones the user loves, go in 4.0 (Recommendations) unless the Work Agreement covers them.
 
 ---
 
@@ -454,6 +454,6 @@ Read these on demand, not all at once:
 - `references/seo-digital-research-agent.md` -- Read before dispatching SEO research.
 - `references/social-media-discovery-agent.md` -- Read before dispatching social media research.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF. Full method chain: pdfplumber, pdftotext, pypdf, OCR.
-- `references/per-client-context-files.md` -- Read during Phase 1. Defines how to create and update CLAUDE.md and MEMORY.md in the client working folder.
+- `references/per-client-context-files.md` -- Read at Step 0 (before anything else). Defines CLAUDE.md, MEMORY.md, and progress.json lifecycle.
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.
 - `references/pipeline-routing.md` -- Read after the brief is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.

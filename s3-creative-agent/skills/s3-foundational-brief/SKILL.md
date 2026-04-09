@@ -161,7 +161,7 @@ After documents are collected, ask the user which build mode to use:
 
 ### Research Execution Contract
 
-For every research-dependent section (2.1 social media, 2.3, 3.1 brand voice, 3.2, 3.3, 3.4), follow this contract:
+For every research-dependent section (2.1 social media, 2.3, 3.1 brand voice, 3.2, 3.3), follow this contract:
 
 1. Read `references/research-tool-contract.md` FIRST. It defines what research is: WebSearch + WebFetch tool calls. Training data is not research. This is non-negotiable.
 2. Read the corresponding agent reference file
@@ -191,7 +191,7 @@ Write directly from boilerplate and document metadata. Include DRAFT status badg
 
 ---
 
-#### Batch 1: Parallel Research (2.1, 2.2, 2.3, 3.1, 3.2)
+#### Batch 1: Parallel Research (2.1, 2.3, 3.1, 3.2) + Document-Only (2.2)
 
 These five sections have no dependencies on each other. Run their research protocols in parallel, then write each section in document order.
 
@@ -350,6 +350,7 @@ Read these on demand, not all at once:
 - `references/social-media-discovery-agent.md` -- Read before 2.1 Social Media discovery. 6-platform search protocol.
 - `references/seo-digital-research-agent.md` -- Read before 2.3 Digital Snapshot. Fallback research protocol.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF. One attempt, no loops.
-- `references/per-client-context-files.md` -- Read after document collection. Defines how to create and update CLAUDE.md and MEMORY.md in the client working folder.
-- `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted (bullets, headers, tables, status lines). Never write dense paragraphs in the chat.
+- `references/per-client-context-files.md` -- Read at Step 0 (before anything else). Defines CLAUDE.md, MEMORY.md, and progress.json lifecycle.
+- `references/s3-docx-styles.md` -- Read before generating the .docx. Font, heading, table, and layout specs.
+- `references/chat-formatting.md` -- Read at the start of Phase 3. Defines how all chat output must be formatted (bullets, headers, tables, status lines). Never write dense paragraphs in the chat.
 - `references/pipeline-routing.md` -- Read after the brief is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.
