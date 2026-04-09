@@ -262,9 +262,11 @@ Implementation: use a right-aligned text box or header element positioned at the
 
 ---
 
-## Cover Date Fields
+## Cover Fields
 
-Section 1.1 Cover must include the following date fields:
+Every document must include the following cover fields below the document title and client name:
+
+**Authored by:** Name, Position (e.g., "Andrés Cuervo, CCO"). If the author's name and position are not known from the client CLAUDE.md, ask the user.
 
 **Draft documents:**
 - **Created**: The date the brief was first generated (Month Day, Year)
