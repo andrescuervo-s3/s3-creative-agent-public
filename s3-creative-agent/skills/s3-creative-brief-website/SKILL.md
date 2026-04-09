@@ -20,9 +20,21 @@ This brief is collaborative, not autonomous. You organize and formalize what the
 
 ---
 
+## Step 0: Context Files (Required — Do This First)
+
+Read `references/per-client-context-files.md`. Then:
+
+1. **CLAUDE.md**: Check for it in the working folder. If it exists, read it. If not, create it with the client name.
+2. **MEMORY.md**: Check for it. If it exists, read it to see what documents exist (use this to locate upstream briefs). If not, do not create yet.
+3. **progress.json**: Check for `{Client}_progress.json`. If it exists and the skill matches, offer to resume. If not, proceed normally.
+
+**GATE: Do not proceed to Phase 1 until CLAUDE.md exists in the working folder.**
+
+---
+
 ## Phase 1: Ingestion
 
-### Step 0: Required Inputs
+### Step 1: Required Inputs
 
 The skill will not proceed without all three inputs.
 
@@ -135,9 +147,9 @@ Create `{Client Name}_Website_Creative_Brief_DRAFT.docx` with cover page, DRAFT 
 - Created: [date]
 - Last Updated: [date]
 
-### Step 7: Per-Client Context Files
+### Step 7: Checkpoint — Ingestion Complete
 
-Read `references/per-client-context-files.md`. Check for existing CLAUDE.md and MEMORY.md in the client working folder. If they exist, read and update them. If not, create them per the reference spec.
+Save `{Client}_progress.json` with: skill name, client, documents collected, phase = "ingestion-complete". Update CLAUDE.md with any new connectors used.
 
 ---
 
@@ -328,9 +340,11 @@ After the user confirms:
 
 1. Generate the final .docx with all sections. **Font: Open Sans for all text. No exceptions. Do not use Arial, Calibri, or any other font.** Read `references/s3-docx-styles.md` before generating.
 2. Run font embedding: `python3 assets/embed-fonts.py output.docx`
-3. Update CLAUDE.md (add document to Documents Produced)
-4. Update MEMORY.md (add or update the Website Creative Brief entry with filename and date)
-5. Follow the document output logging rules in `references/per-client-context-files.md` (first completion gets a Google Drive reminder, updates do not)
+3. **Post-Output Logging (Immediate — Do Not Defer):**
+   - Update MEMORY.md (add or update the Website Creative Brief entry). Create MEMORY.md now if it does not exist.
+   - Update CLAUDE.md (add document to Documents Produced)
+   - Delete `{Client}_progress.json` — skill completed successfully
+   - Google Drive reminder if first completion (no prior entry in MEMORY.md for this brief type)
 
 ---
 

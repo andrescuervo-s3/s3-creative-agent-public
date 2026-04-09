@@ -37,11 +37,22 @@ The brief is built in three phases:
 
 ---
 
+## Step 0: Context Files (Required — Do This First)
+
+Read `references/per-client-context-files.md`. Then:
+
+1. **Client name**: The brief selector passes the confirmed client name when invoking this skill. Extract it from the handoff message. If NOT provided, use AskUserQuestion to ask "What is the client name?" before anything else.
+2. **CLAUDE.md**: Check for it in the working folder. If it exists, read it. If not, create it with the client name now. Do not wait.
+3. **MEMORY.md**: Check for it in the working folder. If it exists, read it to see what has been produced. If not, do not create yet (nothing to index).
+4. **progress.json**: Check for `{Client}_progress.json`. If it exists and the skill matches, offer to resume from the last checkpoint. If not, proceed normally.
+
+**GATE: Do not proceed to Phase 1 until CLAUDE.md exists in the working folder.**
+
+---
+
 ## Phase 1: Document Collection
 
-**Client name**: The brief selector passes the confirmed client name when invoking this skill. Extract it from the handoff message (e.g., "The user selected New (Draft) for client Big Auto Accident Attorneys"). If the client name was NOT provided in the handoff, use the AskUserQuestion tool to ask "What is the client name?" before doing anything else — no reference file reads, no todo lists, no tool loading until the name is confirmed.
-
-Once the client name is confirmed, search for an existing foundational brief before proceeding:
+Once Step 0 is complete, search for an existing foundational brief before collecting documents:
 
 **Existing brief check**: Search Google Drive inside the client's main folder for a document with "Foundational" and "Brief" in the name (e.g., "Big Auto Foundational Brief DRAFT"). Search by both the full client folder name AND shorter variations (e.g., "Big Auto" and "Big Auto Accident Attorneys"). Check subfolders including "Creative Strategy" if a root-level search returns nothing.
 
@@ -125,9 +136,9 @@ Input files come in various formats: PDF, XLSX, CSV, Google Sheets, RTF, DOCX, T
 
 **PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. One fetch attempt, one extraction attempt. If either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
 
-### Per-Client Context Files
+### 1d. Checkpoint: Document Collection Complete
 
-Read `references/per-client-context-files.md`. Check for existing CLAUDE.md and MEMORY.md in the client working folder. If they exist, read and update them. If not, create them per the reference spec. This is the first skill in the pipeline, so for new clients you will be creating these files.
+Save `{Client}_progress.json` with: skill name, client, mode, documents collected, phase = "document-collection-complete". Update CLAUDE.md with Connectors Used (which sources had results, which didn't).
 
 ---
 
@@ -137,7 +148,7 @@ After documents are collected, ask the user which build mode to use:
 
 **Guided**: Approval gate after every section. Best for first-time clients or when the user wants close control.
 
-**Auto**: No checkpoints. Generate all sections from 1.0 through 3.4 without stopping. Deliver the completed document. Best for experienced users who want speed.
+**Auto**: No user-facing checkpoints. Generate all sections from 1.0 through 3.4 without stopping. Deliver the completed document. Best for experienced users who want speed. Note: progress.json is still updated after each section even in Auto mode — this is silent crash recovery, not a user gate.
 
 **Auto mode critical rules:**
 - Run ALL research protocols in full before writing each section. Do not defer research until after delivery.
@@ -162,6 +173,10 @@ For every research-dependent section (2.1 social media, 2.3, 3.1 brand voice, 3.
 8. Assign confidence scores per `references/confidence-scoring-spec.md`
 
 If you cannot produce a Research Log based on actual tool calls, write "RESEARCH NOT PERFORMED" and score every claim as "Not Researched." Do NOT substitute training data and present it as research. Do NOT construct URLs from memory. Do NOT cite organizations you did not fetch data from.
+
+### Checkpoint Rule
+
+After completing each section (or group: 1.0+1.1 together), update `{Client}_progress.json` with the section added to `completed_steps` and the next section as `current_step`. This is silent — do not mention it to the user. In both Guided and Auto mode, this checkpoint happens after every section.
 
 ### Section Sequence
 
@@ -289,6 +304,16 @@ python3 assets/embed-fonts.py output.docx
 ```
 
 This embeds Open Sans directly into the file. Without this step, the document falls back to Aptos or Calibri on machines without Open Sans installed.
+
+### Post-Output Logging (Immediate — Do Not Defer)
+
+After the .docx is saved:
+
+1. **Update MEMORY.md** — Add or update the document entry. Create MEMORY.md now if it does not exist.
+2. **Update CLAUDE.md** — Add or update the Documents Produced entry.
+3. **Update progress.json** — Mark skill as complete.
+4. **Delete progress.json** — The skill finished successfully. Remove the checkpoint file.
+5. **Google Drive reminder** — If this is the first time this document type appears in MEMORY.md, remind the user to move it from My Drive to the client folder.
 
 ---
 

@@ -1,18 +1,24 @@
 # Per-Client Context Files
 
-Every client project maintains two persistent files in the working folder. These files provide continuity across skills and sessions. Whichever skill runs first creates them. Every subsequent skill reads them, uses them, and updates them.
+Every client project maintains three persistent files in the working folder. These files serve different purposes and are written at different times.
+
+| File | Purpose | Created | Updated |
+|------|---------|---------|---------|
+| CLAUDE.md | Project guidance: who, what, decisions | Step 0 (before anything else) | When key people or decisions change |
+| MEMORY.md | Document index: what was produced, when | After first document output | After every document output |
+| `{Client}_progress.json` | Session checkpoint: in-flight state | When skill work begins | After every major step |
 
 ---
 
 ## CLAUDE.md
 
-**Location:** Root of the client's working folder (the Cowork project directory).
+**Location:** Root of the client's working folder.
 
-**Purpose:** Project-level instructions and context that any skill or session can reference. This is the client's single source of truth for what has been produced, who the key people are, and what decisions have been made.
+**Purpose:** Project-level instructions and context. This is the client's single source of truth for who the key people are, what has been decided, and what connectors are available.
 
-**Created by:** The first skill to run for this client. If CLAUDE.md already exists, read it and update it. Do not overwrite.
+**When to create:** Step 0 of every skill. Before document collection, before research, before anything. If CLAUDE.md already exists, read it. If not, create it with whatever you know (even if just the client name). Expand it as you learn more.
 
-**Contents (initialize with what you know, expand over time):**
+**Contents:**
 
 ```markdown
 # {Client Name}
@@ -35,7 +41,7 @@ Every client project maintains two persistent files in the working folder. These
 
 **Update rules:**
 - Add new people as they appear in conversations, Slack threads, or documents
-- Add new documents as they are produced
+- Add new documents as they are produced (immediately, not batched at end)
 - Add key decisions that affect downstream skills (brand direction, scope changes, approved strategies)
 - Do not remove previous entries. Append.
 
@@ -45,9 +51,9 @@ Every client project maintains two persistent files in the working folder. These
 
 **Location:** Root of the client's working folder, alongside CLAUDE.md.
 
-**Purpose:** An index of what has been learned about this client across all skills and sessions. Structured the same way as the agent memory system: one-line entries pointing to context, not full content.
+**Purpose:** An index of what has been produced and learned about this client. Structured as one-line entries. This is how downstream skills know what the pipeline has already done.
 
-**Created by:** The first skill to run for this client. If MEMORY.md already exists, read it and update it. Do not overwrite.
+**When to create:** After the first document is produced. Not at the start of the skill (you have nothing to index yet), but immediately after producing output.
 
 **Contents:**
 
@@ -67,7 +73,7 @@ Every client project maintains two persistent files in the working folder. These
 ```
 
 **Update rules:**
-- Add document entries as briefs are created or updated
+- Add document entries immediately when a brief is created or updated. Do not wait until the end.
 - Add key context when something non-obvious is learned (e.g., "Popok audience does NOT interact with bigauto.com — separate domain and intake flow")
 - Add open items when something is deferred or unresolved
 - Mark open items as resolved when they are addressed
@@ -75,27 +81,96 @@ Every client project maintains two persistent files in the working folder. These
 
 ---
 
+## {Client}_progress.json
+
+**Location:** Root of the client's working folder.
+
+**Purpose:** In-session checkpoint. Tracks what the current skill has done so far. If the session dies, crashes, or runs out of context, the next session reads this file and picks up where it left off.
+
+**When to create:** When the skill begins its work phase (after Step 0, after document collection starts).
+
+**When to update:** After every major step. Not at the end. After each one.
+
+**When to delete:** After the skill completes successfully and all outputs are saved. The progress file is transient — it exists only while work is in flight.
+
+**Structure:**
+
+```json
+{
+  "skill": "s3-foundational-brief",
+  "client": "Big Auto",
+  "mode": "new",
+  "started": "2026-04-09T14:30:00Z",
+  "last_checkpoint": "2026-04-09T15:12:00Z",
+  "phase": "section-writing",
+  "completed_steps": [
+    "document-collection",
+    "content-snare-survey",
+    "google-drive-docs",
+    "context-files-created",
+    "section-1.0",
+    "section-1.1",
+    "social-media-research",
+    "section-2.1"
+  ],
+  "current_step": "section-2.2",
+  "documents_collected": [
+    "Creative Survey (Content Snare)",
+    "Sales Turnover (Google Drive)",
+    "Work Agreement (Google Drive)",
+    "Creative Call Notes (Google Drive)",
+    "Creative Download (Google Drive)"
+  ],
+  "research_completed": {
+    "social_media": true,
+    "seo_digital": false,
+    "audiences": false,
+    "competitors": false
+  },
+  "output_file": "Big_Auto_Foundational_Brief_DRAFT.docx"
+}
+```
+
+**Checkpoint triggers** (save progress.json after each):
+- Document collection complete
+- Each research protocol complete
+- Each section written (in guided mode: after approval; in auto mode: after writing)
+- Document output saved
+- Context files updated
+
+**Recovery:** When a skill starts and finds an existing progress.json for itself:
+1. Read the file
+2. Tell the user: "I found a previous session that stopped at {current_step}. Want me to pick up from there or start over?"
+3. If picking up: skip completed steps, resume from current_step
+4. If starting over: delete the progress file and begin fresh
+
+---
+
 ## Document Output Logging
 
-When a skill produces a .docx file, follow these rules:
+When a skill produces a .docx file:
 
-### After Producing a .docx
+### Immediately After Producing a .docx
 
-1. **Log to MEMORY.md** — Add or update the entry in the Documents section with the filename and date.
+1. **Update MEMORY.md** — Add or update the Documents section entry.
    - New document: `- Strategy Brief: TMP_Strategy_Brief.docx (created 2026-04-08)`
    - Updated document: Update the existing entry's date — `(created 2026-03-18, updated 2026-04-08)`
 
-2. **Log to CLAUDE.md** — Add or update the entry in the Documents Produced section with the filename, status, and date.
+2. **Update CLAUDE.md** — Add or update the Documents Produced entry.
+
+3. **Update progress.json** — Add the output to `output_file` and mark the step complete.
+
+Do all three immediately. Do not batch these until the end of the session.
 
 ### Google Drive Upload Reminder
 
-- **First completion** of a document type (no prior entry in MEMORY.md for this brief type): Remind the user to save to the client's Google Drive folder.
+- **First completion** of a document type (no prior entry in MEMORY.md): Remind the user to save to the client's Google Drive folder.
   > "Your {document type} is ready. When you open it in Google Drive (from the dropdown above), it will land in My Drive. Remember to move it to the client's Google Drive folder."
-- **Updates** to an existing document (MEMORY.md already has an entry for this brief type): Log the updated date. No upload reminder.
+- **Updates** to an existing document (MEMORY.md already has an entry): Log the updated date. No upload reminder.
 
 ### Reference Section in the .docx
 
-Every brief includes a **Reference / Source Documents** section at the end of the document. This section is inherited and additive across the pipeline:
+Every brief includes a **Reference / Source Documents** section at the end. This section is inherited and additive across the pipeline:
 
 - Read MEMORY.md to find all previously produced documents and source materials.
 - Include every known document with its filename and date.
@@ -106,15 +181,21 @@ The reference section uses local filenames during the pipeline. Google Drive lin
 
 ---
 
-## When to Read These Files
+## Step 0: Context File Check (Required for Every Skill)
 
-At the start of every skill activation, before doing anything else:
+This is the FIRST thing every skill does. Before document collection, before research, before loading reference files.
 
-1. Check if CLAUDE.md exists in the working folder. If yes, read it.
-2. Check if MEMORY.md exists in the working folder. If yes, read it.
-3. Use both to understand where the client stands in the pipeline, what has been produced, and what decisions carry forward.
+1. Check if CLAUDE.md exists in the working folder.
+   - If yes: read it. Use it to understand pipeline state.
+   - If no: create it with the client name. Expand as you learn more.
 
-If neither exists, create both after completing the ingestion/document collection phase of the current skill (not before — you need the client name and initial context first).
+2. Check if MEMORY.md exists in the working folder.
+   - If yes: read it. Use it to see what has been produced.
+   - If no: do not create yet. Create after first document output.
+
+3. Check if a progress.json exists for this skill.
+   - If yes: offer to resume from last checkpoint.
+   - If no: proceed normally. Create it when work begins.
 
 ---
 
@@ -122,7 +203,7 @@ If neither exists, create both after completing the ingestion/document collectio
 
 - Full document content (that's what the briefs are for)
 - Conversation transcripts
-- Research logs or raw data
+- Research logs or raw data (that goes in progress.json temporarily)
 - Anything that belongs in the brief itself
 
-These files are pointers and summaries, not storage. They help the next skill pick up where the last one left off.
+CLAUDE.md and MEMORY.md are pointers and summaries. progress.json is transient session state. None of them are storage.

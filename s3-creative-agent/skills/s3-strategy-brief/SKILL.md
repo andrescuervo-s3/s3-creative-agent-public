@@ -25,9 +25,21 @@ The Strategy Brief is collaborative, not autonomous. You organize and formalize 
 
 ---
 
+## Step 0: Context Files (Required — Do This First)
+
+Read `references/per-client-context-files.md`. Then:
+
+1. **CLAUDE.md**: Check for it in the working folder. If it exists, read it (it tells you what has been produced and decided). If not, create it with the client name.
+2. **MEMORY.md**: Check for it. If it exists, read it to see what documents exist. If not, do not create yet.
+3. **progress.json**: Check for `{Client}_progress.json`. If it exists and the skill matches, offer to resume. If not, proceed normally.
+
+**GATE: Do not proceed to Phase 1 until CLAUDE.md exists in the working folder.**
+
+---
+
 ## Phase 1: Ingestion
 
-### Step 0: Required Inputs
+### Step 1: Required Inputs
 
 The skill will not proceed without both inputs.
 
@@ -97,9 +109,9 @@ Proceed to Phase 2 only after the user confirms. If the user adds more material,
 
 Create `{Client Name}_Strategy_Brief_DRAFT.docx` with cover page and DRAFT badge. Read `references/s3-docx-styles.md` before creating the document.
 
-### Step 5: Per-Client Context Files
+### Step 5: Checkpoint — Ingestion Complete
 
-Read `references/per-client-context-files.md`. Check for existing CLAUDE.md and MEMORY.md in the client working folder. If they exist, read and update them. If not, create them per the reference spec.
+Save `{Client}_progress.json` with: skill name, client, documents collected, phase = "ingestion-complete". Update CLAUDE.md with any new connectors used.
 
 ---
 
@@ -296,7 +308,7 @@ Do NOT rush through the checks. Each one is a conversation opportunity, not a bo
 ### After All Checks Are Resolved
 
 - Section 4.0 (Recommendations) is populated with all out-of-scope ideas collected during conversation, each with its own subsection, scope callout, and strategic rationale
-- THEN generate the final .docx with embedded fonts and update CLAUDE.md
+- THEN generate the final .docx with embedded fonts and run Post-Output Logging
 - Do NOT generate the document until the user explicitly says to proceed after the pressure test
 
 ---
@@ -381,6 +393,15 @@ python3 assets/embed-fonts.py output.docx
 ```
 
 This embeds Regular, Bold, Italic, and BoldItalic weights of Open Sans directly into the file. Without this step, the document falls back to Aptos or Calibri on machines without Open Sans installed. The script overwrites the input file in place (pass a second argument for a different output path). Adds approximately 500KB to file size.
+
+### Post-Output Logging (Immediate — Do Not Defer)
+
+After the .docx is saved:
+
+1. **Update MEMORY.md** — Add or update the document entry. Create MEMORY.md now if it does not exist.
+2. **Update CLAUDE.md** — Add or update the Documents Produced entry.
+3. **Delete progress.json** — The skill finished successfully. Remove the checkpoint file.
+4. **Google Drive reminder** — If this is the first time this document type appears in MEMORY.md, remind the user to move it from My Drive to the client folder.
 
 ---
 
