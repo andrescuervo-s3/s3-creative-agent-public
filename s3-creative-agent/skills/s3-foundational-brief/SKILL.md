@@ -41,12 +41,13 @@ The brief is built in three phases:
 
 **Client name**: The brief selector passes the confirmed client name when invoking this skill. Extract it from the handoff message (e.g., "The user selected New (Draft) for client Big Auto Accident Attorneys"). If the client name was NOT provided in the handoff, use the AskUserQuestion tool to ask "What is the client name?" before doing anything else — no reference file reads, no todo lists, no tool loading until the name is confirmed.
 
-Once the client name is confirmed, check for an existing foundational brief before proceeding:
+Once the client name is confirmed, search for an existing foundational brief before proceeding:
 
-**Existing brief check**: Search Google Drive inside the client's main folder for a document with "Foundational" and "Brief" in the name (e.g., "Big Auto Foundational Brief DRAFT"). If found:
-- **If the user selected Update or Finalize**: Fetch the existing document and use it as the starting point. Confirm with the user: "I found [document name]. I'll use this as the base." No need to ask further.
-- **If the user selected New (Draft)**: Alert the user: "I found an existing foundational brief: [document name]. Do you want to update that one instead, or start fresh?" Use AskUserQuestion for this. If they say start fresh, proceed with New mode.
-- **If no existing brief is found and the user selected Update or Finalize**: Tell the user: "I couldn't find an existing foundational brief in Drive for [client name]. Would you like to create a new one instead?" Use AskUserQuestion for this.
+**Existing brief check**: Search Google Drive inside the client's main folder for a document with "Foundational" and "Brief" in the name (e.g., "Big Auto Foundational Brief DRAFT"). Search by both the full client folder name AND shorter variations (e.g., "Big Auto" and "Big Auto Accident Attorneys"). Check subfolders including "Creative Strategy" if a root-level search returns nothing.
+
+- **If found AND the user selected Update or Finalize**: Fetch the document and use it as the starting point. Confirm: "I found [document name]. I'll use this as the base."
+- **If found AND the user selected New (Draft)**: Tell the user: "I found an existing foundational brief: [document name] (created [date]). Want me to use this as a starting point, or start completely fresh?" Use AskUserQuestion with options: "Use as starting point" / "Start fresh". Either way, proceed without re-asking the mode.
+- **If not found AND the user selected Update or Finalize**: Tell the user: "I couldn't find an existing foundational brief in Drive for [client name]. Would you like to create a new one instead?" Use AskUserQuestion.
 
 After the existing brief check, collect documents in the order below. Each source has its own subsection with full procedure.
 

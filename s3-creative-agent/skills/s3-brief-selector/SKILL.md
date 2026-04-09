@@ -88,14 +88,28 @@ Wait for the user to respond.
 
 **If the user chose Foundational Brief:**
 
-Use AskUserQuestion to ask:
+Use the document check from Step 2 to determine which modes to offer. Use AskUserQuestion to ask:
 
-"What would you like to do?"
+"What would you like to do with the Foundational Brief?"
 
-Options (exactly three, no more):
-1. **New (Draft)** -- Create a new client onboarding brief from scratch
-2. **Update (Draft)** -- Update an existing draft with new info or corrections
-3. **Finalize** -- Resolve open items and stamp an existing draft as final
+**If no existing foundational brief was found in Step 2:**
+
+Skip the mode question entirely. Tell the user: "No existing foundational brief found for [client name]. I'll start a new one." Then invoke the skill in New (Draft) mode.
+
+Note: The selector's search is a quick check. The foundational brief skill does a deeper search and may discover an existing brief the selector missed. If it does, it will offer to use it as a starting point. This is expected behavior, not a conflict.
+
+**If an existing DRAFT was found in Step 2:**
+
+Options (exactly three):
+1. **New (Draft)** -- Start fresh (replaces the existing draft)
+2. **Update (Draft)** -- Update the existing draft with new info or corrections
+3. **Finalize** -- Resolve open items and stamp the draft as final
+
+**If an existing FINAL was found in Step 2:**
+
+Options (exactly two):
+1. **New (Draft)** -- Start a completely new brief from scratch
+2. **Update (Draft)** -- Re-open the finalized brief for revisions (creates a new draft)
 
 Wait for the user to respond.
 
