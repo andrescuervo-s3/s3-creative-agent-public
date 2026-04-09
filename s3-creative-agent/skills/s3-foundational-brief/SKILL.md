@@ -89,10 +89,11 @@ After Content Snare is done, search Google Drive for the remaining documents:
 
 - Work Agreement / Partnership Proposal (in the `Sales and Billing Info` subfolder)
 - Sales Turnover / Client Profile (root client folder)
-- Creative Call Notes (root client folder)
 - Creative Download (root client folder)
 - Website Notes (root client folder)
 - SEO Keywords / Rankings (may not exist for all clients)
+
+Note: Creative Call Notes are NOT expected at this stage. The foundational brief is the input to the creative call, not the other way around. Creative call notes are ingested by the Strategy Brief skill.
 
 If Content Snare found nothing in Phase 1a, also search:
 - Creative Survey / Client Intake Questionnaire (in the `Creative Survey` subfolder)
@@ -102,7 +103,7 @@ If Content Snare found nothing in Phase 1a, also search:
 1. Search for the client name to find the main client folder. Note its folder ID.
 2. Search inside the `Sales and Billing Info` subfolder by folder ID for the Work Agreement.
 3. Search the root client folder for remaining documents. Use the full client folder name as the search prefix (e.g., "Big Auto Accident Attorneys" not just "Big Auto") because documents are typically named "{Full Client Name} | {Document Type}".
-4. If any document is not found in the initial search, run a second search using just the document type keyword (e.g., "Creative Call Notes", "Sales Turnover", "Creative Download") within the client folder. Documents may be owned by different team members and may not appear in a name-only search.
+4. If any document is not found in the initial search, run a second search using just the document type keyword (e.g., "Sales Turnover", "Creative Download", "Website Notes") within the client folder. Documents may be owned by different team members and may not appear in a name-only search.
 
 **Subfolder rule**: Finding a folder in search results is NOT the same as finding the files inside it. If a search result shows a folder named "Sales and Billing Info," you have NOT found the work agreement. You must search inside that folder by its ID. Do not declare a document "not found" until you have searched inside its subfolder.
 
