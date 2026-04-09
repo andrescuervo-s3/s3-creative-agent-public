@@ -34,9 +34,9 @@ Read `references/per-client-context-files.md`. Then:
 
 ## Phase 1: Ingestion
 
-### Step 1: Required Inputs
+### Step 1: Required Inputs (Run Document Searches in Parallel)
 
-The skill will not proceed without all three inputs.
+The skill will not proceed without all three inputs. These three searches are independent — run them in parallel:
 
 **Foundational Brief:**
 Search Google Drive for the client name. Locate the main client folder, then search inside the `Creative Strategy` subfolder for the foundational brief. Also check the local working folder (read MEMORY.md for the filename). Fallback to user upload if not found. Extract client facts, audiences, brand voice, and brand identity.
@@ -61,15 +61,17 @@ Here are the website-related line items I found in the Work Agreement: [list]. I
 
 Do not silently fail or guess at spreadsheet contents.
 
-### Step 1: Brand Discovery
+### Steps 2-4: Brand Discovery + Asset Mining + Connector Scans (Run in Parallel)
 
-After ingesting the three required documents, search for brand assets:
+After the three required documents are ingested, these three steps are independent of each other. Run them in parallel:
 
-**Search Google Drive** for branding playbook, brand guide, or similar in the client folder (BRANDING GUIDE, LOGO & ASSETS subfolders).
+**Step 2 — Brand Discovery:**
 
-**If a branding playbook is found:** Extract current color palette (hex codes), font families and weights, logo usage rules, and catalog available assets.
+Search Google Drive for branding playbook, brand guide, or similar in the client folder (BRANDING GUIDE, LOGO & ASSETS subfolders).
 
-**If no branding playbook is found:** Prompt the user:
+If a branding playbook is found: Extract current color palette (hex codes), font families and weights, logo usage rules, and catalog available assets.
+
+If no branding playbook is found: Prompt the user:
 
 > "I don't see any brand guidelines for this client. Want me to scrape the current site for colors and fonts?"
 
@@ -80,37 +82,37 @@ If the user says yes, scrape the live site CSS for:
 
 Present findings for confirmation: "Here's what I pulled from the live site. Confirm or correct."
 
-### Step 2: Asset Mining
+**Step 3 — Asset Mining:**
 
 Search for creative assets that may exist. Do not fabricate entries for things not found.
 
-**Photography (SmugMug):**
+Photography (SmugMug) — run both in parallel:
 - Search Gmail for "smugmug" + client name
 - Search Slack for "smugmug" + client name
 - If found, capture gallery link + description
 
-**Video (Frame.io):**
+Video (Frame.io) — run both in parallel:
 - Search Gmail for "frame.io" + client name
 - Search Slack for "frame.io" + client name
 - If found, capture string-out link + description
 
-**Google Drive assets:**
+Google Drive assets:
 - Scan client folder for DESIGN & ASSETS subfolder
 - Catalog what's in it (shoots, assets, working files)
 
-### Step 3: Connector Scans
+**Step 4 — Connector Scans (Run in Parallel):**
 
-Filter to material created or modified since the Strategy Brief's created date.
+Filter to material created or modified since the Strategy Brief's created date. These scans are independent — run them in parallel:
 
 - **Slack:** threads mentioning client name (requires connector)
 - **Google Drive:** files related to client, modified since strategy brief date
 - **Local workspace:** any documents in the session workspace
 
-### Step 4: User Prompt
+### Step 5: User Prompt
 
 > "Anything else to add? Creative call notes, design references, competitor sites, technical specs?"
 
-### Step 5: Ingestion Catalog
+### Step 6: Ingestion Catalog
 
 Present what was found:
 
@@ -136,7 +138,7 @@ Then ask:
 Does this cover everything, or do you have more to add before we start building?
 ```
 
-### Step 6: Create Working Document
+### Step 7: Create Working Document
 
 Create `{Client Name}_Website_Creative_Brief_DRAFT.docx` with cover page, DRAFT badge, and Authored By field. Read `references/s3-docx-styles.md` before creating.
 
@@ -147,7 +149,7 @@ Create `{Client Name}_Website_Creative_Brief_DRAFT.docx` with cover page, DRAFT 
 - Created: [date]
 - Last Updated: [date]
 
-### Step 7: Checkpoint — Ingestion Complete
+### Step 8: Checkpoint — Ingestion Complete
 
 Save `{Client}_progress.json` with: skill name, client, documents collected, phase = "ingestion-complete". Update CLAUDE.md with any new connectors used.
 

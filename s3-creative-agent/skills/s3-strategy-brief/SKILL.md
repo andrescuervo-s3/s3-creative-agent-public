@@ -57,9 +57,11 @@ Here are the line items I found in the Work Agreement: [list]. Is this complete,
 
 **PDF handling:** Read `references/pdf-reading-protocol.md` before attempting any PDF. CRITICAL: one fetch attempt, one extraction attempt -- if either fails, ask the user to drop the file in chat and keep moving. Do NOT loop, retry, re-search, or explain why it failed.
 
-### Step 1: Connector Scans
+### Step 1: Connector Scans (Run in Parallel)
 
 All scans filter to material created or modified since the Foundational Brief's created date. For threaded sources (Slack), this means threads with new messages since that date.
+
+These scans are independent of each other. Run them in parallel:
 
 - **Slack:** threads mentioning client name (requires connector)
 - **Google Drive:** files related to client, created or modified since foundational date
