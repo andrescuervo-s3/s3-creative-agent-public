@@ -178,70 +178,69 @@ If you cannot produce a Research Log based on actual tool calls, write "RESEARCH
 
 After completing each section (or group: 1.0+1.1 together), update `{Client}_progress.json` with the section added to `completed_steps` and the next section as `current_step`. This is silent — do not mention it to the user. In both Guided and Auto mode, this checkpoint happens after every section.
 
-### Section Sequence
+### Section Sequence — Batched for Efficiency
 
 Read `references/foundational-brief-sections.md` for the full template of each section.
 
-#### Sections 1.0 and 1.1 (No research needed)
+Sections are organized into three batches based on dependencies. Within each batch, research runs in parallel where possible. Writing is always sequential (document order). The Research Execution Contract applies identically to every research task regardless of batching.
+
+---
+
+#### Pre-batch: Sections 1.0 and 1.1 (No research needed)
 Write directly from boilerplate and document metadata. Include DRAFT status badge, creation date, and client name.
 
-#### Section 2.1 Client Details (Document-sourced + social media research)
-Write all fields from documents, including the S3 Service Overview table (derive from work agreement or sales turnover doc).
+---
 
-For Social Media Accounts:
-1. Read `references/social-media-discovery-agent.md`
-2. Execute the full 6-platform search protocol
-3. Output the social media table directly into 2.1. The table IS the log. No separate narrative Research Log needed for social media.
+#### Batch 1: Parallel Research (2.1, 2.2, 2.3, 3.1, 3.2)
 
-For Year Founded, if not in documents:
-1. Fetch client website (About, Our Story, footer)
-2. If not found, check state business filings
-3. Apply confidence scoring
+These five sections have no dependencies on each other. Run their research protocols in parallel, then write each section in document order.
 
-#### Section 2.2 From the Client (Document-sourced only)
-Extract Goals, Painpoints, Asks, Firm Backstory, and Business Model Notes from client documents only. No web research needed. No Research Log needed.
+**Research phase (run in parallel):**
+
+- **2.1 Social Media**: Read `references/social-media-discovery-agent.md`. Execute the full 6-platform search protocol. All 6 platform searches can also run in parallel.
+- **2.1 Year Founded** (if not in documents): Fetch client website (About, Our Story, footer). If not found, check state business filings.
+- **2.3 Digital Snapshot**: Read `references/seo-digital-research-agent.md`. Run the fallback research protocol. If client provided data, extract with "Client-Reported" confidence — ALWAYS run fallback research as well.
+- **3.1 Brand Voice**: Fetch the client's website and observe communication style. If social media accounts are known from documents, review their content for voice/tone signals.
+- **3.2 Audiences**: Identify audiences from client documents, website, and independent research. Read `references/audience-research-agent.md`. Execute mandatory search queries for each audience type. Multiple audience profiles can run in parallel.
+
+**Writing phase (sequential, document order):**
+
+**Section 2.1 Client Details**: Write all fields from documents, including the S3 Service Overview table (derive from work agreement or sales turnover doc). Output the social media table directly into 2.1 (the table IS the log). Apply Year Founded confidence scoring.
+
+**Section 2.2 From the Client**: Extract Goals, Painpoints, Asks, Firm Backstory, and Business Model Notes from client documents only. No web research needed. No Research Log needed.
 
 In Guided mode, use standard approval gates after each section (see Approval Gate Standard below).
-In Auto mode, do NOT stop here. Continue directly to 2.3 without pausing.
+In Auto mode, do NOT stop here. Continue writing.
 
-#### Section 2.3 Digital Snapshot (SEO/digital research)
-1. Read `references/seo-digital-research-agent.md`
-2. If client provided data: extract and format with "Client-Reported" confidence
-3. ALWAYS run the fallback research protocol as well, even when client data exists. Client-reported metrics are supplemented by independently verified signals (indexed pages, observable keyword positions, GBP check, site signals). This produces a richer snapshot and cross-checks client claims.
-4. Produce the Research Log (required for fallback research signals)
-5. Validate and write. Combine client-reported and independently verified rows in the same table, with the Confidence column distinguishing them.
+**Section 2.3 Digital Snapshot**: Produce the Research Log (required for fallback research signals). Validate and write. Combine client-reported and independently verified rows in the same table, with the Confidence column distinguishing them.
 
-#### Section 3.1 Brand Essentials (Document-sourced + brand voice observation)
-Write Brand Values as a table (Value | Description), Mission Statement, and Brand Differentiators from documents.
+**Section 3.1 Brand Essentials**: Write Brand Values as a table (Value | Description), Mission Statement, and Brand Differentiators from documents. Write the Brand Voice (Observed) subsection from the research results. This is observation, not recommendation.
 
-For Brand Voice (Observed) subsection:
-1. Fetch the client's website and observe communication style
-2. If social media accounts were found in 2.1, review their content for voice/tone signals
-3. Write the observed voice analysis
-4. This is observation, not recommendation
+**Section 3.2 Audiences**: Produce a Research Log per audience. Validate each Research Log. Write profiles with claim-to-source evidence mapping.
 
-#### Section 3.2 Audiences (Research-intensive)
-
-**Audience Identification**: Identify all relevant audiences from client documents, the client's website, and independent research. Do not cap the number artificially or ask the user to select. If the research is sound, the number of audiences will be naturally reasonable (typically 3-6). The strategy brief is where audience targeting decisions are made — the foundational brief captures all relevant audiences as facts.
+**Audience identification notes**: Do not cap the number artificially or ask the user to select. If the research is sound, the number of audiences will be naturally reasonable (typically 3-6). The strategy brief is where audience targeting decisions are made — the foundational brief captures all relevant audiences as facts.
 
 **Language-based audience segments**: If client documents indicate a significant non-English-speaking client base AND the client has asked for or is investing in marketing to that language group (e.g., Spanish-language strategy, bilingual intake, translated materials), profile that audience separately. Research how that language group finds and evaluates services in the client's industry, what builds trust, and what channels they use. Do not treat language as a demographic footnote on another audience. Only create this segment when the client's own documents signal it is a priority — do not add it for every client in a multilingual market.
 
-**Audience Profiles** (for each identified audience):
-1. Read `references/audience-research-agent.md`
-2. Execute mandatory search queries for the audience type
-3. Produce a Research Log per audience
-4. Validate each Research Log
-5. Write profiles with claim-to-source evidence mapping
+---
 
-#### Section 3.3 Competitors (Research-intensive)
+#### Batch 2: Section 3.3 Competitors (Depends on 2.1)
+
+Requires the primary channel determination from 2.1 (B2B or B2C).
+
 1. Read `references/competitor-research-agent.md`
-2. Execute the mandatory search sequence
-3. Determine the client's primary channel from 2.1 (B2B or B2C) and organize competitors with that group first
+2. Execute the mandatory search sequence. Multiple competitor profiles can run in parallel.
+3. Organize competitors with the primary channel group first
 4. Produce the Research Log with live source links
 5. Validate
 6. Write profiles with proof signal tables (each signal must have a clickable source link)
 
-#### Section 3.4 Market Differentiators (Constrained section)
+---
+
+#### Batch 3: Section 3.4 Market Differentiators (Depends on 2.1, 3.1, 3.3)
+
+This is a constrained section. No new research.
+
 **Before writing**: Re-read sections 2.1, 3.1, and 3.3 from the working document.
 
 **Allowed Sources**: ONLY facts from 2.1, 3.1, and 3.3. No new research. No new facts.
