@@ -64,6 +64,25 @@ If you realize you are about to write a Research Log entry from memory rather th
 
 ---
 
+## Firecrawl Fallback
+
+WebFetch is the primary tool for loading source pages. When WebFetch underperforms, fall back to the Firecrawl scrape tool (available in the Cowork environment as a connector).
+
+**Fall back to Firecrawl when WebFetch:**
+1. Returns an error or fails to load the URL
+2. Returns an empty body or fewer than 500 characters of extracted content
+3. Does not contain the specific fact the agent was sent to find (for example, the agent was looking for a population statistic and the fetched text has no numbers)
+
+**Why Firecrawl.** Its scrape output preserves tables, JS-rendered content, and structured data more reliably than WebFetch's text extraction. This makes it the designated fallback for pages where WebFetch commonly loses information, such as government sites with data tables, pages that require JS rendering, and YouTube video pages.
+
+**Research Log treatment.** A Firecrawl scrape call counts as a fetch for Research Log purposes. Record both attempts:
+- The original WebFetch call and why it was thin, empty, or errored
+- The Firecrawl retry and what it returned
+
+**If Firecrawl also fails or returns nothing usable:** Mark the claim Unverified. Do NOT substitute training data. The rules in "When You Cannot Research" below apply.
+
+---
+
 ## When You Cannot Research
 
 If WebSearch or WebFetch tools are unavailable, blocked, or failing:
