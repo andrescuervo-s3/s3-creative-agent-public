@@ -241,8 +241,9 @@ The user chooses which section to work on. For each section:
 
 **5.0 Site Architecture:**
 - **URL Structure:** From sitemap or strategy brief.
-- **What Gets Designed:** Unique builds table + dynamic modules table. Clarify that everything else is template-generated. Link to the full sitemap document.
-- **Special Features:** One H3 per feature. Only features that affect design.
+- **What Gets Designed:** Unique builds table. Clarify that everything else is template-generated. Link to the full sitemap document. Do NOT list dynamic modules or module systems.
+- **Special Features:** One H3 per feature. Only features that affect design. Each feature gets 1-2 sentences max.
+- **Technical Requirements:** Table format (Component | Technology | Notes). Follow with a short bulleted list of performance targets. Do NOT write prose paragraphs about technical architecture.
 
 **6.0 Content & Assets:** A table of things that actually exist right now, with links. Asset | Description | Location. Do not list things that don't exist yet. Do not include wishlists. Photography, brand assets, content folders, team roster. If a shoot gallery or video string-out was found during asset mining, include it here.
 
@@ -384,8 +385,9 @@ Created: [date]  |  Last Updated: [date]
 
 5.0  Site Architecture
      5.1  URL Structure
-     5.2  What Gets Designed (unique builds table + dynamic modules table + sitemap link)
+     5.2  What Gets Designed (unique builds table + sitemap link)
      5.3  Special Features (one H3 per feature)
+     5.4  Technical Requirements (table: Component | Technology | Notes)
 
 6.0  Content & Assets
      (table: Asset | Description | Location with links. Only what exists.)
@@ -438,7 +440,8 @@ When cross-referencing other sections in the document, use section names ("See B
 15. **Content & Assets lists only what exists.** No wishlists. No "Video: None yet." If it doesn't exist, it doesn't appear in the table.
 16. **Open Decisions are design-relevant only.** HubSpot reactivation is not a design decision. Color palette direction is.
 17. **Never send Slack messages without explicit user approval.** Draft messages for review. Never auto-send.
-18. **Page inventory means what gets designed.** Unique builds and templates. Not every URL the sitemap generates. If the sitemap has 165 URLs, most are template-generated. The designer needs to know the 4-6 unique builds and the module system.
+18. **Page inventory means what gets designed.** Unique builds only. Not every URL the sitemap generates. If the sitemap has 165 URLs, most are template-generated. The designer needs to know the 4-6 unique builds. Do NOT list dynamic modules or module inventories.
+19. **No Recommendations section.** Recommendations live in the Strategy Brief. The creative brief documents what we ARE doing. Out-of-scope ideas go in Open Decisions & Dependencies.
 
 ---
 

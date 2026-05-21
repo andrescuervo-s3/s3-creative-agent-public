@@ -222,12 +222,9 @@ Two tables:
 **Unique Builds** (H3)
 Table: Page | Notes
 
-**Dynamic Modules** (H3)
-Table: Module | Behavior
+Follow with a note linking to the full sitemap: "Everything else is template-generated. The full sitemap ([linked filename]) documents every page, but the design work is the unique builds above."
 
-Follow with a note linking to the full sitemap: "Everything else is template-generated. The full sitemap ([linked filename]) documents every page, but the design work is the unique builds and module system above."
-
-Page inventory means what gets designed. Not every URL the sitemap generates.
+Page inventory means what gets designed. Not every URL the sitemap generates. Do NOT list dynamic modules or module systems. The designer does not need a module inventory. If a module has design implications, it belongs in Special Features.
 
 ### 5.3 Special Features
 
@@ -237,7 +234,21 @@ One H3 per feature. Each feature gets:
 - What it does (1-2 sentences)
 - Design implication (how it affects layout or interaction)
 
-Only features that affect design. Not backend integrations.
+Only features that affect design. Not backend integrations. Each feature gets 1-2 sentences max. No dense technical paragraphs.
+
+### 5.4 Technical Requirements
+
+**Heading:** H2
+
+**Data source:** Strategy Brief (2.1 Technical Direction), s3-tech-stack.md
+
+A single table: Component | Technology | Notes
+
+Common rows: Front-end framework, CMS, Video hosting, Live chat, Case intake/CRM, Call tracking. Only include components relevant to this project.
+
+Follow with a short bulleted list of performance targets (ADA compliance, mobile-first, Core Web Vitals).
+
+Present the tech stack as a scannable table. Do NOT write prose paragraphs about technical architecture, SEO safeguards, canonicalization rules, or CMS entity models. The designer and developer need to see the stack at a glance. Detailed technical specs live in the Strategy Brief.
 
 ---
 
@@ -297,3 +308,9 @@ This section is inherited and additive. Read MEMORY.md first. Include every docu
 **Links:** Hyperlinked text in the document. Display the URL only if the link text doesn't make the destination obvious.
 
 **Cross-references:** Always by section name, never by number. "See Branding Status" not "See section 2.5."
+
+---
+
+## Excluded Sections
+
+**Recommendations:** The Website Creative Brief does NOT include a Recommendations section. Recommendations live in the Strategy Brief (section 4.0). The creative brief documents what we ARE doing, not what we COULD do. If an idea surfaces during the creative brief conversation that is outside the Work Agreement, note it in Open Decisions & Dependencies, not in a separate recommendations section.

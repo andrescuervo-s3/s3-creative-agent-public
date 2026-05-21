@@ -117,7 +117,7 @@ A compact performance table from provided documents or fallback research.
 
 Do not invent metrics. If the client explicitly wants to deprioritize something that performs well, add one short note: "Client request: deprioritize despite performance."
 
-**Research Log**: Required for fallback research only. Use the compact format defined in research-validation-rules.md.
+**Research Log**: Do NOT include research logs in the output document. Research logs are internal working artifacts used during the research phase. The table above is the deliverable. The log stays in agent working memory only.
 
 ---
 
@@ -138,7 +138,9 @@ Use client-provided values from documents first. If not explicitly provided, onl
 - Do not introduce new claims, promises, outcomes, or unverifiable superlatives
 - Tone: clear, factual, client-appropriate
 
-**Brand Differentiators (Client-Reported)**: Each must be defensible and based on facts from documents or owned channels (credentials, capabilities, scope, proof signals, operating model, unique specialization). Write as: "Differentiator label: short explanation." Avoid subjective adjectives without support. These are what the client claims, not independently verified. Verification happens in 3.4.
+**Brand Differentiators (Client-Reported)**: Each must be a brand-vs-brand differentiator: something that distinguishes this brand from competing brands in the same market. The test is: "Would this help us market against competitors?" Business structure details (entity type, ownership model, capital structure) belong in Organizational Structure (2.1), not here. If a fact does not help position the brand against competing brands, it is context, not a differentiator.
+
+Each must be defensible and based on facts from documents or owned channels. Write as: "Differentiator label: short explanation." Avoid subjective adjectives without support. These are what the client claims, not independently verified. Verification happens in Market Differentiators.
 
 **Brand Voice (Observed)**: Observe the client's actual communication style across their website, social media, and any provided content samples. Present as a table:
 
@@ -151,7 +153,7 @@ Use client-provided values from documents first. If not explicitly provided, onl
 | Sentence Structure | How language is constructed (short/long, active/passive) |
 | CTAs | How the brand asks people to take action |
 
-Follow with one summary paragraph noting any gaps between the observed voice and the client's stated brand attributes.
+If there is a gap between the observed voice and the client's stated brand attributes, present it as a styled callout (orange left border, light gray background, italic text). Label it clearly. Do not bury gap observations in body paragraphs where they get lost.
 
 This subsection captures what the brand voice IS based on observation, not what it SHOULD BE. Strategy comes later.
 
@@ -174,17 +176,17 @@ Profile every relevant audience identified. Do not cap the number or ask the use
 
 Execute the audience-research-agent.md for each selected audience. Each profile uses this structure:
 
-1. **Demographics**: Geography, life stage, professional role, urgency context, relevant qualifiers
-2. **Mindset**: What they are protecting, seeking, fearing, or motivated by
-3. **Attitude**: How they evaluate options, what they demand, what they reject
-4. **Perception**: What must be true for trust to form; how they identify authority or safety
+1. **Demographics**: Present as a bulleted list with bold labels, not a prose paragraph. Fields: Age, Gender split, Location, Context/life stage. One bullet per field. Dense demographic stats buried in paragraphs are unreadable.
+2. **Mindset**: What they are protecting, seeking, fearing, or motivated by. 2-3 sentences max.
+3. **Attitude**: How they evaluate options, what they demand, what they reject. 2-3 sentences max.
+4. **Perception**: What must be true for trust to form; how they identify authority or safety. 2-3 sentences max.
 5. **Evidence**: 2-5 key claims with live source links and confidence scores, formatted as:
 
 | Claim | Source | Confidence |
 |-------|--------|------------|
 | [Specific factual claim used in the profile] | [Source title](URL) | Verified / Client-Reported |
 
-**Research Log**: Required. Use the compact format defined in research-validation-rules.md. Must include live links.
+**Research Log**: Do NOT include research logs in the output document. Research logs are internal working artifacts. The evidence table is the deliverable.
 
 ---
 
@@ -219,7 +221,7 @@ For each competitor:
 
 Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
 
-**Research Log**: Required. Use the compact format defined in research-validation-rules.md.
+**Research Log**: Do NOT include research logs in the output document. Research logs are internal working artifacts. The proof signals table is the deliverable.
 
 ---
 

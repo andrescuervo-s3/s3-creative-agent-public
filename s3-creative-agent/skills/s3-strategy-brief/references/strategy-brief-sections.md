@@ -146,7 +146,7 @@ Each channel section follows this structure unless noted otherwise:
 
 **Technical Direction data source:** `references/s3-tech-stack.md`, user input
 
-**Technical Direction fields:** Platform notes (Tresio baseline), CMS considerations (DatoCMS), integrations needed, performance requirements, development approach, any platform-specific constraints. Technical detail is welcome but must be readable: lead with the strategic rationale, use tables and bullets for structured information, and avoid dense paragraphs that list 10+ items in a single sentence.
+**Technical Direction fields:** Present as a bulleted list, not prose paragraphs. One bullet per component (Platform, CMS, Video, Integrations, Scope). Dense technical paragraphs are unreadable. The reader needs to see the stack at a glance, not parse it out of a paragraph.
 
 ---
 
@@ -207,9 +207,11 @@ Each channel section follows this structure unless noted otherwise:
 
 **Format per recommendation:**
 1. Scope callout (styled per s3-docx-styles.md): "Outside current scope. Requires client approval and separate agreement."
-2. Current state paragraph: what exists today (data, metrics, vendor situation)
-3. Strategic rationale: 1-2 paragraphs explaining why this matters and how it connects to the strategy established in the brief
-4. Recommended approach: what S3 would do if engaged
+2. **WHAT** (H4): One paragraph. What we are recommending.
+3. **WHY** (H4): One paragraph. Why it matters to the strategy.
+4. **HOW** (H4): One paragraph. What S3 would do if engaged.
+
+Keep each block to 1-3 sentences. No restating context that already exists in the brief. No verbose rationale. The reader should be able to evaluate the recommendation in under 30 seconds.
 
 **Example subsections:** 4.1 Paid Advertising Management, 4.2 Social Media Management, 4.3 Ongoing Video Production. The specific subsections depend on what emerged during the strategy conversation.
 
@@ -245,3 +247,5 @@ When a channel strategy does not apply to the engagement:
 - **Lead with strategy, end with technical detail.** Within any section, strategic direction comes first, creative direction next, technical supporting detail last.
 - **Break up density.** No paragraph should run more than 5-6 lines. No sentence should list 10+ items separated by commas. Use tables for structured data, bullets for lists, prose for reasoning.
 - **No cross-reference scavenger hunts.** If the brand voice matters to the SEO strategy, describe the relevant aspects in the SEO section. Do not send the reader elsewhere.
+- **State it once.** If a concept (e.g., bilingual Spanish track, "usted" register, cultural authenticity) has been fully described in one section, do not redeclare it in subsequent sections. A brief mention ("Spanish track follows the same arc, transcreated") is sufficient. Repeating the same detail across multiple sections creates bloat.
+- **No restating messaging examples.** If messaging copy (headlines, taglines, channel expressions) has been written in the Messaging Framework, do not repeat it in Channel Strategies or other sections. Reference it, do not restate it.
