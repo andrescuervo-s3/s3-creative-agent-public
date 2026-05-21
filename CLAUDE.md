@@ -24,6 +24,25 @@ After pushing, always share the exact command (no wildcard):
 rm -rf ~/Library/Caches/cowork/plugins/s3-creative-agent
 ```
 
+### GitHub Repo Setup (Private + Public Mirror)
+
+Two GitHub repos, auto-synced via a GitHub Action. Both Cowork installs (Andrés's personal Max account and the S3 Teams account) end up tracking the same code because of this mirror.
+
+| Repo | Visibility | Purpose |
+|---|---|---|
+| `andrescuervo-s3/s3-creative-agent` | PRIVATE | Working repo. All `git push` goes here. Personal Max Cowork pulls from here. |
+| `andrescuervo-s3/s3-creative-agent-public` | PUBLIC | Auto-mirror. S3 Teams Cowork pulls from here (Teams can't access the private repo). |
+
+The mirror lives at `.github/workflows/mirror-to-public.yml`: every push to `main` force-pushes `main` to the public repo (~1 min lag). Uses secret `PUBLIC_REPO_TOKEN`.
+
+**Deployment is one push, two Update clicks:**
+1. `git push origin main` — private repo updates immediately
+2. Mirror action runs — public repo updates ~1 min later
+3. In Cowork, click **Update** separately on the Personal install AND the S3 Teams install (Cowork does not auto-pull)
+4. Greyed-out **Update** button = already on the latest version (this is what you want to see)
+
+If the two installs ever show different versions, the issue is Cowork-side caching, not GitHub. Verify with `git show origin/main:.claude-plugin/marketplace.json` vs `git show public/main:.claude-plugin/marketplace.json`. If those match, the repos are fine and Cowork just needs Update clicked (or the cache cleared).
+
 ## Reference Material — READ BEFORE BUILDING
 
 The `.reference/` directory contains two repos that must be consulted before creating or modifying any skill:
