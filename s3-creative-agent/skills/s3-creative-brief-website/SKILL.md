@@ -104,6 +104,7 @@ Google Drive assets:
 
 Filter to material created or modified since the Strategy Brief's created date. These scans are independent — run them in parallel:
 
+- **Grain:** client-facing and internal conversations since the strategy brief date. Read `references/grain-source.md`. Pass `after_datetime` = Strategy "Created" date, `before_datetime` = now. Inherit the strategy brief's Grain meetings (do not re-scan them). Present included meetings in the Ingestion Catalog with their tier reason.
 - **Slack:** threads mentioning client name (requires connector)
 - **Google Drive:** files related to client, modified since strategy brief date
 - **Local workspace:** any documents in the session workspace
@@ -458,5 +459,6 @@ Read these on demand, not all at once:
 - `references/research-validation-rules.md` -- Read before validating any Research Log.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF.
 - `references/per-client-context-files.md` -- Read during Phase 1. Defines CLAUDE.md, MEMORY.md, and document output logging.
+- `references/grain-source.md` -- Read during Phase 1 Step 4. Grain retrieval, triage, and inheritance. Delta pull since the strategy date.
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted.
 - `references/pipeline-routing.md` -- Read after the brief is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.
