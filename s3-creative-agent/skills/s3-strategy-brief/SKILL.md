@@ -63,6 +63,7 @@ All scans filter to material created or modified since the Foundational Brief's 
 
 These scans are independent of each other. Run them in parallel:
 
+- **Grain:** client-facing and internal conversations since the foundational date. Read `references/grain-source.md`. Pass `after_datetime` = Foundational "Created" date, `before_datetime` = now. Inherit the foundational brief's Grain meetings (do not re-scan them). Present included meetings in the Ingestion Catalog with their tier reason.
 - **Slack:** threads mentioning client name (requires connector)
 - **Google Drive:** files related to client, created or modified since foundational date
 - **Google Docs:** documents mentioning client, modified since foundational date
@@ -455,5 +456,6 @@ Read these on demand, not all at once:
 - `references/social-media-discovery-agent.md` -- Read before dispatching social media research.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF. Full method chain: pdfplumber, pdftotext, pypdf, OCR.
 - `references/per-client-context-files.md` -- Read at Step 0 (before anything else). Defines CLAUDE.md, MEMORY.md, and progress.json lifecycle.
+- `references/grain-source.md` -- Read during Phase 1 Step 2. Grain retrieval, triage, and inheritance. Delta pull since the foundational date.
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.
 - `references/pipeline-routing.md` -- Read after the brief is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.
