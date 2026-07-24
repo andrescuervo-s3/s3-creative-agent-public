@@ -41,6 +41,7 @@ That's it. Do NOT ask about the topic, meeting details, position, audience, or a
 
 As soon as you have the client name, search **all** of the following sources for recent activity. Do not skip any:
 
+- **Grain** — client-facing and internal conversations. Read `references/grain-source.md`. Standalone pull (no inheritance): pull the client's relevant recordings up to now. Capture meeting title, date, and internal/external for the Reference Links section.
 - **Gmail** — recent emails mentioning the client name (last 2 weeks)
 - **Google Drive** — documents, briefs, meeting notes, proposals for this client
 - **Slack** — messages and threads mentioning the client name across all channels
@@ -478,4 +479,5 @@ The audience is an account manager who needs to walk into a client call feeling 
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.
 - `references/s3-docx-styles.md` -- Read before creating the document. Defines all S3 document styles.
 - `references/per-client-context-files.md` -- Read at the start. Check for and update CLAUDE.md and MEMORY.md in the client working folder.
+- `references/grain-source.md` -- Read during Gather Context (Step 2). Grain retrieval and relevance triage. Standalone pull, no inheritance.
 - `references/pipeline-routing.md` -- Read after the document is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.
