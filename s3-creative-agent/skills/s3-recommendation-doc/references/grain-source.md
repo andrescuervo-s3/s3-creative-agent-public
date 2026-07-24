@@ -2,7 +2,7 @@
 
 Grain captures meeting transcripts and AI notes for S3's calls. This module defines how any brief pulls the client's recorded conversations, both client-facing calls and internal S3 conversations, as a source of truth scoped to the brief's date window.
 
-Grain is already connected as an MCP. Reference its tools by bare name: `search_companies`, `search_persons`, `list_meetings`, `search_in_transcripts`, `fetch_meeting_notes`, `fetch_meeting_transcript`, `get_dossier_for_company`.
+Grain is already connected as an MCP. Reference its tools by bare name: `search_companies`, `list_meetings`, `search_in_transcripts`, `fetch_meeting_notes`, `fetch_meeting_transcript`.
 
 ## Tool rules
 
