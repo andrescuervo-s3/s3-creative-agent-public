@@ -107,12 +107,19 @@ If Content Snare found nothing in Phase 1a, also search:
 
 **Subfolder rule**: Finding a folder in search results is NOT the same as finding the files inside it. If a search result shows a folder named "Sales and Billing Info," you have NOT found the work agreement. You must search inside that folder by its ID. Do not declare a document "not found" until you have searched inside its subfolder.
 
+### 1b-2. Grain — Client & Internal Conversations (Anchor Pull)
+
+Read `references/grain-source.md`. Run it as the **anchor pull**: `after_datetime` empty (all history), `before_datetime` = the brief's creation date. No inheritance (this is the first stage).
+
+This produces a classified candidate list of the client's Grain meetings (client-facing and internal). Do not read full transcripts here. Pull `fetch_meeting_notes` for included meetings only. Carry the candidate list into 1c so it appears in the confirm gate.
+
 ### 1c. Compile and Confirm
 
-List every document collected from both sources:
+List every document collected from all sources:
 
 - **Content Snare**: [survey name(s) and who completed them]
 - **Google Drive**: [document names and locations]
+- **Grain**: [included meetings: title, date, internal/external, tier reason. Note any dropped as noise.]
 
 Use the AskUserQuestion tool to ask: "Does this look complete, or are there any additional documents I should pull before we start building?" Wait for the user's response before proceeding.
 
@@ -342,6 +349,7 @@ After the .docx is saved:
 Read these on demand, not all at once:
 
 - `references/document-sources.md` -- Source map: which document type lives where and which tool to use
+- `references/grain-source.md` -- Read during Phase 1 (step 1b-2). Grain retrieval, relevance triage, and inheritance. Anchor pull for the foundational brief.
 - `references/research-tool-contract.md` -- Read FIRST before any research. Defines what research is (WebSearch + WebFetch calls, not training data). Non-negotiable.
 - `references/confidence-scoring-spec.md` -- Read at the start. Defines confidence levels and scoring rules.
 - `references/research-validation-rules.md` -- Read before validating any Research Log. Six validation rules.

@@ -4,6 +4,8 @@ Quick-reference map of where each client document lives and which tool retrieves
 
 | Document | Source | Tool |
 |----------|--------|------|
+| Client-facing call recordings | Grain | `search_companies` → `list_meetings` / `search_in_transcripts` → `fetch_meeting_notes` |
+| Internal conversations (client discussed) | Grain | `search_in_transcripts` → `fetch_meeting_notes` |
 | Creative Survey (Client Intake Questionnaire) | Content Snare | `search_surveys` → `get_full_survey` |
 | Work Agreement / Partnership Proposal | Google Drive | `google_drive_search` → `google_drive_fetch` |
 | Sales Turnover / Client Profile | Google Drive | `google_drive_search` → `google_drive_fetch` |
