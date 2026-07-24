@@ -54,9 +54,27 @@ Lives in a new reference file `references/grain-source.md`, duplicated into each
 - **Targeted:** `search_in_transcripts` segments for specific topics.
 - **On demand only:** `fetch_meeting_transcript` (full transcript) when a single meeting needs a deep read. Never bulk-fetch full transcripts.
 
-### Step 5 — Confirm gate
-Present the found meetings in the existing ingestion/confirm step: title, date, internal/external, participants. User confirms which to include.
-- **Exception:** Foundational Brief **Auto mode** pulls all without stopping (consistent with Auto mode's no-user-gate rule).
+### Step 5 — Relevance triage (classify before including)
+Not every meeting that surfaces is worth including. The transcript net is deliberately wide, so each candidate is classified into one of three tiers using its AI notes + transcript segment summaries (never the full transcript — the triage is cheap). The test: **is the client a *subject* of this meeting, or just *mentioned* in it?**
+
+| Tier | Rule | Action | Signal |
+|------|------|--------|--------|
+| **Tier 1 — Always include** | The client is an actual participant on the call (any client-facing call) | Include, always | Deterministic: company/participant match. No judgment. |
+| **Tier 2 — Include** | Internal meeting where the client is *substantively* discussed — an official strategy/media/creative call, or the subject of a real discussion segment | Include | Judgment: also surfaced via title or company pass, multiple matching segments, segment summaries that are *about* the client's work |
+| **Tier 3 — Drop (noise)** | The client name appears in one stray segment of an otherwise-unrelated meeting (standup to-do list, tangential name-drop) | Exclude | Judgment: single shallow hit, no sustained discussion |
+
+Every classification carries a one-line reason (e.g. "Tier 2 — dedicated media-strategy segment" or "Tier 3 — single passing mention in a daily standup").
+
+### Step 6 — Confirm gate
+Present the classified candidates in the existing ingestion/confirm step: title, date, internal/external, participants, **tier + one-line reason**. User confirms or overrides which to include. Overrides are the primary tuning mechanism (see Calibration).
+- **Exception:** Foundational Brief **Auto mode** applies the classifier silently — includes Tier 1 + Tier 2, drops Tier 3, surfaces the included set ranked by tier as important context, and does not stop (consistent with Auto mode's no-user-gate rule).
+
+### Calibration (expectation-setting)
+The Tier 2 vs Tier 3 boundary is a heuristic, not a solved classifier. It will misjudge some calls at first. Two mechanisms tune it:
+1. **Guided overrides** — every include/drop shows its reason, so the user corrects it live.
+2. **Decision log** — the classifier's keep/drop decisions (with reasons) are written to `progress.json` during a run so patterns can be reviewed across a few real clients and the signals adjusted.
+
+The first few real briefs are calibration runs, not proof the boundary is right.
 
 ## Where Grain Content Lands
 
@@ -99,4 +117,6 @@ rm -rf ~/Library/Caches/cowork/plugins/s3-creative-agent
 
 ## Open Questions
 
-None blocking. Retrieval strategy, scope, inheritance model, content policy, and confirm-gate behavior are all settled with the user.
+None blocking. Retrieval strategy, scope, inheritance model, content policy, relevance triage, and confirm-gate behavior are all settled with the user.
+
+The one thing that is settled in *design* but unproven in *practice* is the Tier 2 vs Tier 3 relevance boundary. It ships as a heuristic and is tuned through Guided overrides and the decision log (see Calibration). The first few real briefs are treated as calibration runs.
