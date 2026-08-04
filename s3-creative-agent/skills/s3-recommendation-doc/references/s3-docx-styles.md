@@ -1,296 +1,734 @@
 # S3 Document Style Reference
 
-This file defines the enforceable document styles for all S3 briefs and deliverables produced as .docx files. Every skill that generates a Word document must follow these exact specifications. Do not deviate, interpret loosely, or substitute values.
+This spec defines the visual system for every S3 brief and deliverable produced as .docx. Every skill that generates a Word document MUST follow it. Do not deviate, interpret loosely, or substitute values.
 
-Read the system docx skill before creating or updating any document.
+The document generation stack is **Node.js + docx-js**. The model writes a fresh docx-js script per brief, following the code patterns in this file. After generation, run `python3 assets/embed-fonts.py output.docx` to embed Open Sans.
+
+Validated 2026-08-04 against a full rebuild of the Colombo Law Foundational Brief. Andrés-approved.
 
 ---
 
-## Font Family
+## Font
 
-**Open Sans** for all text. No exceptions. Do not use Calibri, Arial, Helvetica, Times New Roman, or any other font.
+**Open Sans** for all text. No exceptions — never Calibri, Arial, Helvetica, Times New Roman, or any other font.
 
-**Font embedding is required.** Open Sans is not installed on most machines by default. Without embedding, documents fall back to Aptos (Office 365) or Calibri (older Office). After generating the .docx with docx-js, run:
+Google Docs has Open Sans natively, so it renders correctly on upload without embedding. **Font embedding is still required** for Word / Pages / other clients where Open Sans isn't installed. After docx-js generates the file, run:
 
 ```bash
 python3 assets/embed-fonts.py output.docx
 ```
 
-This embeds Regular, Bold, Italic, and BoldItalic weights directly into the file. Adds approximately 500KB. The font files live in `assets/fonts/`. The script can overwrite in place (one argument) or write to a new path (two arguments).
+That embeds Regular, Bold, Italic, and BoldItalic weights (~500KB). Font files live in `assets/fonts/`.
 
 ---
 
-## Page Layout
+## Palette — warm B&W
+
+Every color used in the doc comes from this palette. No blue hyperlinks, no red accents, no other colors. The warmth (choosing `#2E2C27` over pure black, `#FCFCFB` over pure white) is deliberate — pure B&W reads as unconsidered.
+
+| Token | Hex | Use |
+|---|---|---|
+| `INK` | `#2E2C27` | Primary text, section headings, strong emphasis |
+| `PAPER` | `#FCFCFB` | Body-band background (default) |
+| `PAPER_BAND` | `#F9F9F7` | Cover band + shaded-section (`band-alt`) background |
+| `MUTED` | `#6B6A63` | Section labels, muted text, source-line text, italic notes |
+| `MICRO` | `#B4B3A8` | Numbering, dashed underlines on hyperlinks, small tags |
+| `RULE` | `#E4E3DC` | Hairline dividers, table borders, section separators |
+| `RULE_STRONG` | `#E1E1DF` | Band boundary borders (top/bottom of `band-top` / `band-alt`) |
+
+Declare as constants at the top of every script:
+
+```js
+const INK          = '2E2C27';
+const PAPER        = 'FCFCFB';
+const PAPER_BAND   = 'F9F9F7';
+const MUTED        = '6B6A63';
+const MICRO        = 'B4B3A8';
+const RULE         = 'E4E3DC';
+const RULE_STRONG  = 'E1E1DF';
+```
+
+---
+
+## Page layout
+
+US Letter, portrait. 1" margins on the default sections; the shaded-band section (see below) uses zero margins so the shading extends edge-to-edge.
 
 | Property | Value |
-|----------|-------|
-| Paper size | US Letter (12240 x 15840 DXA) |
+|---|---|
+| Paper size | US Letter — width 12240 DXA, height 15840 DXA |
 | Orientation | Portrait |
-| Top margin | 1440 DXA (1 inch) |
-| Bottom margin | 1440 DXA (1 inch) |
-| Left margin | 1440 DXA (1 inch) |
-| Right margin | 1440 DXA (1 inch) |
-| Content width | 9360 DXA (6.5 inches) |
+| Default margins (top/bottom/left/right) | 1440 DXA (1 inch) each |
+| Shaded band section margins | 0 DXA all four sides |
+
+**1 inch = 1440 DXA. Half-points for font sizes: `size: 22` means 11pt.**
 
 ---
 
-## Heading Hierarchy
+## Three-band document structure
 
-All headings use Open Sans Bold. Colors and sizes are exact values in half-points (w:val) and hex.
+Every brief is composed of three docx sections, in this order:
 
-| Level | Style ID | Size (pt) | w:val | Weight | Color | Spacing Before | Spacing After | Use |
-|-------|----------|-----------|-------|--------|-------|----------------|---------------|-----|
-| H1 | Heading1 | 20pt | 40 | Bold | #000000 | 360 | 200 | Major sections: 1.0 Intro, 2.0 Client Overview, 3.0 The Brand |
-| H2 | Heading2 | 16pt | 32 | Bold | #333333 | 280 | 160 | Subsections: 2.1 Client Details, 2.2 From the Client, 3.1 Brand Essentials, 3.2 Audiences, 3.3 Competitors, 3.4 Market Differentiators |
-| H3 | Heading3 | 13pt | 26 | Bold | #333333 | 200 | 120 | Named blocks: Brand Values, Mission Statement, Brand Differentiators, competitor names, audience profile names, differentiator pattern titles |
-| H4 | Heading4 | 11pt | 22 | Bold | #000000 | 80 | 20 | Profile sub-categories: Demographics, Mindset, Attitude, Perception, Evidence |
+1. **Section 1** — cover + all content up to the first data-heavy shaded section. Normal 1" margins.
+2. **Section 2** — the shaded section (e.g., Digital Snapshot in the Foundational Brief). Continuous break, zero margins on all sides, single full-width shaded table wraps the content.
+3. **Section 3** — all remaining content. Continuous break, back to normal 1" margins.
 
-All headings: line spacing 240 (single), left-aligned, no borders, no shading.
+If a brief has multiple shaded sections, repeat the pattern (section N shaded → section N+1 normal). The section-break trick is the ONLY way to get edge-to-edge shading in docx that survives Google Docs conversion.
+
+```js
+sections: [
+  {
+    properties: {
+      page: {
+        size: { width: 12240, height: 15840 },
+        margin: { top: 1440, bottom: 1440, left: 1440, right: 1440 },
+      },
+    },
+    children: contentBefore,
+  },
+  {
+    properties: {
+      type: SectionType.CONTINUOUS,
+      page: {
+        size: { width: 12240, height: 15840 },
+        margin: { top: 0, bottom: 0, left: 0, right: 0 },
+      },
+    },
+    children: [shadedBand(shadedContent)],
+  },
+  {
+    properties: {
+      type: SectionType.CONTINUOUS,
+      page: {
+        size: { width: 12240, height: 15840 },
+        margin: { top: 1440, bottom: 1440, left: 1440, right: 1440 },
+      },
+    },
+    children: contentAfter,
+  },
+],
+```
 
 ---
 
-## Body Text
+## Cover masthead
 
-| Property | Value |
-|----------|-------|
-| Font | Open Sans Regular |
-| Size | 11pt (w:val 22) |
-| Color | #000000 (black) |
-| Line spacing | 240 (single, lineRule auto) |
-| Alignment | Left |
+Every brief opens with the same masthead pattern. In Draft mode, the status banner appears above the type kicker. In Finalize mode, the banner is omitted entirely — do not put "FINAL" in its place. The type kicker (e.g., "FOUNDATIONAL BRIEF") stays either way.
+
+```js
+// Draft only — omit in Finalize mode
+new Paragraph({
+  spacing: { after: 100 },
+  border: { top: { color: INK, size: 6, space: 8, style: BorderStyle.SINGLE } },
+  children: [new TextRun({
+    text: 'DRAFT · NOT FOR EXTERNAL CIRCULATION',
+    font: 'Open Sans', size: 18, bold: true, color: MUTED, characterSpacing: 40,
+  })],
+}),
+// Type kicker — always
+new Paragraph({
+  spacing: { after: 120 },
+  // If no Draft banner above, add the top border to this paragraph instead:
+  // border: { top: { color: INK, size: 6, space: 8, style: BorderStyle.SINGLE } },
+  children: [new TextRun({
+    text: 'FOUNDATIONAL BRIEF',  // or STRATEGY BRIEF, CREATIVE BRIEF — WEBSITE, etc.
+    font: 'Open Sans', size: 20, bold: true, color: MUTED, characterSpacing: 36,
+  })],
+}),
+// Client name — always
+new Paragraph({
+  spacing: { after: 300 },
+  children: [new TextRun({
+    text: '<Client Name>', font: 'Open Sans', size: 64, bold: true, color: INK,
+  })],
+}),
+```
+
+**Below the client name, a 4-column metadata strip** with a bottom `INK` border (no top border — the client name provides visual separation):
+
+```js
+// 4-column meta: Client, Authored by, Created, Last updated
+// (In Finalize mode add a 5th column: Finalized)
+new Table({
+  width: { size: 5000, type: WidthType.PERCENTAGE },
+  layout: TableLayoutType.AUTOFIT,
+  columnWidths: [colW, colW, colW, colW],
+  borders: {
+    top: NO_BORDER,
+    bottom: { color: INK, size: 6, space: 8, style: BorderStyle.SINGLE },
+    left: NO_BORDER, right: NO_BORDER,
+    insideHorizontal: NO_BORDER, insideVertical: NO_BORDER,
+  },
+  rows: [new TableRow({
+    children: [
+      ['CLIENT', clientName],
+      ['AUTHORED BY', 'Andrés Cuervo, CCO'],
+      ['CREATED', 'May 27, 2026'],
+      ['LAST UPDATED', 'August 4, 2026'],
+    ].map(([label, val]) => new TableCell({
+      width: { size: colW, type: WidthType.DXA },
+      margins: { top: 100, bottom: 200, left: 0, right: 120 },
+      children: [
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [new TextRun({
+            text: label, font: 'Open Sans', size: 16, bold: true,
+            color: MUTED, characterSpacing: 40,
+          })],
+        }),
+        new Paragraph({
+          children: [new TextRun({
+            text: val, font: 'Open Sans', size: 20, color: INK,
+          })],
+        }),
+      ],
+    })),
+  })],
+}),
+```
+
+**Do NOT include a verbose "what changed" update note under the meta strip.** The `Last updated` date carries that meaning by itself. In prior versions we listed folded-in surveys and meetings under the cover — that's noise.
+
+**Author defaults.** If the client CLAUDE.md doesn't specify an author, use "Andrés Cuervo, CCO". If the author is different per the CLAUDE.md, use that. Never invent.
 
 ---
 
-## Inline Formatting
+## Status banner logic (Draft / Finalize)
 
-**Bold (field labels):** Open Sans Bold, 11pt. Use for field labels (Name:, Year Founded:, Date:, Client:, Locations:, Overview:, URL:, Citations:) and key phrases within body text the reader should catch on a scan.
+The Draft banner is a first-page-only element. Rules:
 
-**Italic (notes/callouts):** Open Sans Italic, 11pt. Use for editorial notes, caveats, and non-primary commentary.
+- **New (Draft)** or **Update (Draft)**: include the `DRAFT · NOT FOR EXTERNAL CIRCULATION` banner as shown in the cover pattern.
+- **Finalize**: omit the banner entirely. Add a `Finalized` column to the metadata strip with the finalize date.
+- **File name**: append `_DRAFT` to the file name in Draft modes (e.g., `Colombo_Foundational_Brief_DRAFT.docx`); drop it on Finalize (`Colombo_Foundational_Brief.docx`).
 
-**Bold Italic:** Open Sans Bold Italic. Use sparingly, only for parenthetical subtitles on section headings (e.g., competitor section subtitle).
+**Do not** put a "FINAL" badge or watermark on finalized documents. The absence of the DRAFT banner is the signal.
+
+---
+
+## Heading hierarchy
+
+Use `HeadingLevel.HEADING_1` / `HeadingLevel.HEADING_2` on the paragraph. This is what populates the Google Docs Outline sidebar with clickable jumps to every section. Custom run formatting (font, size, color, caps, letter-spacing) overrides the heading style's default look, so the visual matches this spec while navigation still works.
+
+| Level | Where | Font | Size | Color | Case | Letter-spacing |
+|---|---|---|---|---|---|---|
+| H1 (H2 in docx-js `HEADING_1`) | Numbered sections (e.g., "1.0 · Intro", "2.3 · Digital Snapshot") | Open Sans Bold | 13pt (`size: 21`) | INK | ALL CAPS | `characterSpacing: 40` |
+| H2 (`HEADING_2`) | Named subsections (Organizational Structure, Demographics, Brand Values, competitor names, etc.) | Open Sans Bold | 11pt (`size: 22`) | MUTED | ALL CAPS | `characterSpacing: 60` |
+| Named block (H3-flavored, not `HeadingLevel`) | Audience profile names, differentiator titles, competitor names | Open Sans Bold | 15.5pt (`size: 31`) | INK | Title Case | — |
+
+H1 paragraphs also carry a bottom `RULE` border (hairline separator under each numbered section header).
+
+```js
+function h2(text) {
+  return new Paragraph({
+    heading: HeadingLevel.HEADING_1,
+    spacing: { before: 480, after: 240, line: 300 },
+    border: { bottom: { color: RULE, size: 6, space: 4, style: BorderStyle.SINGLE } },
+    children: [new TextRun({
+      text: text.toUpperCase(), font: 'Open Sans', size: 21,
+      bold: true, color: INK, characterSpacing: 40,
+    })],
+  });
+}
+
+function h4(text) {
+  return new Paragraph({
+    heading: HeadingLevel.HEADING_2,
+    spacing: { before: 680, after: 200, line: 260 },  // generous space above subsections
+    children: [new TextRun({
+      text: text.toUpperCase(), font: 'Open Sans', size: 22,
+      bold: true, color: MUTED, characterSpacing: 60,
+    })],
+  });
+}
+```
+
+**Spacing note.** The gap above every H4 subsection should feel like the gap from the top of the Client Details facts strip to the "Organizational Structure" label — roughly 34pt / 680 DXA `before`. Inside clustered blocks (audience profiles, differentiators, competitors), h4 subsection margins tighten to ~18pt (`before: 360`) since those subsections are semantically related.
+
+---
+
+## Body text, muted italic, notes
+
+**Body paragraph** — Open Sans Regular, 10.5pt (`size: 21`), INK color, line 1.55.
+
+**Muted italic** — for section-intro leads (e.g., "Distilled from the three senior-stakeholder creative surveys..."). 10pt, italic, MUTED color. Use the `muted()` helper below.
+
+**Note (pipe-border aside)** — for any procedural aside or caveat (e.g., "Direct email is off-limits for Dino, Nathan, and Travis...", "Additional GMB-only 'Google Location' listings in each market"). Left border, italic, MUTED, small left padding.
+
+```js
+function p(text) {
+  return new Paragraph({
+    spacing: { after: 240, line: 320 },
+    children: [new TextRun({ text, font: 'Open Sans', size: 21, color: INK })],
+  });
+}
+
+function muted(text) {
+  return new Paragraph({
+    spacing: { before: 40, after: 200, line: 300 },
+    children: [new TextRun({
+      text, font: 'Open Sans', size: 20, italics: true, color: MUTED,
+    })],
+  });
+}
+
+function note(text) {
+  return new Paragraph({
+    spacing: { before: 180, after: 180, line: 300 },
+    border: { left: { color: RULE, size: 12, space: 10, style: BorderStyle.SINGLE } },
+    indent: { left: 120 },
+    children: [new TextRun({
+      text, font: 'Open Sans', size: 20, italics: true, color: MUTED,
+    })],
+  });
+}
+```
+
+**Use notes wherever an aside/caveat/procedural clarification appears.** They read as "worth knowing but not the main line." Don't wrap ordinary muted intros in note styling.
 
 ---
 
 ## Hyperlinks
 
-| Property | Value |
-|----------|-------|
-| Color | #0563C1 |
-| Underline | Single |
-| Font | Open Sans Regular, 11pt |
+Every external URL that the source-capture pipeline pulled MUST render as a live hyperlink. **No blue.** Dashed `MICRO` underline in the resting state, solid `INK` underline on hover.
 
-All URLs must be clickable hyperlinks. For leadership profile links, place the link on its own line below the role summary.
+- Inherit the surrounding text color (don't force blue).
+- `underline: { type: 'dash', color: MICRO }` — the dashed underline is what signals clickability.
 
----
-
-## Bullet Lists
-
-Use the docx numbering system with LevelFormat.BULLET. Never insert raw unicode bullet characters.
-
-| Property | Value |
-|----------|-------|
-| Bullet character | bullet (standard dot, via numbering config) |
-| Indent left | 720 DXA |
-| Hanging indent | 360 DXA |
-| Font | Open Sans Regular, 11pt |
-
-Use bullet lists only when the section calls for them (Leadership, Locations, Targeting, Practice Areas, Proof Signals, Brand Values, audience profile traits, Brand Voice traits). Do not add blank lines between bullets unless the section explicitly requires spacing.
-
----
-
-## Numbered Lists
-
-Use the docx numbering system with LevelFormat.DECIMAL.
-
-| Property | Value |
-|----------|-------|
-| Format | %1. |
-| Indent left | 720 DXA |
-| Hanging indent | 360 DXA |
-| Font | Open Sans Regular, 11pt |
-
-Use numbered lists for Client Goals and any other ordered content.
-
----
-
-## Labeled Fields (No Bullets)
-
-Competitor profiles and similar structured data use bold labels followed by content on the same line. No bullet prefix.
-
-**Correct:**
-```
-Overview: Description text here.
-URL: https://example.com
-Citations: Source 1 | Source 2
+```js
+new ExternalHyperlink({
+  link: 'https://drive.google.com/file/d/.../view',
+  children: [new TextRun({
+    text: 'Work Agreement',
+    font: 'Open Sans', size: 21, color: INK,
+    underline: { type: 'dash', color: MICRO },
+  })],
+})
 ```
 
-**Incorrect:**
-```
-- Overview: Description text here.
-- URL: https://example.com
-```
+**Never emit `href="#"` placeholders.** If the skill didn't capture a URL for a source, render the source name as plain text — no fake link. See `research-tool-contract.md` for the URL-capture rules.
 
 ---
 
-## Section Dividers
+## Bulleted lists
 
-Implemented as empty paragraphs with a bottom border.
+Use `numbering` with `LevelFormat.BULLET`. Never insert raw `•` characters. Bullets carry the `MICRO` color for the marker; body text stays INK.
 
-| Property | Value |
-|----------|-------|
-| Border position | Bottom |
-| Border style | Single |
-| Border color | #999999 |
-| Border size | 6 (3/4 pt line) |
-| Border space | 1 |
-
-Place a divider between each major section (after each x.0 group completes, between competitor profiles in 3.3, and between audience profiles in 3.2).
-
----
-
-## Tables
-
-| Property | Value |
-|----------|-------|
-| Width | 9360 DXA (full content width) or as appropriate |
-| Width type | DXA (never use PERCENTAGE) |
-| Border style | Single |
-| Border color | #000000 |
-| Border size | 4 |
-| Borders | All sides + insideH + insideV |
-| Cell margin top | 0 DXA |
-| Cell margin bottom | 0 DXA |
-| Cell margin left | 115 DXA |
-| Cell margin right | 115 DXA |
-| Header row font | Open Sans Bold, 11pt |
-| Data row font | Open Sans Regular, 11pt |
-| Shading type | CLEAR (never SOLID) |
-
-Column widths must sum to table width. Set both columnWidths on the table AND width on each cell.
-
----
-
-## Scope Callout
-
-Used in the Strategy Brief for flagging ideas outside the current Work Agreement scope.
-
-**Visual spec:**
-- Full content width (9360 DXA)
-- Left border: 3pt solid, orange (#E67E22)
-- Background: light gray (#F5F5F5) via shading
-- Text: italic, 11pt Open Sans, black
-- Padding: 115 DXA all sides (matches table cell margins)
-- Margin: 6pt above and below (spacing before/after: 120)
-
-**docx-js config:**
-```javascript
-// Scope callout as a styled paragraph with borders and shading
-new Paragraph({
-  children: [
-    new TextRun({
-      text: "Outside current scope — requires client approval",
-      italics: true,
-      font: "Open Sans",
-      size: 22, // 11pt
-    }),
+```js
+// In the doc's numbering config:
+numbering: {
+  config: [
+    {
+      reference: 'bul',
+      levels: [{
+        level: 0, format: LevelFormat.BULLET, text: '•',
+        alignment: AlignmentType.LEFT,
+        style: { paragraph: { indent: { left: 440, hanging: 320 } } },
+      }],
+    },
+    {
+      reference: 'refs',
+      levels: [{
+        level: 0, format: LevelFormat.DECIMAL, text: '%1.',
+        alignment: AlignmentType.LEFT,
+        style: { paragraph: { indent: { left: 480, hanging: 360 } } },
+      }],
+    },
   ],
-  border: {
-    left: { style: BorderStyle.SINGLE, size: 6, color: "E67E22" }, // 3pt orange
-  },
-  shading: { type: ShadingType.SOLID, color: "F5F5F5" },
-  spacing: { before: 120, after: 120 },
-  indent: { left: 230 }, // ~115 DXA padding from border
+},
+
+// Then to create a bullet paragraph:
+new Paragraph({
+  children: [...runs],
+  numbering: { reference: 'bul', level: 0 },
+  spacing: { before: 40, after: 60, line: 300 },
+})
+```
+
+Never add blank lines between bullets. The `after: 60` DXA gives just enough breathing room.
+
+---
+
+## Numbered lists
+
+Used only for the Reference / Source Documents section at the bottom of every brief. Each entry gets a top hairline `RULE` border so entries feel separated even when tightly stacked.
+
+```js
+new Paragraph({
+  children: [...runs],
+  numbering: { reference: 'refs', level: 0 },
+  spacing: { before: 20, after: 100, line: 280 },
+  border: { top: { color: RULE, size: 4, space: 6, style: BorderStyle.SINGLE } },
 })
 ```
 
 ---
 
-## Document Default Styles (docx-js)
+## Facts strip (top/bottom-ruled column grid)
 
-When creating new documents with docx-js, use this styles configuration:
+Used at the top of §2.1 Client Details in the Foundational Brief (Founded / Offices / Intake / Annual marketing). Also usable in other briefs wherever key facts should sit above the section.
 
-```javascript
-styles: {
-  default: {
-    document: {
-      run: { font: "Open Sans", size: 22 }  // 11pt default
-    }
-  },
-  paragraphStyles: [
-    {
-      id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true,
-      run: { size: 40, bold: true, font: "Open Sans", color: "000000" },
-      paragraph: { spacing: { before: 360, after: 200, line: 240, lineRule: "auto" } }
+```js
+function factsTable(cells) {
+  const colW = Math.floor(12240 / cells.length);   // proportional DXA columns
+  return new Table({
+    width: { size: 5000, type: WidthType.PERCENTAGE },
+    layout: TableLayoutType.AUTOFIT,
+    columnWidths: cells.map(() => colW),
+    borders: {
+      top: { style: BorderStyle.SINGLE, size: 6, color: RULE },
+      bottom: { style: BorderStyle.SINGLE, size: 6, color: RULE },
+      left: NO_BORDER, right: NO_BORDER,
+      insideHorizontal: NO_BORDER, insideVertical: NO_BORDER,
     },
-    {
-      id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true,
-      run: { size: 32, bold: true, font: "Open Sans", color: "333333" },
-      paragraph: { spacing: { before: 280, after: 160, line: 240, lineRule: "auto" } }
-    },
-    {
-      id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal", quickFormat: true,
-      run: { size: 26, bold: true, font: "Open Sans", color: "333333" },
-      paragraph: { spacing: { before: 200, after: 120, line: 240, lineRule: "auto" } }
-    },
-    {
-      id: "Heading4", name: "Heading 4", basedOn: "Normal", next: "Normal", quickFormat: true,
-      run: { size: 22, bold: true, font: "Open Sans", color: "000000" },
-      paragraph: { spacing: { before: 80, after: 20, line: 240, lineRule: "auto" } }
-    }
-  ]
+    rows: [new TableRow({
+      cantSplit: true,
+      children: cells.map(c => new TableCell({
+        width: { size: colW, type: WidthType.DXA },
+        margins: { top: 240, bottom: 240, left: 120, right: 120 },
+        children: [
+          // Label — MUTED small caps
+          new Paragraph({ spacing: { after: 60 }, children: [new TextRun({
+            text: c.label.toUpperCase(), font: 'Open Sans', size: 17,
+            bold: true, color: MUTED, characterSpacing: 40,
+          })] }),
+          // Value — big INK bold
+          new Paragraph({ spacing: { after: c.note ? 60 : 0 }, children: [new TextRun({
+            text: c.value, font: 'Open Sans',
+            size: c.big ? 32 : 22, bold: true, color: INK,
+          })] }),
+          // Optional note — MUTED small
+          ...(c.note ? [new Paragraph({ children: [new TextRun({
+            text: c.note, font: 'Open Sans', size: 18, color: MUTED,
+          })] })] : []),
+        ],
+      })),
+    })],
+  });
 }
 ```
 
 ---
 
-## Document Status Badge
+## Column strip (3-col or 4-col with vertical dividers)
 
-Every brief must include a status badge in the top right corner of the first page.
+The general-purpose parallel-comparison pattern. Used at the top of §3.2 Audiences (Book Reality / Market / Aspiration when helpful), at the top of §2.3 Digital Snapshot (Referral / Digital / Billboard TL;DR), for Paid Media split (WV / Columbus), or anywhere else the same kind of information deserves side-by-side treatment.
 
-| Property | Draft | Final |
-|----------|-------|-------|
-| Position | Top right of first page, right-aligned | Same |
-| Text | DRAFT | FINAL |
-| Font | Open Sans Bold, 9pt, uppercase, letter-spacing 1.5px | Same |
-| Background | Transparent (no fill) | #000000 (black) |
-| Text color | #000000 (black) | #FFFFFF (white) |
-| Border | 1.5pt solid #000000 | 1.5pt solid #000000 |
-| Padding | 4px top/bottom, 14px left/right | Same |
-| Border radius | 3px | Same |
+Difference from facts strip: **vertical `RULE` dividers between columns** (`insideVertical` set to hairline RULE).
 
-Implementation: use a right-aligned text box or header element positioned at the top of the first page. The badge should sit above the 1.0 Intro heading.
+```js
+function threeCol(cols) {
+  const colW = Math.floor(12240 / cols.length);
+  return new Table({
+    width: { size: 5000, type: WidthType.PERCENTAGE },
+    layout: TableLayoutType.AUTOFIT,
+    columnWidths: cols.map(() => colW),
+    borders: {
+      top: { style: BorderStyle.SINGLE, size: 6, color: RULE },
+      bottom: { style: BorderStyle.SINGLE, size: 6, color: RULE },
+      left: NO_BORDER, right: NO_BORDER,
+      insideHorizontal: NO_BORDER,
+      insideVertical: { style: BorderStyle.SINGLE, size: 4, color: RULE },
+    },
+    rows: [new TableRow({
+      cantSplit: true,  // don't orphan cells across a page break
+      children: cols.map(c => new TableCell({
+        width: { size: colW, type: WidthType.DXA },
+        margins: { top: 240, bottom: 240, left: 200, right: 200 },
+        children: [
+          new Paragraph({ spacing: { after: 80 }, children: [new TextRun({
+            text: c.label.toUpperCase(), font: 'Open Sans', size: 17,
+            bold: true, color: MUTED, characterSpacing: 40,
+          })] }),
+          new Paragraph({ spacing: { after: 60 }, children: [new TextRun({
+            text: c.value, font: 'Open Sans',
+            size: c.big ? 32 : 22, bold: true, color: INK,
+          })] }),
+          ...(c.note ? [new Paragraph({ children: [new TextRun({
+            text: c.note, font: 'Open Sans', size: 19, color: MUTED,
+          })] })] : []),
+        ],
+      })),
+    })],
+  });
+}
+```
+
+Extend to 4-col by passing 4 items in `cols`. The pattern scales.
 
 ---
 
-## Cover Fields
+## Data table (Lead Docket, streaming performance, etc.)
 
-Every document must include the following cover fields below the document title and client name:
+For tabular data with a header row. Header row has a bottom `INK` rule; body rows have hairline `RULE` bottom borders. No left/right/top/vertical borders — the visual weight is on horizontal separators.
 
-**Authored by:** Name, Position (e.g., "Andrés Cuervo, CCO"). If the author's name and position are not known from the client CLAUDE.md, ask the user.
+```js
+function dataTable(headers, rows) {
+  const colW = Math.floor(12240 / headers.length);
+  return new Table({
+    width: { size: 5000, type: WidthType.PERCENTAGE },
+    layout: TableLayoutType.AUTOFIT,
+    columnWidths: headers.map(() => colW),
+    borders: {
+      top: NO_BORDER, left: NO_BORDER, right: NO_BORDER, bottom: NO_BORDER,
+      insideHorizontal: { style: BorderStyle.SINGLE, size: 4, color: RULE },
+      insideVertical: NO_BORDER,
+    },
+    rows: [
+      new TableRow({
+        tableHeader: true,
+        children: headers.map(h => new TableCell({
+          width: { size: colW, type: WidthType.DXA },
+          margins: { top: 120, bottom: 140, left: 0, right: 120 },
+          borders: { top: NO_BORDER, left: NO_BORDER, right: NO_BORDER,
+                     bottom: { style: BorderStyle.SINGLE, size: 8, color: INK } },
+          children: [new Paragraph({ children: [new TextRun({
+            text: h.toUpperCase(), font: 'Open Sans', size: 17,
+            bold: true, color: MUTED, characterSpacing: 40,
+          })] })],
+        })),
+      }),
+      ...rows.map(cells => new TableRow({
+        children: cells.map((cell, i) => new TableCell({
+          width: { size: colW, type: WidthType.DXA },
+          margins: { top: 140, bottom: 140, left: 0, right: 120 },
+          borders: { top: NO_BORDER, left: NO_BORDER, right: NO_BORDER,
+                     bottom: { style: BorderStyle.SINGLE, size: 4, color: RULE } },
+          children: [new Paragraph({ children:
+            (Array.isArray(cell) ? cell : [{ text: String(cell) }]).map(s => new TextRun({
+              text: s.text, font: 'Open Sans', size: 20,
+              bold: i > 0 || s.bold, italics: s.italics, color: s.color ?? INK,
+            })),
+          })],
+        })),
+      })),
+    ],
+  });
+}
+```
 
-**Draft documents:**
-- **Created**: The date the brief was first generated (Month Day, Year)
-- **Last Updated**: The date of the most recent edit or update session (Month Day, Year)
-
-**Finalized documents:**
-- **Created**: The date the brief was first generated
-- **Last Updated**: The date of the most recent edit before finalization
-- **Finalized**: The date the document was locked down as the authority version
-
-Every time the skill touches the document (update or finalize), the Last Updated date must be refreshed to the current date.
+Data cells in columns 2+ are bold by default (they're the numeric/emphasis cells). Column 1 (the row label) is regular weight unless explicitly bolded via a span.
 
 ---
 
-## Content Structure Rules
+## Shaded band (edge-to-edge shaded section)
 
-These rules govern how content is formatted, not what it says:
+Used for data-heavy sections that should stand out. In the Foundational Brief, this is §2.3 Digital Snapshot. The band extends to the physical left and right page edges (achieved by putting the content in a section with zero side margins) and — because the section also has zero top/bottom margins — the shading continues visually across page breaks with no unshaded gap.
 
-- **Heading assignments are fixed.** H1 for x.0 sections, H2 for x.x subsections, H3 for named blocks, H4 for profile categories. Do not reassign.
-- **Competitor profiles use labeled fields, not bullets.** Bold label + colon + content. No bullet prefix.
-- **Audience profiles are numbered** (Audience Profile 1, Audience Profile 2, etc.) with the audience name as a separate line below the profile label. Use H3 for the profile label and a bold paragraph for the audience name.
-- **Audience profiles use H4 for category names** (Demographics, Mindset, Attitude, Perception, Evidence) with content under each. H4 is bold black, not italic blue.
-- **Brand Voice traits use bullet lists** with bold trait name + description.
-- **Dividers separate major sections**, not every subsection.
-- **No blank lines between bullets** unless the section explicitly requires spacing.
-- **No raw unicode characters** for bullets, dividers, or decorative elements.
-- **No code, HTML, or debug artifacts** in the output document.
+**Two-step recipe:**
+
+1. Put the shaded section inside a `SectionType.CONTINUOUS` section with `margin: { top: 0, bottom: 0, left: 0, right: 0 }` (see three-band structure above).
+2. Wrap the shaded content in a full-page-width single-cell table with `PAPER_BAND` shading and ~1" cell padding on left/right (so the content isn't jammed against the physical page edge).
+
+```js
+function shadedBand(children) {
+  const tw = 12240;   // full Letter page width
+  return new Table({
+    width: { size: 5000, type: WidthType.PERCENTAGE },
+    layout: TableLayoutType.AUTOFIT,
+    columnWidths: [tw],
+    borders: {
+      top: NO_BORDER, bottom: NO_BORDER, left: NO_BORDER, right: NO_BORDER,
+      insideHorizontal: NO_BORDER, insideVertical: NO_BORDER,
+    },
+    rows: [new TableRow({
+      children: [new TableCell({
+        width: { size: tw, type: WidthType.DXA },
+        shading: { type: ShadingType.CLEAR, color: 'auto', fill: PAPER_BAND },
+        margins: { top: 800, bottom: 800, left: 1440, right: 1440 },
+        children,
+      })],
+    })],
+  });
+}
+```
+
+`ShadingType.CLEAR` with `fill: PAPER_BAND` is the correct cell shading. Never use `SOLID` — it renders black.
+
+---
+
+## Social handles grid (2-col name + description + live links)
+
+Where the Foundational Brief lists social platforms, use a 2-column grid — never a prose sentence like "Facebook (brand + WV + OH pages), Instagram (...), ...".
+
+```js
+// CSS-side, if you want a CSS analog. In docx, use a two-column table with cell shading none.
+// Each cell: bold platform name, muted description, then a row of dashed-underline hyperlink handles.
+new Table({
+  width: { size: 5000, type: WidthType.PERCENTAGE },
+  layout: TableLayoutType.AUTOFIT,
+  columnWidths: [colW, colW],   // colW = 12240 / 2 = 6120
+  borders: {
+    top: NO_BORDER, bottom: NO_BORDER, left: NO_BORDER, right: NO_BORDER,
+    insideHorizontal: { style: BorderStyle.SINGLE, size: 4, color: RULE },
+    insideVertical: NO_BORDER,
+  },
+  rows: platforms.map(row => new TableRow({
+    children: row.map(platform => new TableCell({
+      width: { size: colW, type: WidthType.DXA },
+      margins: { top: 200, bottom: 200, left: 0, right: 200 },
+      children: [
+        new Paragraph({ children: [new TextRun({
+          text: platform.name, font: 'Open Sans', size: 22, bold: true, color: INK,
+        })] }),
+        new Paragraph({ spacing: { before: 40, after: 80 }, children: [new TextRun({
+          text: platform.description, font: 'Open Sans', size: 19, color: MUTED,
+        })] }),
+        // Links row: one paragraph containing all handles separated by " · "
+        new Paragraph({ children: platform.links.flatMap((l, i) => [
+          ...(i > 0 ? [new TextRun({ text: ' · ', font: 'Open Sans', size: 19, color: MUTED })] : []),
+          new ExternalHyperlink({ link: l.url, children: [new TextRun({
+            text: l.handle, font: 'Open Sans', size: 19, color: INK,
+            underline: { type: 'dash', color: MICRO },
+          })] }),
+        ]) }),
+      ],
+    })),
+  })),
+})
+```
+
+**If a platform genuinely doesn't exist** (e.g., no TikTok account), include it with a small "Not found" pill instead of link handles. Don't fake a link.
+
+---
+
+## Source line
+
+Every §-numbered section ends with a source line: dashed top border, `SOURCES` caps label in MUTED, then citation entries separated by ` · `. Each citation is a dashed-underline hyperlink pointing to the actual source URL captured during ingestion.
+
+```js
+function sourceLine(citations) {
+  return new Paragraph({
+    spacing: { before: 320, after: 400, line: 280 },
+    border: { top: { color: RULE, size: 6, space: 8, style: BorderStyle.DASHED } },
+    children: [
+      new TextRun({
+        text: 'SOURCES  ', font: 'Open Sans', size: 17,
+        bold: true, color: MUTED, characterSpacing: 40,
+      }),
+      ...citations.flatMap((c, i) => [
+        ...(i > 0 ? [new TextRun({ text: ' · ', font: 'Open Sans', size: 18, color: MUTED })] : []),
+        c.url
+          ? new ExternalHyperlink({ link: c.url, children: [new TextRun({
+              text: c.text, font: 'Open Sans', size: 18, color: MUTED,
+              underline: { type: 'dash', color: MICRO },
+            })] })
+          : new TextRun({ text: c.text, font: 'Open Sans', size: 18, color: MUTED }),
+      ]),
+    ],
+  });
+}
+```
+
+---
+
+## Reference & Source Documents section
+
+The last section of every brief is a numbered list of every source consulted. Uses the `refs` numbering config (decimal). Every entry that has a URL is a dashed-underline hyperlink; entries without URLs are plain text (never `#` placeholders).
+
+Section heading:
+
+```js
+h2('§ · Reference & Source Documents'),
+```
+
+Then each entry:
+
+```js
+ol([
+  { text: 'Colombo Law Sales Turnover, Sales-to-Creative / Accounts handoff', url: U.sales_turnover },
+  { text: ' (Google Drive, May 2026).' },
+])
+```
+
+where `ol()` produces a numbered paragraph using the `refs` config.
+
+---
+
+## Divider between sections
+
+Do not use blank lines or manual dividers between sections. The `h2()` bottom border + spacing already provides visual separation. Use dividers ONLY when a specific pattern calls for it (e.g., the top+bottom rules on the facts strip). Never insert a table used as a horizontal rule — use a paragraph bottom border.
+
+---
+
+## Common constants and helpers
+
+Every generator script should declare these once at the top:
+
+```js
+const NO_BORDER = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+const FONT = 'Open Sans';
+```
+
+Use `halfPt(pt) => pt * 2` if you prefer semantic sizing:
+
+```js
+const halfPt = pt => pt * 2;
+// then size: halfPt(11) === size: 22
+```
+
+---
+
+## Confidence vocabulary
+
+When a section marks the confidence level of a claim (in Evidence lists, Research Logs, source citations), use one of these five terms — no synonyms, no ad-hoc alternatives:
+
+| Term | Meaning |
+|---|---|
+| **Verified** | Confirmed by an independent primary source (government data, live competitor site, official profile). |
+| **Corroborated** | Multiple independent sources agree, but no single primary source is authoritative. |
+| **Client-Reported** | Stated by the client in surveys, discovery, or handoff docs. Not independently verified. |
+| **Unverified** | Not yet confirmed by any source. Placeholder for future research. |
+| **Contradicted** | Sources disagree; flag for follow-up. |
+
+Format inline citations as: `... (Source Name — Verified)` or `... *(Client-Reported)*`.
+
+---
+
+## What NOT to do
+
+- No blue hyperlinks (`#0563C1` is banned)
+- No all-sides black table borders (old Word/legal-doc look)
+- No pure black text (`#000000`) — use INK `#2E2C27`
+- No pure white background (`#FFFFFF`) — use PAPER `#FCFCFB`
+- No colored accents (no red, no orange, no green) — the client's own aversions plus the design system
+- No `href="#"` placeholders for missing URLs — either link with a real URL or emit plain text
+- No "FINAL" badge on finalized documents — omit the DRAFT banner instead
+- No Contents / Table of Contents block — Google Docs Outline sidebar handles navigation
+- No "what changed in this update" verbose paragraph under the cover — the Last updated date is enough
+- No blank lines between bullets
+- No raw `•` unicode characters — always via LevelFormat.BULLET
+- No downstream teasers ("addressed in the Strategy Brief," "captured later in §X") — see `feedback_no_downstream_leaks` rule
+- No code, HTML, or debug artifacts in the output document
+
+---
+
+## Document defaults (docx-js `Document` config)
+
+```js
+const doc = new Document({
+  numbering: {
+    config: [
+      { reference: 'bul', levels: [{ level: 0, format: LevelFormat.BULLET, text: '•', alignment: AlignmentType.LEFT,
+        style: { paragraph: { indent: { left: 440, hanging: 320 } } } }] },
+      { reference: 'refs', levels: [{ level: 0, format: LevelFormat.DECIMAL, text: '%1.', alignment: AlignmentType.LEFT,
+        style: { paragraph: { indent: { left: 480, hanging: 360 } } } }] },
+    ],
+  },
+  styles: {
+    default: {
+      document: { run: { font: FONT, size: 21, color: INK } },  // 10.5pt body
+    },
+  },
+  sections: [/* three-band structure */],
+});
+```
+
+---
+
+## Reference example
+
+The Colombo Law Foundational Brief (v7, produced 2026-08-04) is the canonical reference for this spec. When in doubt about how a section should look or how a pattern should compose, generate the equivalent and compare. The v7 rebuild is at:
+
+`/private/tmp/…/scratchpad/Colombo_Foundational_Brief.docx` (session-local; not versioned)
+
+And the generator that produced it, `build_docx.js`, is the reference implementation for these patterns.
