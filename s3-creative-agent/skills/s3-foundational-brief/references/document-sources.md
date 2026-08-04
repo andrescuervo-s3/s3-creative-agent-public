@@ -1,6 +1,6 @@
 # Document Sources
 
-Quick-reference map of where each client document lives and which tool retrieves it.
+Quick-reference map of where each client document lives and which tool retrieves it. **Every fetched document's URL must be captured for citation** — see the Source URL Capture section in `research-tool-contract.md`. The `viewUrl` field on Drive responses and the Content Snare portal URL for surveys are what render as live hyperlinks in the finished brief.
 
 | Document | Source | Tool |
 |----------|--------|------|
@@ -16,12 +16,22 @@ Quick-reference map of where each client document lives and which tool retrieves
 
 ## Content Snare Tools
 
-| Tool | Input | Returns |
-|------|-------|---------|
-| `search_surveys` | `{ query: "client name" }` | Matching surveys with name, status, due date, request ID |
-| `get_full_survey` | `{ request_id: "req_..." }` | All pages with questions and answers |
-| `get_survey` | `{ request_id: "req_..." }` | Survey metadata and page list (no answers) |
-| `get_survey_page` | `{ page_id: "pag_..." }` | Single page with questions and answers |
+| Tool | Input | Returns | Capture for citation |
+|------|-------|---------|----------------------|
+| `search_surveys` | `{ query: "client name" }` | Matching surveys with name, status, due date, request ID | Request ID (`req_...`); the citable URL is `https://app.contentsnare.com/requests/{req_id}` |
+| `get_full_survey` | `{ request_id: "req_..." }` | All pages with questions and answers | Same request ID as above |
+| `get_survey` | `{ request_id: "req_..." }` | Survey metadata and page list (no answers) | Same request ID as above |
+| `get_survey_page` | `{ page_id: "pag_..." }` | Single page with questions and answers | The parent survey's request ID |
+
+## Google Drive Tools
+
+Every Drive fetch response includes a `viewUrl` field. Capture and pass it through to the brief. Example URL patterns:
+- Docs: `https://docs.google.com/document/d/{fileId}/edit`
+- Sheets: `https://docs.google.com/spreadsheets/d/{fileId}/edit`
+- Slides: `https://docs.google.com/presentation/d/{fileId}/edit`
+- Other files (PDFs, images, etc.): `https://drive.google.com/file/d/{fileId}/view`
+
+If a document was referenced by name only (e.g., a source you know exists but didn't fetch), call `search_files` with the title first, capture the `viewUrl` from the result, THEN cite it. Do not skip the URL just because you didn't originally fetch the file.
 
 ## Google Drive Folder Structure
 

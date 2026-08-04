@@ -52,6 +52,31 @@ When WebSearch returns results, you must filter them BEFORE fetching. Check ever
 
 ---
 
+## Source URL Capture
+
+**Every source pulled by any ingestion tool MUST have its URL captured alongside the content, and that URL MUST flow through to the brief as a live hyperlink on the citation.**
+
+This applies universally: WebFetch on public data, Drive file reads, Notion page fetches, Grain meeting fetches, Content Snare survey pulls, Airtable record fetches — all of them. If the tool call succeeded, the URL exists in the tool response; capture it.
+
+**Why:** the reader of the finished brief should be able to click any source citation and land on the actual document / recording / dataset. `href="#"` placeholders and plain "(Sales Turnover)" text with no link both fail this contract. See project memory `project_source_url_capture.md`.
+
+**Per-tool URL field mapping:**
+
+| Source | Tool | URL field to capture | URL format example |
+|---|---|---|---|
+| Google Drive (any file) | `get_file_metadata` / `read_file_content` | `viewUrl` (returned by `get_file_metadata`; can also be constructed from `id`) | `https://docs.google.com/document/d/{id}/edit` or `https://drive.google.com/file/d/{id}/view` |
+| Notion page | `notion-search`, `notion-fetch` | `url` field on each search result | `https://app.notion.com/p/{page-id}` |
+| Grain meeting | `list_meetings`, `fetch_meeting_notes`, `fetch_meeting_transcript` | `recording_url` field on each meeting object | `https://grain.com/share/recording/{meeting-id}/{token}` |
+| Content Snare survey | `search_surveys`, `get_full_survey`, `get_survey`, `get_survey_page` | Request ID (`req_...`) — full portal URL follows the `https://app.contentsnare.com/requests/{req_id}` pattern; verify with the client's actual Content Snare workspace | `https://app.contentsnare.com/requests/req_...` |
+| Airtable record | `get_record`, `list_records` | Construct from base ID + table ID + record ID | `https://airtable.com/{base}/{table}/{view}/{record}` |
+| Public web (govt/industry data) | WebSearch → WebFetch | The URL you fetched | any authoritative URL like `https://ai.fmcsa.dot.gov/` |
+
+**Never invent a URL.** If the tool response didn't contain a URL field and you can't construct one from documented ID fields, the source is uncited-with-URL. In that case: (a) go find the URL via a follow-up search (Drive `search_files`, Notion `notion-search`, Grain `list_meetings`, etc.), or (b) render the source as plain text in the brief with a parenthetical `(Internal — URL not yet in Drive index)`. Never emit `href="#"`.
+
+**Carry URLs through the pipeline.** When a research agent hands its findings to the orchestrator (or the orchestrator hands validated content to the write phase), source URLs travel with the content. Every claim in the Research Log records the URL that produced it. Every citation in the final brief renders that URL as a live hyperlink.
+
+---
+
 ## Research Log Integrity
 
 Every Research Log must be an honest record of tool usage in this session:

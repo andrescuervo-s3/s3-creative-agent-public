@@ -8,6 +8,7 @@ Grain is already connected as an MCP. Reference its tools by bare name: `search_
 
 - Always use `list_meetings` (every meeting in the workspace you have access to). NEVER use `list_attended_meetings`. Attended-only wrongly narrows the net. Any accessible meeting where the client is mentioned counts, not just meetings you attended.
 - Never bulk-fetch full transcripts. `fetch_meeting_notes` is the default. `fetch_meeting_transcript` is on-demand only, for a single meeting that needs a deep read.
+- **Capture the `recording_url` field on every meeting object** — that's the citable URL for the brief. Format: `https://grain.com/share/recording/{meeting-id}/{token}`. Do not cite a Grain meeting without its `recording_url`. See "Source URL Capture" in `research-tool-contract.md`.
 
 ## What each consuming skill passes in
 
