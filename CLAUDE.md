@@ -17,12 +17,37 @@ When bumping the plugin version, update BOTH files:
 - `.claude-plugin/marketplace.json` (root level)
 - `s3-creative-agent/.claude-plugin/plugin.json` (plugin subdirectory — this is what Cowork displays)
 
-### Cache Clear Command
+### When Update Won't Update
 
-After pushing, always share the exact command (no wildcard):
-```
-rm -rf ~/Library/Caches/cowork/plugins/s3-creative-agent
-```
+The happy path is: push to GitHub, wait ~1 min for the mirror, click **Update** in the Claude Desktop plugin manager. Greyed-out Update usually means "already latest" — but not always. Sometimes it means the Electron UI state is stuck at the old version and doesn't know a newer one exists.
+
+Layers involved (in order of stickiness):
+
+| Layer | Location | Fix |
+|---|---|---|
+| Marketplace metadata (git clone) | `~/.claude/plugins/marketplaces/s3-creative-agent-marketplace/` | Deletes on marketplace remove |
+| Installed-plugin registry | `~/.claude/plugins/installed_plugins.json` | Deletes on plugin uninstall |
+| Old on-disk cache (legacy) | `~/.claude/plugins/cache/s3-creative-agent-marketplace/` | `rm -rf` the directory |
+| **Electron UI state (sticky)** | `~/Library/Application Support/Claude/{Local Storage,Session Storage,IndexedDB}/` | Survives Cmd+Q and reboot; nuking signs you out |
+
+Recovery ladder — try in order, stop when it works:
+
+1. Click the **⋯** menu on the plugin card, look for Reset / Reload / Check for updates.
+2. Repeatedly click **Update** — sometimes the UI eventually catches up (observed after ~7 clicks on 2026-08-04).
+3. Verify disk state matches expectations:
+   ```bash
+   cat ~/.claude/plugins/marketplaces/s3-creative-agent-marketplace/.claude-plugin/marketplace.json
+   ```
+   If that shows the new version but the UI shows the old one, the problem is Electron state, not disk.
+4. Nuke Electron state (last resort — signs you out, resets UI prefs):
+   ```bash
+   rm -rf ~/Library/Application\ Support/Claude/Local\ Storage
+   rm -rf ~/Library/Application\ Support/Claude/Session\ Storage
+   rm -rf ~/Library/Application\ Support/Claude/IndexedDB
+   ```
+   Then relaunch Claude Desktop, sign in, re-add the marketplace.
+
+**Do not recommend** `rm -rf ~/Library/Caches/cowork/plugins/…` — that path doesn't exist on the current Desktop app; it was from an older Cowork build.
 
 ### GitHub Repo Setup (Private + Public Mirror)
 
@@ -156,3 +181,13 @@ Short (2-6 page) internal B&W strategy doc for client meetings. Not a brief.
 
 ## Known Issues / Feedback Backlog
 See `.claude/session-log.md` for the full list of 13 feedback items from the first live test (TMP/Turnbull, 2026-03-18).
+
+<!-- claude-max-s3:history-pointer -->
+## Project History
+
+Prior Claude Code session summaries for this project live at:
+`~/claude-max-s3/projects/s3-creative-agent/`
+
+Each dated entry has a `.md` summary (read these first) and a `.jsonl` raw transcript (dig in only if you need the full transcript).
+
+When asked about past decisions or prior work on this project, read the recent `.md` files there before answering.
