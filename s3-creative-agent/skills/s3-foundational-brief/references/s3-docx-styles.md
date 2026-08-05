@@ -8,6 +8,28 @@ Validated 2026-08-04 against a full rebuild of the Colombo Law Foundational Brie
 
 ---
 
+## Read This Before Writing Any docx-js Code
+
+**This document is the sole source of truth for the docx layout.** You compose the brief's docx-js by adapting the code snippets below — not by inventing new patterns, and not by copying anything from any existing brief on disk.
+
+**Forbidden behaviors (never do these):**
+- ❌ Reading an existing brief file (Drive, local disk, anywhere) to extract its layout, run-level formatting, table styling, cover pattern, or heading treatment. That file is a PREVIOUS version's output and using it as a template propagates old styling — the exact thing every version bump is designed to replace.
+- ❌ Choosing a layout decision because it "matches the existing template" or is "consistent with what was there before". The prior brief's layout does not exist as a reference for you. Only this file does.
+- ❌ Inventing your own palette, fonts, colors, or table borders. Every color hex, font size, and border weight is defined here. If it's not in this doc, don't add it.
+- ❌ Skipping any pattern below because it's "not strictly required" — the three-band structure with shaded §2.3 band, the source lines at the end of each section, the pipe-border notes, the `HeadingLevel` styles, the dashed-underline hyperlink treatment, and the 4-column cover metadata strip are all REQUIRED, not optional.
+- ❌ Producing a docx with pure black (`#000000`) text, pure white (`#FFFFFF`) background, blue (`#0563C1`) hyperlinks, or all-sides black table borders. Those are the old 3.26-era patterns and are retired.
+
+**Required self-check before you pack the docx**: after composing all sections, verify each of these is true. If any is false, you have not followed this spec:
+1. Cover has a 4-column metadata strip (Client / Authored by / Created / Last updated) — not bulleted labeled fields.
+2. Every §-numbered section header uses `HeadingLevel.HEADING_1` (so the Google Docs Outline sidebar populates).
+3. §2.3 Digital Snapshot is wrapped in a full-width shaded table inside a section with zero side margins (three-band structure).
+4. Every section ends with a source line: dashed top border, `SOURCES` label, `·`-separated citations rendered as dashed-underline live hyperlinks.
+5. Palette is warm B&W: INK `#2E2C27`, PAPER `#FCFCFB`, PAPER_BAND `#F9F9F7`, MUTED `#6B6A63`, MICRO `#B4B3A8`, RULE `#E4E3DC`. No blue hyperlinks. No all-sides black table borders.
+
+If any check fails, correct it before writing the file. The user cannot re-run this cheaply — get it right the first time.
+
+---
+
 ## Font
 
 **Open Sans** for all text. No exceptions — never Calibri, Arial, Helvetica, Times New Roman, or any other font.
@@ -725,10 +747,6 @@ const doc = new Document({
 
 ---
 
-## Reference example
+## Where the patterns came from
 
-The Colombo Law Foundational Brief (v7, produced 2026-08-04) is the canonical reference for this spec. When in doubt about how a section should look or how a pattern should compose, generate the equivalent and compare. The v7 rebuild is at:
-
-`/private/tmp/…/scratchpad/Colombo_Foundational_Brief.docx` (session-local; not versioned)
-
-And the generator that produced it, `build_docx.js`, is the reference implementation for these patterns.
+Every code snippet in this file was derived from a validated end-to-end docx generation on 2026-08-04 (Colombo Law Foundational Brief). That output is not preserved as a reference file the model can read — intentionally, per the anti-pattern rule at the top of this document. The snippets in this file ARE the reference. If you need to know how a pattern composes, adapt the snippet in this file; do not look for an example .docx to copy from.
