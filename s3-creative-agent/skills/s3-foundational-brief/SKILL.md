@@ -283,34 +283,32 @@ If everything looks good, reply "Approved" to confirm completion of the Foundati
 
 ---
 
-## Document Output
+## Document Output — MANDATORY: Hand Off to s3-docx-styler
 
-### Incremental Building
-Create a working .docx document after Phase 1 completes. Name it `{Client Name}_Foundational_Brief_DRAFT.docx`. After each section is approved, append it to the document immediately.
+**You do NOT write the .docx yourself.** After all sections are prepared as structured content in your working notes (Phase 3 complete), your final action is to invoke the `s3-docx-styler` skill via the Skill tool. That skill handles every visual composition decision, font embedding, and file save.
 
-### Save Location
+Why this is mandatory: the styler skill's SKILL.md and its `references/visual-system.md` become active context ONLY when you invoke it. If you try to write the docx yourself, those visual rules stay dormant and the output regresses to whatever pattern the writer model defaults to (typically: mimicking whatever old file is on disk in the client folder).
+
+### Invocation
+
+Use the Skill tool:
+
+- **skill**: `s3-docx-styler`
+- **args**: A message containing:
+  - Client name (e.g., "Colombo Law")
+  - Mode (`New Draft`, `Update Draft`, or `Finalize` — pass along whichever the user selected)
+  - File save path (absolute path, e.g., `/path/to/{Client}/01 Deliverables/{Client}_Foundational_Brief_DRAFT.docx`)
+  - The prepared section content, structured by section number (1.0 through 3.4 plus the Reference section)
+
+The styler will produce the .docx, embed Open Sans, verify its own required-pattern checklist, and report back with the file path. Do not attempt any style, layout, or font decisions yourself — those all live in the styler skill now.
+
+### Save Location (pass to styler)
 - **Google Drive** (if connector available): `{Client Folder}/CREATIVE STRATEGY/{Client}_Foundational_Brief_DRAFT.docx`
-- **Local**: Save to the outputs folder if Drive is unavailable
+- **Local**: the outputs folder if Drive is unavailable
 
-### Status Badge
-- DRAFT: Black outline badge on cover page
-- FINAL: Black fill badge on cover page
-
-### Dates
-- Created: Generation date
-- Last Updated: Most recent edit date
-
-### Document Styling
-Read `references/s3-docx-styles.md` for font, heading, table, and layout specifications. Read `references/foundational-brief-sections.md` for the exact structure, field order, table formats, and heading hierarchy for every section. Do not improvise your own layout. Follow the templates exactly.
-
-### Font Embedding (Required)
-After generating the .docx with docx-js, run the font embedding script to ensure Open Sans renders on all machines:
-
-```bash
-python3 assets/embed-fonts.py output.docx
-```
-
-This embeds Open Sans directly into the file. Without this step, the document falls back to Aptos or Calibri on machines without Open Sans installed.
+### Mode Handling (pass to styler)
+- **New Draft** or **Update Draft**: filename ends `_DRAFT.docx`, styler includes Draft banner on cover
+- **Finalize**: filename drops `_DRAFT`, styler omits banner, adds `Finalized` date column to cover metadata strip
 
 ### Post-Output Logging (Immediate — Do Not Defer)
 
@@ -360,6 +358,6 @@ Read these on demand, not all at once:
 - `references/seo-digital-research-agent.md` -- Read before 2.3 Digital Snapshot. Fallback research protocol.
 - `references/pdf-reading-protocol.md` -- Read before attempting any PDF. One attempt, no loops.
 - `references/per-client-context-files.md` -- Read at Step 0 (before anything else). Defines CLAUDE.md, MEMORY.md, and progress.json lifecycle.
-- `references/s3-docx-styles.md` -- Read before generating the .docx. Font, heading, table, and layout specs.
+- **Sibling skill `s3-docx-styler`** — MANDATORY invocation for the final .docx composition step. Do NOT write the docx yourself. See "Document Output" section above for how to invoke.
 - `references/chat-formatting.md` -- Read at the start of Phase 3. Defines how all chat output must be formatted (bullets, headers, tables, status lines). Never write dense paragraphs in the chat.
 - `references/pipeline-routing.md` -- Read after the brief is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.
