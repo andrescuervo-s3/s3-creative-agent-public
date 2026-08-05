@@ -1,10 +1,10 @@
 ---
 name: s3-brief-selector
 description: |
-  Routes users to the correct S3 brief skill when their request is ambiguous. Studio 3 has three brief types: Foundational Brief (evergreen onboarding), Strategy Brief (strategic recommendations built on a foundational brief), and Creative Brief (project-specific: Website, Media, Paid Ads, Social Media). Determines which one the user needs and hands off.
-  TRIGGERS: brief, creative brief, start a brief, get the brief going, campaign brief, project brief, create a brief, help me with a brief, do a brief, build a brief, work on a brief, new brief, client brief.
-  This skill MUST be the entry point whenever the user says "brief" without a specific type qualifier like "foundational," "strategy," or "website." Even if context (like a turnover email or new client) suggests a foundational brief, the user must be asked to confirm the brief type first.
-  Do NOT trigger when user explicitly says "foundational brief" or "onboarding brief" (those go to s3-foundational-brief), "strategy brief" (goes to s3-strategy-brief), or "website brief," "media brief," etc. (those go directly to the matching creative brief skill).
+  Routes ambiguous brief requests to the correct S3 brief skill. Studio 3 has three types: Foundational (evergreen onboarding), Strategy (recommendations built on a foundational brief), and Creative (project-specific: Website, Media, Paid Ads, Social Media). Confirms which is needed, then hands off.
+  TRIGGERS: brief, a brief, new brief, client brief, project brief, campaign brief, creative brief, create/build/start/do/work on a brief, help me with a brief.
+  MUST be the entry point whenever the user says "brief" without a type qualifier. Even when context such as a turnover email or a new client implies a foundational brief, confirm the type with the user first.
+  Do NOT trigger when the user names the type: "foundational brief" goes to s3-foundational-brief, "strategy brief" to s3-strategy-brief, "website/media/paid ads/social media brief" to the matching s3-creative-brief-* skill.
 ---
 
 # S3 Brief Selector

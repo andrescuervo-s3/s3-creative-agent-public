@@ -141,7 +141,7 @@ Does this cover everything, or do you have more to add before we start building?
 
 ### Step 7: Create Working Document
 
-Create `{Client Name}_Website_Creative_Brief_DRAFT.docx` with cover page, DRAFT badge, and Authored By field. Read `references/s3-docx-styles.md` before creating.
+Create `{Client Name}_Website_Creative_Brief_DRAFT.docx` by invoking the `s3-docx-styler` skill (see Document Generation). Do not compose the docx or make style decisions yourself.
 
 **Cover fields:**
 - Document title: Website Creative Brief
@@ -342,9 +342,8 @@ All locations should be links. No "pending" notes. If something doesn't have a l
 
 After the user confirms:
 
-1. Generate the final .docx with all sections. **Font: Open Sans for all text. No exceptions. Do not use Arial, Calibri, or any other font.** Read `references/s3-docx-styles.md` before generating.
-2. Run font embedding: `python3 assets/embed-fonts.py output.docx`
-3. **Post-Output Logging (Immediate — Do Not Defer):**
+1. Invoke the `s3-docx-styler` skill via the Skill tool, passing: client name, document type `Website Creative Brief`, mode, the absolute save path, and all prepared section content. The styler composes the docx, embeds Open Sans, and reports the file path back. Do not write docx-js and do not make style or font decisions yourself.
+2. **Post-Output Logging (Immediate — Do Not Defer):**
    - Update MEMORY.md (add or update the Website Creative Brief entry). Create MEMORY.md now if it does not exist.
    - Update CLAUDE.md (add document to Documents Produced)
    - Delete `{Client}_progress.json` — skill completed successfully
@@ -436,7 +435,7 @@ When cross-referencing other sections in the document, use section names ("See B
 10. **The reference section is inherited.** Read MEMORY.md. Include every document from the full pipeline, not just what this skill produced.
 11. **Do NOT use "hub" generically.** "Hub" means S3 Hub (the product). Do not say "location hub," "media hub," or "content hub" unless referring to the actual S3 Hub product.
 12. **Use correct S3 terminology.** "Video Testimonial Engine Framework" not "Swag Room." Check `references/s3-product-stack.md` when referencing S3 products.
-13. **Font is Open Sans. Always.** Do not use Arial. Do not use Calibri. Read `references/s3-docx-styles.md`. Run `embed-fonts.py` after generating.
+13. **Never compose the .docx yourself.** Invoke the `s3-docx-styler` skill. It owns the font, palette, and layout, and it runs font embedding.
 14. **Cross-reference by name, not number.** "See Branding Status" not "See section 2.5." Numbers shift and break.
 15. **Content & Assets lists only what exists.** No wishlists. No "Video: None yet." If it doesn't exist, it doesn't appear in the table.
 16. **Open Decisions are design-relevant only.** HubSpot reactivation is not a design decision. Color palette direction is.
@@ -451,7 +450,7 @@ When cross-referencing other sections in the document, use section names ("See B
 Read these on demand, not all at once:
 
 - `references/creative-brief-website-sections.md` -- Read before writing ANY section. Section templates and field specs.
-- `references/s3-docx-styles.md` -- Read before creating or formatting the document.
+- Document styling is NOT a reference file. Invoke the `s3-docx-styler` skill as the final step; it owns the visual system.
 - `references/s3-tech-stack.md` -- Read before writing section 5.0. S3 platform details.
 - `references/s3-product-stack.md` -- Read when a feature involves an S3 product (Hub, LeadLoop, Answer Engine, Multi-Local).
 - `references/research-tool-contract.md` -- Read FIRST before any research. Non-negotiable.

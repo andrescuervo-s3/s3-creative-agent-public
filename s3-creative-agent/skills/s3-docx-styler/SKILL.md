@@ -15,13 +15,56 @@ This skill exists because a reference file can be skipped by a writer model but 
 
 ## Your workflow (do these in order, no skipping)
 
-1. **Read `references/visual-system.md` in full.** Every code snippet, every palette hex, every anti-pattern rule. You cannot skip this — the invoking skill deliberately handed off to you so that this file becomes active context. Read it now.
-2. **Ingest the handoff message** from the invoking skill. It will name the client, the file path, the mode (Draft/Finalize), and provide structured section content.
-3. **Compose the docx-js script** using ONLY the code patterns in `references/visual-system.md`. Do not extract layout from any existing file on disk. Do not invent your own patterns. If a section calls for a facts strip, use the `factsTable()` snippet. If it's the shaded band section, use the `shadedBand()` + section-break trick.
-4. **Run the docx-js script** to produce the initial .docx.
-5. **Embed Open Sans** by running `python3 assets/embed-fonts.py <path>` on the produced file.
-6. **Verify five required patterns are present** in the generated docx (per the self-check list in visual-system.md).
-7. **Report the file path** back to the invoking skill.
+**You do not hand-write docx-js.** `assets/build-brief.js` is a deterministic renderer: every helper hardcodes the correct S3 style. Your job is to call the right helpers with the handed-off content. This is not optional and there is no faster path — writing raw docx-js is how the output regresses.
+
+1. **Ingest the handoff message** from the invoking skill: client name, document type, mode (Draft/Finalize), absolute save path, and the structured section content.
+2. **Set up a working directory.** Copy `assets/build-brief.js` there. Ensure the `docx` package resolves; if `node -e "require.resolve('docx')"` fails, run `npm install docx` in that directory.
+3. **Write a short compose script** that requires `./build-brief.js` and calls its helpers (API below). The ONLY things you author are the content strings and which helper each block uses. Never set a color, font, size, border, or margin yourself — if you find yourself typing a hex code, you are doing it wrong.
+4. **Run it** with `node`.
+5. **Embed Open Sans**: `python3 assets/embed-fonts.py <path>`.
+6. **Verify the five required patterns** (checklist below).
+7. **Report the saved file path** back to the invoking skill.
+
+Read `references/visual-system.md` when you need the rationale behind a pattern, a case the helpers do not cover, or the full editorial spec. The helpers are the implementation; that file is the reference.
+
+## Renderer API (`assets/build-brief.js`)
+
+```js
+const B = require('./build-brief.js');
+
+await B.writeDoc(B.buildDoc({
+  cover: { client, authored_by, created, last_updated, mode, briefType, finalized? },
+  bands: [ { normal: [...blocks] }, { shaded: [...blocks] }, { normal: [...blocks] } ],
+}), '/absolute/save/path.docx');
+```
+
+`buildDoc` places the cover automatically and turns each band into its own docx section. Put the data-heavy section (§2.3 Digital Snapshot in a Foundational Brief) in the single `shaded` band; everything else goes in `normal` bands.
+
+Block helpers:
+
+| Helper | Use |
+|---|---|
+| `h2('2.1 · Client Details')` | Numbered section header. HEADING_1 → Google Docs Outline. |
+| `h4('Subsection')` | Subsection header. |
+| `eyebrow('LABEL')` | Small caps label / citation line. |
+| `p(runs)` | Body paragraph. |
+| `muted(text)` | De-emphasized italic line. |
+| `note(text)` | Pipe-rule callout (the left-bar style). |
+| `bullets([runs, ...])` | Returns an array — spread it: `...B.bullets([...])`. |
+| `ol([runs, ...])` | Numbered reference list. Spread it. |
+| `sourceLine([{text, url}, ...])` | Dashed-top SOURCES line. Ends every section. |
+| `threeCol([{label, value, big, note}])` | Facts strip with dividers. |
+| `factsTable([{label, value, big, note}])` | Facts strip without dividers. |
+| `dataTable(headers, rows)` | Metrics table. Cells are strings or run arrays. |
+| `mission(text, citation)` | Returns an array — spread it. |
+
+A **run** is a string, or `{text, bold?, italics?, url?}`. Passing `url` makes it a correctly styled dashed hyperlink. Never build hyperlinks any other way.
+
+```js
+B.p(['Direct email is off-limits. See ', {text: 'the policy', url: 'https://…'}, '.'])
+```
+
+If the handoff gives you a citation with no URL, pass it as plain text. Never invent a URL and never use `#`.
 
 ## Hard rules
 
@@ -70,6 +113,7 @@ If you spot an editorial violation in the handed-off content, flag it in your re
 
 ## Reference files
 
-- `references/visual-system.md` — full visual system spec with every code snippet. **MANDATORY read at start of your workflow.**
+- `assets/build-brief.js` — **the renderer. Always compose through it.** Every helper hardcodes the correct style.
+- `references/visual-system.md` — full visual system spec and editorial rules. Read for rationale, for cases the helpers do not cover, and when a check fails.
 - `assets/fonts/` — Open Sans TTFs to embed
 - `assets/embed-fonts.py` — post-generation font-embedding script

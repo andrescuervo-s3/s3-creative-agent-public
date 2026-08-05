@@ -18,11 +18,10 @@ The visual identity is intentionally monochrome — black, white, and greys only
 
 ### Required Reading
 
-1. Read the system `docx` skill for the docx-js API reference and validation workflow
-2. Read the shared S3 document style system at `references/s3-docx-styles.md` — this defines Open Sans, the heading hierarchy, table formatting, and all base styles
-3. Read this skill's own `references/s3-rec-doc-components.md` for recommendation-specific components: alert boxes, metric cards, meta tables, bold-intro bullets, comparison tables, and the title block pattern
+1. Read this skill's own `references/s3-rec-doc-components.md` for recommendation-specific components: alert boxes, metric cards, meta tables, bold-intro bullets, comparison tables, and the title block pattern
+2. Do NOT compose the .docx yourself. The `s3-docx-styler` skill owns Open Sans, the palette, the heading hierarchy, table formatting, and all base styles. You invoke it as the final step (see Building the Document).
 
-The shared style system is the foundation. This skill's reference file adds the components unique to recommendation docs.
+Your job is content and structure. The styler's job is every visual decision.
 
 ### Gather Context — Research First, Ask Second
 
@@ -433,15 +432,15 @@ A light rule (#CCCCCC top border), then "Prepared by Studio 3 Marketing · [Mont
 
 ## Heading Mapping
 
-The recommendation doc maps its sections to the shared S3 heading hierarchy from `s3-docx-styles.md`:
+Map each section to a heading level and pass that to the styler. The styler owns the exact type sizes, colors, and dividers.
 
 | Recommendation Section | Heading Level | Example |
 |----------------------|---------------|---------|
-| Major sections | H1 (20pt, Bold, Black) | THE ASK, CURRENT STATE, OUR POSITION |
-| Subsections / Steps | H2 (16pt, Bold, #333333) | What's Already Working, 1. Build the Podcast Page |
-| Named items | H3 (13pt, Bold, #333333) | Rarely used in rec docs |
+| Major sections | H1 | THE ASK, CURRENT STATE, OUR POSITION |
+| Subsections / Steps | H2 | What's Already Working, 1. Build the Podcast Page |
+| Named items | H3 | Rarely used in rec docs |
 
-Note: Section headers in recommendation docs are rendered in UPPERCASE. This is a stylistic convention for this document type — apply `.toUpperCase()` to the heading text. Add a section divider (bottom border per s3-docx-styles.md) immediately after each H1.
+Note: Section headers in recommendation docs are rendered in UPPERCASE. Tell the styler this when you hand off.
 
 ## Writing Voice
 
@@ -459,14 +458,11 @@ The audience is an account manager who needs to walk into a client call feeling 
 
 ### Generation Workflow
 
-1. Write the content first — get alignment on the position and structure before touching code
-2. Build the docx-js script using the shared styles from `s3-docx-styles.md` and the components from `references/s3-rec-doc-components.md`
-3. Run it: `node script.js`
-4. Embed fonts: `python3 assets/embed-fonts.py output.docx`
-5. Validate: `python scripts/office/validate.py output.docx`
-6. Convert to PDF for preview: `python scripts/office/soffice.py --headless --convert-to pdf output.docx`
-7. Preview pages: `pdftoppm -jpeg -r 150 output.pdf preview`
-8. Save the final .docx to the outputs folder
+1. Write the content first — get alignment on the position and structure before anything else
+2. Invoke the `s3-docx-styler` skill via the Skill tool, passing: client name, document type `Recommendation Doc`, the absolute save path, the section content mapped to heading levels, and any rec-doc components required (alert boxes, metric cards, comparison tables) from `references/s3-rec-doc-components.md`
+3. The styler builds the docx, embeds Open Sans, runs its own verification, and reports the file path back
+
+Do not write docx-js yourself, and do not make style, palette, or font decisions. Those all live in the styler.
 
 ### Naming Convention
 
@@ -477,7 +473,7 @@ The audience is an account manager who needs to walk into a client call feeling 
 ## Reference Files
 
 - `references/chat-formatting.md` -- Read at the start. Defines how all chat output must be formatted. Never write dense paragraphs in the chat.
-- `references/s3-docx-styles.md` -- Read before creating the document. Defines all S3 document styles.
+- Document styling is NOT a reference file. Invoke the `s3-docx-styler` skill as the final step; it owns the visual system.
 - `references/per-client-context-files.md` -- Read at the start. Check for and update CLAUDE.md and MEMORY.md in the client working folder.
 - `references/grain-source.md` -- Read during Gather Context (Step 2). Grain retrieval and relevance triage. Standalone pull, no inheritance.
 - `references/pipeline-routing.md` -- Read after the document is complete and the user signals they want to move on. Presents the recommended next step in the pipeline.

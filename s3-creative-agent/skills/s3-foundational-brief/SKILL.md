@@ -287,7 +287,7 @@ If everything looks good, reply "Approved" to confirm completion of the Foundati
 
 **You do NOT write the .docx yourself.** After all sections are prepared as structured content in your working notes (Phase 3 complete), your final action is to invoke the `s3-docx-styler` skill via the Skill tool. That skill handles every visual composition decision, font embedding, and file save.
 
-Why this is mandatory: the styler skill's SKILL.md and its `references/visual-system.md` become active context ONLY when you invoke it. If you try to write the docx yourself, those visual rules stay dormant and the output regresses to whatever pattern the writer model defaults to (typically: mimicking whatever old file is on disk in the client folder).
+Why this is mandatory: the styler skill's SKILL.md and its visual-system reference become active context ONLY when you invoke it. If you try to write the docx yourself, those visual rules stay dormant and the output regresses to whatever pattern the writer model defaults to (typically: mimicking whatever old file is on disk in the client folder).
 
 ### Invocation
 

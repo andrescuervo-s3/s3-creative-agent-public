@@ -110,7 +110,7 @@ Proceed to Phase 2 only after the user confirms. If the user adds more material,
 
 ### Step 5: Create Working Document
 
-Create `{Client Name}_Strategy_Brief_DRAFT.docx` with cover page and DRAFT badge. Read `references/s3-docx-styles.md` before creating the document.
+Create `{Client Name}_Strategy_Brief_DRAFT.docx` by invoking the `s3-docx-styler` skill (see Document Output). Do not compose the docx or make any style decisions yourself.
 
 ### Step 6: Checkpoint — Ingestion Complete
 
@@ -375,15 +375,27 @@ Section 2.3 (S3 Media Strategy) is the **production brief** for photo/video shoo
 
 ---
 
-## Document Output
+## Document Output — MANDATORY: Hand Off to s3-docx-styler
 
-Read `references/s3-docx-styles.md` before creating or formatting the document.
+**You do NOT write the .docx yourself.** Once all sections are prepared as structured content in your working notes, your final action is to invoke the `s3-docx-styler` skill via the Skill tool. That skill owns every visual composition decision, font embedding, and file save.
 
-- Format: .docx with embedded Open Sans fonts
-- Status badge: DRAFT (black outline on cover page)
-- Dates: Created, Last Updated
-- Location: Google Drive `{Client Folder}/CREATIVE STRATEGY/` (if available) or local outputs
-- No em dashes, no code/HTML in content
+Why this is mandatory: the styler's rules become active context ONLY when you invoke it. If you compose the docx yourself, those rules stay dormant and the output regresses to whatever pattern the writer model defaults to (typically: mimicking whatever old file is on disk in the client folder).
+
+### Invocation
+
+Use the Skill tool:
+
+- **skill**: `s3-docx-styler`
+- **args**: A message containing:
+  - Client name
+  - Brief type: `Strategy Brief`
+  - Mode (`New Draft`, `Update Draft`, or `Finalize`)
+  - File save path (absolute)
+  - The prepared section content, structured by section number (1.0 through 4.0)
+
+Save location to pass to the styler: Google Drive `{Client Folder}/CREATIVE STRATEGY/{Client}_Strategy_Brief_DRAFT.docx` if the connector is available, otherwise the local outputs folder.
+
+Content rules that remain yours: no em dashes, no code or HTML in brief content.
 - Scope callout styling: bordered box, light gray background, left orange border, italic text
 - Section dividers (gray bottom border) between every subsection, not just between major sections
 
@@ -446,7 +458,7 @@ Read these on demand, not all at once:
 - `references/strategy-brief-sections.md` -- Read before writing ANY section. Section templates and field specs.
 - `references/s3-tech-stack.md` -- Read before writing section 2.1.2. S3 platform details.
 - `references/s3-product-stack.md` -- Read when a channel strategy involves an S3 product (Hub, LeadLoop, Answer Engine, Multi-Local). Do not inject products unless the engagement calls for them.
-- `references/s3-docx-styles.md` -- Read before creating or formatting the document.
+- Document styling is NOT a reference file. Invoke the `s3-docx-styler` skill as the final step; it owns the visual system.
 - `references/research-tool-contract.md` -- Read FIRST before any research. Defines what research is (WebSearch + WebFetch calls, not training data). Non-negotiable.
 - `references/confidence-scoring-spec.md` -- Read before scoring any research-backed claims.
 - `references/research-validation-rules.md` -- Read before validating any Research Log.
