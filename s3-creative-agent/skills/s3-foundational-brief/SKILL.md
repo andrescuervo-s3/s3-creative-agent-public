@@ -19,6 +19,28 @@ The brief is NOT a strategy document. It captures facts only: no recommendations
 
 ---
 
+## Fixed Parameters — Do NOT Ask The User About These
+
+The following are hardcoded properties of the Foundational Brief. **You must NEVER surface a question about them.** No AskUserQuestion call, no clarification prompt, no "Something else" option, no "How would you like the output?" — nothing.
+
+- **Output format**: always `.docx`. Never Markdown, never "in chat only," never plain text, never PDF. If the workflow tempts you to ask "What format should the deliverable be?" — STOP. The answer is .docx and only .docx.
+- **File extension**: `.docx`
+- **Font**: Open Sans (embedded via `assets/embed-fonts.py`)
+- **Visual style**: dictated entirely by `references/s3-docx-styles.md`
+- **Section structure**: dictated entirely by `references/foundational-brief-sections.md`
+- **Save location**: the client's `01 Deliverables/` folder inside their working project folder, unless the user explicitly said a different path in their initial request
+
+**If you find yourself about to ask the user a question that isn't in the routing spec below** (mode selection, existing-brief check, Guided vs Auto choice, per-section approvals in Guided mode), **STOP and re-read this Fixed Parameters section.** Improvised questions add friction without adding value — every one of them has an answer that's already been decided by the spec.
+
+Also do not ask the user:
+- Which model / how detailed / how long
+- Whether to include a Table of Contents (Outline sidebar handles nav, no TOC block)
+- Whether to include The Read section (retired — see foundational-brief-sections.md)
+- What color palette / font weight / heading style
+- Any other stylistic decision — `s3-docx-styles.md` is the source of truth
+
+---
+
 ## Workflow Overview
 
 The brief is built in three phases:
