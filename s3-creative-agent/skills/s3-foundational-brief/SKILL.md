@@ -19,28 +19,6 @@ The brief is NOT a strategy document. It captures facts only: no recommendations
 
 ---
 
-## Fixed Parameters — Do NOT Ask The User About These
-
-The following are hardcoded properties of the Foundational Brief. **You must NEVER surface a question about them.** No AskUserQuestion call, no clarification prompt, no "Something else" option, no "How would you like the output?" — nothing.
-
-- **Output format**: always `.docx`. Never Markdown, never "in chat only," never plain text, never PDF. If the workflow tempts you to ask "What format should the deliverable be?" — STOP. The answer is .docx and only .docx.
-- **File extension**: `.docx`
-- **Font**: Open Sans (embedded via `assets/embed-fonts.py`)
-- **Visual style**: dictated entirely by `references/s3-docx-styles.md`
-- **Section structure**: dictated entirely by `references/foundational-brief-sections.md`
-- **Save location**: the client's `01 Deliverables/` folder inside their working project folder, unless the user explicitly said a different path in their initial request
-
-**If you find yourself about to ask the user a question that isn't in the routing spec below** (mode selection, existing-brief check, Guided vs Auto choice, per-section approvals in Guided mode), **STOP and re-read this Fixed Parameters section.** Improvised questions add friction without adding value — every one of them has an answer that's already been decided by the spec.
-
-Also do not ask the user:
-- Which model / how detailed / how long
-- Whether to include a Table of Contents (Outline sidebar handles nav, no TOC block)
-- Whether to include The Read section (retired — see foundational-brief-sections.md)
-- What color palette / font weight / heading style
-- Any other stylistic decision — `s3-docx-styles.md` is the source of truth
-
----
-
 ## Workflow Overview
 
 The brief is built in three phases:
@@ -78,12 +56,10 @@ Once Step 0 is complete, search for an existing foundational brief before collec
 
 **Existing brief check**: Search Google Drive inside the client's main folder for a document with "Foundational" and "Brief" in the name (e.g., "Big Auto Foundational Brief DRAFT"). Search by both the full client folder name AND shorter variations (e.g., "Big Auto" and "Big Auto Accident Attorneys"). Check subfolders including "Creative Strategy" if a root-level search returns nothing.
 
-- **If found AND the user selected Update or Finalize**: Fetch the document and use it for **content lineage only** — meaning read it to understand what facts are already captured, so you don't duplicate them and so you know which sections need updating. Do NOT use it as a visual style template. Confirm: "I found [document name]. I'll use its content as the baseline for this update."
-- **If found AND the user selected New (Draft)**: Do NOT prompt the user with a "Use as starting point" option — that option has been retired. In New Draft mode you **always start from scratch**. Silently note the existing brief exists (for the user's awareness only) and proceed to document collection: *"An existing brief was found at [name]. Since you selected New Draft, I'll rebuild from scratch and won't reference the existing file's layout."*
+- **If found AND the user selected Update or Finalize**: Fetch the document and use it as the starting point. Confirm: "I found [document name]. I'll use this as the base."
+- **If found AND the user selected New (Draft)**: Tell the user: "I found an existing foundational brief: [document name] (created [date]). Want me to use this as a starting point, or start completely fresh?" Use AskUserQuestion with options: "Use as starting point" / "Start fresh". Either way, proceed without re-asking the mode.
 - **If not found AND the user selected Update or Finalize**: Tell the user: "I couldn't find an existing foundational brief in Drive for [client name]. Would you like to create a new one instead?" Use AskUserQuestion.
 - **If not found AND the user selected New (Draft)**: Do not announce this. The brief selector already told the user no brief was found. Silently proceed to document collection.
-
-**CRITICAL — In every mode, regardless of whether an existing brief is found:** the visual layout of the output docx (fonts, colors, cover masthead, section headings, tables, borders, shaded bands, source lines, hyperlink styling, spacing) is dictated by `references/s3-docx-styles.md` and nothing else. You MUST NOT read, extract, or infer visual layout from any existing brief file on disk. The existing brief on disk (if present) is a PREVIOUS version's OUTPUT — using it as a visual template propagates old styling and defeats the purpose of every version bump. If you catch yourself thinking "I'll match the existing document's layout" or "I'll use the existing file as a style reference," STOP and re-read `references/s3-docx-styles.md`. That file has concrete docx-js code snippets for every visual element the brief needs; compose from them.
 
 After the existing brief check, collect documents in the order below. Each source has its own subsection with full procedure.
 
@@ -316,34 +292,16 @@ Create a working .docx document after Phase 1 completes. Name it `{Client Name}_
 - **Google Drive** (if connector available): `{Client Folder}/CREATIVE STRATEGY/{Client}_Foundational_Brief_DRAFT.docx`
 - **Local**: Save to the outputs folder if Drive is unavailable
 
-### Status Banner
-- **New (Draft)** or **Update (Draft)**: include the `DRAFT · NOT FOR EXTERNAL CIRCULATION` banner as specified in `references/s3-docx-styles.md` (cover masthead pattern).
-- **Finalize**: omit the banner entirely. Do NOT put "FINAL" in its place — the absence of the DRAFT banner is the finalized signal. Add a `FINALIZED` column to the metadata strip with the finalize date.
-- The old "DRAFT outline badge / FINAL fill badge" pair is retired.
+### Status Badge
+- DRAFT: Black outline badge on cover page
+- FINAL: Black fill badge on cover page
 
 ### Dates
-- **Created**: Generation date (Month Day, Year format).
-- **Last Updated**: Most recent edit date.
-- **Finalized** (Finalize mode only): date the document was locked as the authority version.
+- Created: Generation date
+- Last Updated: Most recent edit date
 
-### Document Styling — READ THIS BEFORE WRITING ANY DOCX-JS CODE
-
-**`references/s3-docx-styles.md` is the SOLE source of truth for the docx layout.** Before you write one line of docx-js code, read that file end to end. It contains concrete code snippets for every visual element you need: cover masthead, facts strip, 3-col grid, data table, shaded band, source line, pipe-border notes, hyperlinks, headings, lists. Compose the brief's docx-js by adapting those snippets — not by inventing new patterns and not by copying anything from any existing file on disk.
-
-**Explicit anti-patterns (DO NOT do these):**
-- ❌ Do NOT read an existing brief file (either on the user's disk or in Google Drive) to extract its layout, run-level formatting, table styling, cover pattern, or heading treatment. That file is a PREVIOUS version's output and using it as a template propagates old styling. It's the entire reason we version-bump.
-- ❌ Do NOT use "matches the existing template" or "consistent with what was there before" as reasons for any layout decision. The prior brief's layout does not exist as a reference for you. Only `references/s3-docx-styles.md` does.
-- ❌ Do NOT invent your own palette, fonts, colors, or table borders. Every color hex, every font size, every border weight comes from `s3-docx-styles.md`. If it's not in the styles doc, don't add it.
-- ❌ Do NOT skip patterns from `s3-docx-styles.md` because they're "not strictly required" — the three-band structure with shaded §2.3, the source lines at the end of each section, the pipe-border notes, the HeadingLevel styles that drive the Google Docs Outline sidebar, the dashed-underline hyperlink treatment, the 4-column cover metadata strip: all are required. All are validated.
-
-**Required cross-check before packing the docx**: after you've composed all sections, verify these five patterns are present in your generated document. If any are missing, you have not followed the spec:
-1. Cover has 4-column metadata strip (Client / Authored by / Created / Last updated), not bulleted labeled fields.
-2. Section headers use `HeadingLevel.HEADING_1` (visible in the Google Docs Outline sidebar).
-3. §2.3 Digital Snapshot is wrapped in a full-width shaded table inside a section with zero side margins.
-4. Every section's source line has a dashed top border and dashed-underline live hyperlinks.
-5. Palette is warm B&W (INK `#2E2C27`, PAPER `#FCFCFB`, MUTED `#6B6A63`, etc.) — no blue hyperlinks, no all-sides black table borders.
-
-Also read `references/foundational-brief-sections.md` for the editorial rules (extract-not-regurgitate, importance-not-count, no downstream leaks, descriptive-vs-interpretive split) and per-section content structure. Do not improvise. Do not fill sections that don't have content. Do not add "The Read" — it is retired from the FB and belongs in the Strategy Brief.
+### Document Styling
+Read `references/s3-docx-styles.md` for font, heading, table, and layout specifications. Read `references/foundational-brief-sections.md` for the exact structure, field order, table formats, and heading hierarchy for every section. Do not improvise your own layout. Follow the templates exactly.
 
 ### Font Embedding (Required)
 After generating the .docx with docx-js, run the font embedding script to ensure Open Sans renders on all machines:

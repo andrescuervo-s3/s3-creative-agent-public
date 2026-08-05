@@ -30,6 +30,54 @@ If any check fails, correct it before writing the file. The user cannot re-run t
 
 ---
 
+## Editorial Rules
+
+These rules govern the CONTENT of every section, not just the visual layout. Apply them alongside the section templates in `foundational-brief-sections.md`.
+
+### Extract, don't regurgitate
+
+Every input source — surveys, sales turnovers, discovery notes, Grain call transcripts, Notion AI notes, Content Snare responses — contributes **1 to 3 extracted signals**, not paragraphs of paraphrase. The reader could always read the source; the brief exists to say what mattered in it.
+
+- Body of each subsection = the extracted signals.
+- Every subsection ends the section with a source line citing every input consulted, with live URLs.
+- If a source contributed nothing new, don't cite it defensively.
+
+### Importance, not count
+
+There are no hard caps ("top 3") and no forced fills. Include what matters. Cut what doesn't.
+
+- If a section genuinely has 6 important signals, include 6.
+- If it has 1, include 1.
+- Never stretch to fill a template cell. Empty is honest. Padded is worse than empty.
+
+### No downstream leaks
+
+Write each brief as if the later briefs don't exist yet. **No teasers, no "captured later in the Strategy Brief", no name-dropping of downstream research instruments (specific survey names, specific analyses).** Generic architectural pointers like "targeting decisions belong in the Strategy Brief" or "positioning belongs in the Strategy Brief" are fine — those describe document responsibilities, not downstream content. What's not fine: "the Centiment survey findings are captured in the Strategy Brief" — that leaks Centiment by name and previews the finding.
+
+The reader should experience each brief as a self-contained record of what was known at that stage of the engagement.
+
+### Descriptive vs. interpretive: what belongs in the Foundational Brief
+
+The Foundational Brief contains **descriptive facts** about the client, its book, and its operations:
+
+- Sales Turnover, senior stakeholder surveys, discovery notes (client-reported facts)
+- Epsilon customer profiles (descriptive of the current client book)
+- Lead Docket / CRM attribution (descriptive of operations)
+- Owned website content, competitor primary sources (public facts)
+- Government/industry data (FMCSA, NHTSA, Census)
+
+The Foundational Brief does NOT contain **interpretive market research** commissioned to test strategic hypotheses. Those findings (awareness surveys, brand-definition surveys, ad-recall studies) live in the Strategy Brief where they earn the strategy. Even if the research is complete by the time the Foundational Brief is finalized, its content stays out of the FB.
+
+### No "The Read"
+
+The Foundational Brief has no interpretive TL;DR / summary / "The Read" section. Any such synthesis is strategic reading of the facts, and it belongs in the Strategy Brief. The Foundational Brief opens with 1.0 Intro (the document's own purpose) and goes straight to facts.
+
+### No em dashes
+
+Use commas, colons, or periods. Never `—` in generated content.
+
+---
+
 ## Font
 
 **Open Sans** for all text. No exceptions — never Calibri, Arial, Helvetica, Times New Roman, or any other font.
