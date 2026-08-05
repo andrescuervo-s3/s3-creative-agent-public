@@ -32,6 +32,16 @@ The selector is pipeline-aware. It checks what documents exist for the client an
 
 **CRITICAL: Each step must be its own separate AskUserQuestion call. Wait for the user's response before proceeding to the next step.**
 
+**CRITICAL — no improvisation allowed on the options.** The option lists in each scenario below are exhaustive and prescribed. When you present options to the user via AskUserQuestion:
+
+- Use the EXACT options listed for the matching scenario. Do not add options. Do not remove options. Do not rename options. Do not reorder.
+- Do NOT invent project-specific options based on what came up in the conversation (e.g., a "2027 plan one-pager", a "shoot logistics doc", a "monthly report"). Those are not brief types. If the user needs something like that, they will say so and the router should route them via the "Other" / "Something else" fallback path per the spec.
+- Do NOT drop the Foundational Brief option from Scenarios B or C just because a foundational brief already exists. The user may still want to update or finalize it — that's what the Foundational Brief option offers in those scenarios (see Step 4).
+- Do NOT drop the Strategy Brief or Creative Brief options either. The user's next-step recommendation is a LABEL on one option, not permission to hide the others.
+- If you find yourself thinking "the user probably wants X, let me just offer X" — STOP. That's exactly the anti-pattern. Present the full option set for the matching scenario and let the user pick.
+
+The scenarios below are complete. If you catch yourself about to add a fourth option to a three-option scenario, or drop an option because "it doesn't seem relevant right now," you are deviating from the spec.
+
 ### Step 1: Confirm the client name
 
 Before anything else, determine the client name so we can check what already exists.
@@ -150,7 +160,8 @@ Use AskUserQuestion with a freeform text input: "What are you looking to create?
 
 - This skill is a router only. It does not produce any brief content itself.
 - **Each step gets its own AskUserQuestion call.** Never combine steps.
-- Do NOT add extra options beyond what is listed above for each step.
+- **Do NOT add extra options beyond what is listed above for each step.** No matter what came up in the recent conversation (a specific deliverable name, a project-specific one-pager, a report title mentioned by the client), the options in Step 3 stay the exact prescribed list — Foundational Brief / Strategy Brief / Creative Brief in Scenarios B and C, Foundational Brief / Other in Scenario A. Nothing else.
+- **Do NOT drop options either.** When Scenario B or C matches, Foundational Brief is ALWAYS in the option list — the user may want to update it. When Strategy Brief exists, Strategy Brief stays in the option list — the user may want to update it. The pipeline "recommended next step" is a label on one option, never a reason to hide the others.
 - The document check in Step 2 is silent. Do not tell the user whether you found documents or not. It only determines which option set and labels to show.
 - The "recommended next step" label guides users through the pipeline without blocking. A user can always pick any available option regardless of the label.
 - Even if context strongly suggests which brief type the user needs (e.g., a turnover email implies foundational), always ask the confirmation questions. The routing is a confirmation flow, not just a disambiguation flow.
