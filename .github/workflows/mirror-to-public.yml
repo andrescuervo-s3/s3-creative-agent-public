@@ -6,6 +6,10 @@ on:
 
 jobs:
   mirror:
+    # This workflow file is itself mirrored to the public repo, where it would
+    # run with no PUBLIC_REPO_TOKEN and fail on every push. Only run in the
+    # private source repo.
+    if: github.repository == 'andrescuervo-s3/s3-creative-agent'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
