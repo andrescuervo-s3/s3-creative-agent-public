@@ -180,13 +180,11 @@ Execute the audience-research-agent.md for each selected audience. Each profile 
 2. **Mindset**: What they are protecting, seeking, fearing, or motivated by. 2-3 sentences max.
 3. **Attitude**: How they evaluate options, what they demand, what they reject. 2-3 sentences max.
 4. **Perception**: What must be true for trust to form; how they identify authority or safety. 2-3 sentences max.
-5. **Evidence**: 2-5 key claims with live source links and confidence scores, formatted as:
+5. **Sources**: A single source line at the end of the profile, not a table. Format is the styler's standard dashed `SOURCES` line: citations separated by `·`, each a live hyperlink.
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| [Specific factual claim used in the profile] | [Source title](URL) | Verified / Client-Reported |
+**Do NOT put a Claim / Source / Confidence table inside the profile.** One evidence table per profile is what turned this brief into 36 pages. Every claim's provenance goes in the Evidence Register appendix, where it can be checked without interrupting the read.
 
-**Research Log**: Do NOT include research logs in the output document. Research logs are internal working artifacts. The evidence table is the deliverable.
+**Research Log**: Do NOT include research logs in the output document. Research logs are internal working artifacts.
 
 ---
 
@@ -211,17 +209,15 @@ For each competitor:
 - **Channel**: Which audience channel this competitor competes in
 - **Overview**: 2 to 4 sentences describing what they emphasize, their scale, and how they present themselves
 - **URL**: [Firm homepage](URL) -- clickable link
-- **Proof Signals**: 2 to 5 concrete credibility signals. Each must have a live source link:
-
-| Signal | Source | Confidence |
-|--------|--------|------------|
-| [Specific credibility claim] | [Source title](URL) | Verified |
-
+- **Proof Signals**: 2 to 4 concrete credibility signals as bold-label bullets, not a table. One line each.
 - **Relevance to Client**: 1-2 sentences on why this competitor matters to the client's competitive position
+- **Sources**: One dashed `SOURCES` line at the end of the profile.
+
+**Do NOT put a Signal / Source / Confidence table inside each competitor.** Provenance belongs in the Evidence Register appendix.
 
 Must include independently discovered competitors, not just client-named ones. At least 2 from independent research.
 
-**Research Log**: Do NOT include research logs in the output document. Research logs are internal working artifacts. The proof signals table is the deliverable.
+**Research Log**: Do NOT include research logs in the output document. Research logs are internal working artifacts.
 
 ---
 
@@ -237,12 +233,41 @@ Structure each differentiator:
 - **Pattern Title**: Short, descriptive name for the differentiator
 - **Pattern Summary**: What the competitors do (cite specific competitors from 3.3 by name)
 - **Client Difference and Why It Matters**: How the client differs, stated as fact
-- **Evidence Trail**:
+- **Sources**: One dashed `SOURCES` line naming the sections this draws from (e.g. `2.1 · 3.1 · 3.3`).
 
-| Claim | Source Section | Confidence |
-|-------|--------------|------------|
-| [Client claim] | 2.1 / 3.1 | Verified / Client-Reported |
-| [Competitor comparison] | 3.3 | Verified |
+**Do NOT put an Evidence Trail table under each differentiator.** These claims are already stated and sourced in 2.1, 3.1, and 3.3. Repeating them in a table per differentiator is pure duplication.
+
+---
+
+## Appendix · Evidence Register
+
+One table at the end of the document, after the Reference section. This is the only place a Claim / Source / Confidence table appears in a Foundational Brief.
+
+| Section | Claim | Source | Confidence |
+|---------|-------|--------|------------|
+| 3.2 | [Claim as used in the body] | [Source title](URL) | Verified / Client-Reported |
+
+Rules:
+
+- **One table, not one per profile.** Rows are grouped by section number in document order.
+- Include only claims that actually appear in the body. If a claim was researched but not used, it does not get a row.
+- Confidence vocabulary is fixed: `Verified` or `Client-Reported`. No other values.
+- If a claim has no URL, put the document name as plain text. Never `#`.
+- The body must read completely without this appendix. It is for checking provenance, not for carrying meaning.
+
+---
+
+## Length Discipline
+
+The Foundational Brief targets **12 to 18 pages**. The prior 32-to-36-page versions were caused by per-item evidence tables, not by having too much to say.
+
+If the draft runs long, cut in this order:
+
+1. Evidence tables in the body (there should be none, they belong in the appendix)
+2. Paraphrase of source material that restates rather than extracts
+3. Any profile sub-section running past its stated sentence cap
+
+Never cut a decision, a fact the client gave you, or a source line.
 
 ---
 
@@ -268,7 +293,7 @@ The following sections from earlier versions are no longer part of the Foundatio
 - Clickable hyperlinks for all URLs (never raw URLs without link text)
 - Horizontal rules between major sections
 - Bullet lists only where the section template calls for them
-- Tables where the section template specifies them (Brand Values, Brand Voice, Social Media, S3 Service Overview, Evidence, Proof Signals)
+- Tables ONLY where the section template specifies them: Brand Values, Brand Voice, Social Media, S3 Service Overview, the 2.3 Digital Snapshot, and the single Evidence Register appendix. Nowhere else. Per-profile, per-competitor, and per-differentiator evidence tables are prohibited in the body.
 - No em dashes; use commas, colons, or periods
 - No code, HTML, or debug output in brief content
 - Clean, modern, agency-grade, client-ready appearance

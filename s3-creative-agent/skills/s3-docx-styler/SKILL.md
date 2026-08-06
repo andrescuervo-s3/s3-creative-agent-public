@@ -22,8 +22,16 @@ This skill exists because a reference file can be skipped by a writer model but 
 3. **Write a short compose script** that requires `./build-brief.js` and calls its helpers (API below). The ONLY things you author are the content strings and which helper each block uses. Never set a color, font, size, border, or margin yourself — if you find yourself typing a hex code, you are doing it wrong.
 4. **Run it** with `node`.
 5. **Embed Open Sans**: `python3 assets/embed-fonts.py <path>`.
-6. **Verify the five required patterns** (checklist below).
+6. **Verify mechanically. This is not optional:**
+
+   ```
+   python3 assets/verify-docx.py <path>
+   ```
+
+   If it exits non-zero, the file is rejected. Fix the generator and regenerate. Do NOT deliver a file that fails, and do NOT report success. It catches the two defects that have actually shipped to clients: table grids sized to the paper instead of the text column (tables cut off on the right in Word, refuse to fill the width in Google Docs), and banned blue hyperlinks.
 7. **Report the saved file path** back to the invoking skill.
+
+**Never compute a table column width from the page width.** The text column is 9360 twips (6.5in); the paper is 12240 (8.5in). Only the single-column full-bleed shaded band may span 12240. The helpers in `build-brief.js` already do this correctly, which is another reason to compose through them.
 
 Read `references/visual-system.md` when you need the rationale behind a pattern, a case the helpers do not cover, or the full editorial spec. The helpers are the implementation; that file is the reference.
 

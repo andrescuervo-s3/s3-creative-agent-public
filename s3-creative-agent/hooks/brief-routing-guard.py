@@ -38,9 +38,23 @@ def log(status: str, prompt: str, cwd: str) -> None:
 BRIEF = re.compile(r"\bbriefs?\b", re.I)
 
 # Phrasings that mean "begin brief work now", as opposed to talking about one.
+# The verb must sit NEXT TO the word "brief". Searching the whole message for a
+# verb misfires badly: "some of the tables do not present well" matched on "do"
+# and injected the routing contract into a feedback message.
 STARTING = re.compile(
-    r"\b(create|build|start|begin|make|do|write|draft|generate|produce|"
-    r"work on|put together|kick off|new|another|update|finalize|redo|rebuild)\b",
+    r"\b(creat\w*|build\w*|start\w*|begin\w*|mak\w*|writ\w*|draft\w*|generat\w*|"
+    r"produc\w*|work on|put together|kick off|new|another|updat\w*|finaliz\w*|"
+    r"redo|rebuild\w*|need|want)\b[\w\s,'\"-]{0,25}?\bbriefs?\b",
+    re.I,
+)
+
+# Feedback on a document that already exists is not a request to start one.
+FEEDBACK = re.compile(r"\.docx\b|\.pdf\b|@/|page[s]?\b|cut off|verbos|table[s]?\b", re.I)
+
+# Reacting to a delivered brief is not a request either ("the brief looks good").
+REACTION = re.compile(
+    r"\b(looks?|looked|seems?|is|was|were|great|good|nice|perfect|love|"
+    r"thanks|thank you|worked|works|working|nailed|awful|terrible|wrong)\b",
     re.I,
 )
 
@@ -106,9 +120,15 @@ def main() -> None:
         log("silent-nobrief", prompt, cwd)
         sys.exit(0)
 
+    # Feedback on an existing document is never a request to start a new one.
+    if FEEDBACK.search(prompt):
+        log("silent-feedback", prompt, cwd)
+        sys.exit(0)
+
     # Mentioning a brief in passing shouldn't hijack the turn. Require either an
-    # action verb or a prompt short enough to be a bare request ("create a brief").
-    if not (STARTING.search(prompt) or len(prompt.split()) <= 8):
+    # action verb next to "brief", or a prompt short enough to be a bare request.
+    short_request = len(prompt.split()) <= 5 and not REACTION.search(prompt)
+    if not (STARTING.search(prompt) or short_request):
         log("silent-incidental", prompt, cwd)
         sys.exit(0)
 

@@ -18,6 +18,13 @@
 //   });
 //   await B.writeDoc(doc, '/path/to/output.docx');
 
+// Page geometry. Tables must be sized to CONTENT_W (the text column), not
+// PAGE_W (the paper). Using PAGE_W makes tables run off the right edge in
+// Word and refuse to fill the column in Google Docs.
+const PAGE_W = 12240;      // 8.5in
+const MARGIN_W = 1440;     // 1in
+const CONTENT_W = PAGE_W - 2 * MARGIN_W;  // 9360 = 6.5in
+
 const fs = require('fs');
 const path = require('path');
 const {
@@ -170,7 +177,7 @@ function sourceLine(items) {
 // ---------- tables ----------
 // factsTable([{label:'Founded', value:'1999', big:true}, ...])
 function factsTable(cells) {
-  const colW = Math.floor(12240 / cells.length);
+  const colW = Math.floor(CONTENT_W / cells.length);
   const ruleBorder = { style: BorderStyle.SINGLE, size: 6, color: RULE };
   return new Table({
     width: { size: 5000, type: WidthType.PERCENTAGE },
@@ -207,7 +214,7 @@ function factsTable(cells) {
 
 // threeCol([{label, value, big?, note?}, ...]) — same as factsTable but with vertical dividers
 function threeCol(cells) {
-  const colW = Math.floor(12240 / cells.length);
+  const colW = Math.floor(CONTENT_W / cells.length);
   const ruleBorder = { style: BorderStyle.SINGLE, size: 6, color: RULE };
   return new Table({
     width: { size: 5000, type: WidthType.PERCENTAGE },
@@ -246,7 +253,7 @@ function threeCol(cells) {
 // dataTable(['Source', 'Columbus', 'WV', 'Read'], [ ['Google LSA', '824 → 24', '— → 15', 'Volume; ~8% wanted.'], ...])
 // Each cell can be a string OR an array of run specs (for inline bold/emphasis).
 function dataTable(headers, rows) {
-  const colW = Math.floor(12240 / headers.length);
+  const colW = Math.floor(CONTENT_W / headers.length);
   const headBorder = { style: BorderStyle.SINGLE, size: 8, color: INK };
   const rowBorder  = { style: BorderStyle.SINGLE, size: 4, color: RULE };
   return new Table({
@@ -368,7 +375,7 @@ function coverBlock(cover) {
   ];
   if (cover.finalized) meta.push(['FINALIZED', cover.finalized]);
 
-  const tw = 12240 - 2 * 1440; // content width
+  const tw = CONTENT_W;
   const colW = Math.floor(tw / meta.length);
   out.push(new Table({
     width: { size: 5000, type: WidthType.PERCENTAGE },
