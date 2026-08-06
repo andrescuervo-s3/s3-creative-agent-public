@@ -1,0 +1,16 @@
+{
+  "description": "S3 Creative Agent - enforces brief routing discipline mechanically, so it does not depend on the model choosing to invoke the right skill.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/brief-routing-guard.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
