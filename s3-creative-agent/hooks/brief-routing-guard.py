@@ -12,8 +12,27 @@ is that discovery INFORMS the routing question rather than REPLACING it.
 Always exits 0. A guard that breaks the session is worse than no guard.
 """
 import json
+import os
 import re
 import sys
+import time
+
+# Every invocation appends one line here, whether it fires or stays silent.
+# This is the only way to tell "the hook never ran" apart from "the hook ran
+# and the model ignored it" after a failed test. Never let logging break the
+# hook: any error here is swallowed.
+LOG = os.path.expanduser("~/.claude/s3-routing-guard.log")
+
+
+def log(status: str, prompt: str, cwd: str) -> None:
+    try:
+        os.makedirs(os.path.dirname(LOG), exist_ok=True)
+        stamp = time.strftime("%Y-%m-%d %H:%M:%S")
+        snippet = " ".join(prompt.split())[:80]
+        with open(LOG, "a", encoding="utf-8") as fh:
+            fh.write(f"{stamp}\t{status}\tcwd={cwd}\tprompt={snippet!r}\n")
+    except Exception:
+        pass
 
 # "brief" as a whole word. Avoids "briefly", "briefing", "debrief".
 BRIEF = re.compile(r"\bbriefs?\b", re.I)
@@ -77,20 +96,28 @@ def main() -> None:
     try:
         data = json.load(sys.stdin)
     except Exception:
+        log("BADINPUT", "", "")
         sys.exit(0)
 
     prompt = str(data.get("prompt", ""))
+    cwd = str(data.get("cwd", ""))
+
     if not BRIEF.search(prompt):
+        log("silent-nobrief", prompt, cwd)
         sys.exit(0)
 
     # Mentioning a brief in passing shouldn't hijack the turn. Require either an
     # action verb or a prompt short enough to be a bare request ("create a brief").
     if not (STARTING.search(prompt) or len(prompt.split()) <= 8):
+        log("silent-incidental", prompt, cwd)
         sys.exit(0)
 
     context = ROUTING
     if TYPED.search(prompt):
         context = TYPED_NOTE + "\n" + ROUTING
+        log("FIRED-typed", prompt, cwd)
+    else:
+        log("FIRED-selector", prompt, cwd)
 
     json.dump(
         {
