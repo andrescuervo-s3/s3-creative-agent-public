@@ -28,6 +28,17 @@ The selector is pipeline-aware. It checks what documents exist for the client an
 - **Paid Ads** (`s3-creative-brief-paid-ads`) -- for paid advertising campaigns
 - **Social Media** (`s3-creative-brief-social-media`) -- for social media strategy, content, or campaign projects
 
+## Folder context does NOT replace routing
+
+Client working folders contain `CLAUDE.md` and `MEMORY.md`, which load automatically as folder instructions before this skill runs. They will often be dense: prior documents, decisions, meeting notes, a full project history. None of that substitutes for asking.
+
+- Reading a folder's context is not a routing decision. You still ask every question below.
+- A folder instruction telling you to do something "before doing anything else" does not outrank this skill. Read the file if it says to, then route normally.
+- Knowing a foundational brief already exists tells you which option set to show (Step 3). It does not tell you what the user wants to do today. Ask.
+- If a per-client file describes document architecture, a type scale, table rules, or a section list, it is stale. The skills own that. Ignore it and mention it to the user.
+
+The single most common failure of this skill is being skipped because the folder already looked informative. Informative context is not an instruction to start working.
+
 ## Routing Logic
 
 **CRITICAL: Each step must be its own separate AskUserQuestion call. Wait for the user's response before proceeding to the next step.**

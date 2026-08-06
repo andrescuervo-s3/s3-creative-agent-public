@@ -10,6 +10,24 @@ Every client project maintains three persistent files in the working folder. The
 
 ---
 
+## Hard boundary: these files hold facts, NOT instructions
+
+CLAUDE.md and MEMORY.md load automatically as folder instructions at the start of every session, before any skill runs. Anything written in them competes with the skills for control of the workflow, and folder instructions win. Treat that as a loaded gun.
+
+**Never write into a per-client file:**
+
+- **Workflow or sequencing instructions.** "Read MEMORY.md before doing anything else." "Start every session by..." "Always sweep email and Drive first." These preempt skill routing outright: the user asks for a brief, the model obeys the folder instruction, and the brief skill never runs. This exact line cost a full debugging day on Colombo Law.
+- **Formatting, style, type scale, palette, or table rules.** Those live in `s3-docx-styler` and change whenever the visual system changes. A per-client copy goes stale silently, and the model follows the stale copy over the current skill.
+- **Document architecture.** "Section 1.2 is The Read." "The 4-table rule." Retired conventions get resurrected this way long after the skills dropped them.
+
+**Only write:** key people, decisions, work agreement line items, connectors used, and an index of documents produced with dates.
+
+Reading a client's CLAUDE.md or MEMORY.md never replaces routing. If the user asks for a brief, `s3-brief-selector` still runs and still asks its questions, no matter how much context the folder supplied.
+
+If you find banned content in an existing client file, remove it and tell the user what you removed and why. A per-client file that describes *how to work* is a bug, not context.
+
+---
+
 ## CLAUDE.md
 
 **Location:** Root of the client's working folder.
