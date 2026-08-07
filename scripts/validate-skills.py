@@ -74,8 +74,12 @@ def validate(directory: str, path: str):
         warnings.append(f"body is {body_lines} lines (target <{BODY_WARN_LINES}); "
                         "move detail into references/")
 
-    for ref in re.findall(r"references/[A-Za-z0-9._-]+\.md", text):
-        if not os.path.isfile(os.path.join(os.path.dirname(path), ref)):
+    # A reference may point into a sibling skill (../s3-docx-styler/references/x.md),
+    # so capture any leading ../<skill>/ and resolve the whole path, not just the
+    # trailing "references/..." fragment.
+    skill_dir = os.path.dirname(path)
+    for ref in re.findall(r"((?:\.\./[A-Za-z0-9._-]+/)?references/[A-Za-z0-9._-]+\.md)", text):
+        if not os.path.isfile(os.path.normpath(os.path.join(skill_dir, ref))):
             errors.append(f"references a missing file: {ref}")
 
     return errors, warnings, len(desc), body_lines
