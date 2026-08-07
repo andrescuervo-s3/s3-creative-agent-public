@@ -96,6 +96,21 @@ function h4(text, opts = {}) {
   });
 }
 
+// Named sub-blocks: competitor names, audience profile names, differentiator
+// titles. Sits between h4 (subsection label, uppercase MUTED) and body copy, in
+// sentence case and INK so the eye has a distinct step to land on. Without this
+// level the hierarchy flattens and named items read as body text.
+function h3(text, opts = {}) {
+  return new Paragraph({
+    heading: HeadingLevel.HEADING_3,
+    spacing: { before: opts.before ?? 360, after: opts.after ?? 120, line: 280 },
+    children: [new TextRun({
+      text: String(text), font: FONT, size: halfPt(12.5),
+      bold: true, color: INK,
+    })],
+  });
+}
+
 function eyebrow(text, opts = {}) {
   return new Paragraph({
     spacing: { before: opts.before ?? 60, after: opts.after ?? 60 },
@@ -471,7 +486,7 @@ async function writeDoc(doc, outPath) {
 
 module.exports = {
   // helpers
-  h2, h4, eyebrow, p, muted, note, bullets, ol, sourceLine,
+  h2, h3, h4, eyebrow, p, muted, note, bullets, ol, sourceLine,
   factsTable, threeCol, dataTable, mission,
   // low-level (rarely needed by model)
   shadedBand, coverBlock, makeRun,

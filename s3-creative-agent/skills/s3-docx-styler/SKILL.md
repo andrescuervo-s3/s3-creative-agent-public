@@ -53,14 +53,15 @@ Block helpers:
 | Helper | Use |
 |---|---|
 | `h2('2.1 · Client Details')` | Numbered section header. HEADING_1 → Google Docs Outline. |
-| `h4('Subsection')` | Subsection header. |
+| `h4('Subsection')` | Subsection label. Uppercase, muted. |
+| `h3('Morgan & Morgan')` | Named sub-block: competitor names, audience profile names, differentiator titles. Sentence case, 12.5pt. **Use this for every named item** — without it the hierarchy flattens and named items read as body copy. |
 | `eyebrow('LABEL')` | Small caps label / citation line. |
 | `p(runs)` | Body paragraph. |
 | `muted(text)` | De-emphasized italic line. |
 | `note(text)` | Pipe-rule callout (the left-bar style). |
 | `bullets([runs, ...])` | Returns an array — spread it: `...B.bullets([...])`. |
 | `ol([runs, ...])` | Numbered reference list. Spread it. |
-| `sourceLine([{text, url}, ...])` | Dashed-top SOURCES line. Ends every section. |
+| `sourceLine([{text, url}, ...])` | Dashed-top SOURCES line. **One per §-numbered section only** — see below. |
 | `threeCol([{label, value, big, note}])` | Facts strip with dividers. |
 | `factsTable([{label, value, big, note}])` | Facts strip without dividers. |
 | `dataTable(headers, rows)` | Metrics table. Cells are strings or run arrays. |
@@ -102,7 +103,7 @@ Before you report success, verify:
 1. Cover has a 4-column metadata strip (Client / Authored by / Created / Last updated), not bulleted labeled fields.
 2. Every §-numbered section header uses `HeadingLevel.HEADING_1` so the Google Docs Outline sidebar populates.
 3. §2.3 Digital Snapshot (in a Foundational Brief) is wrapped in a full-width shaded table inside a section with zero side margins.
-4. Every section ends with a source line: dashed top border, `SOURCES` label, `·`-separated citations rendered as dashed-underline live hyperlinks.
+4. Every §-numbered section ends with a source line: dashed top border, `SOURCES` label, `·`-separated citations as dashed-underline live hyperlinks. **One per numbered section (1.0, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 3.4), never one per subsection.** A Foundational Brief should have roughly 8-10 source lines total. If the count is above 12, you are placing them under `h4`/`h3` blocks and the page will read as strips: consolidate each section's citations into one line at the end of that section.
 5. Palette is warm B&W: INK `#2E2C27`, PAPER `#FCFCFB`, PAPER_BAND `#F9F9F7`, MUTED `#6B6A63`, MICRO `#B4B3A8`, RULE `#E4E3DC`. No blue. No all-sides black table borders.
 
 If any check fails, correct the docx-js and regenerate before reporting success.

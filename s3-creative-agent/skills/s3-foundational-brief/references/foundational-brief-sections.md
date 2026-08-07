@@ -257,9 +257,29 @@ Rules:
 
 ---
 
+## Source Lines: One Per Numbered Section
+
+A `SOURCES` line closes each **§-numbered section** (1.0, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 3.4). Collect that section's citations into one line at its end.
+
+**Never put a source line under an individual subsection, competitor, audience profile, or differentiator.** Each source line carries a dashed rule above it. One per named item produced 23 rules in a document that should have 8, chopping the page into strips. The approved design had 7.
+
+Target: 8 to 10 source lines in the whole document. Above 12 means they are being attached to subsections.
+
+## Heading Levels
+
+| Level | Use |
+|-------|-----|
+| H1 | §-numbered sections only |
+| H4 | Subsection labels (Demographics, Client Goals, Painpoints) |
+| H3 | **Named items**: competitor names, audience profile names, differentiator pattern titles |
+
+Named items must use H3. Rendering them at subsection or body weight flattens the hierarchy and the reader loses the structure.
+
 ## Length Discipline
 
-The Foundational Brief targets **12 to 18 pages**. The prior 32-to-36-page versions were caused by per-item evidence tables, not by having too much to say.
+The Foundational Brief targets **12 to 18 pages**, roughly **38,000 characters of body text**. The approved reference build was 37,800. A draft at 56,000 is half again too long even with the evidence tables removed.
+
+The prior 32-to-36-page versions were caused by per-item evidence tables, not by having too much to say.
 
 If the draft runs long, cut in this order:
 
