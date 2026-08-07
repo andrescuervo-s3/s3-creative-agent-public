@@ -291,7 +291,7 @@ Why this is mandatory: the styler skill's SKILL.md and its visual-system referen
 
 ### Invocation
 
-Use the Skill tool:
+Try the Skill tool first:
 
 - **skill**: `s3-docx-styler`
 - **args**: A message containing:
@@ -301,6 +301,20 @@ Use the Skill tool:
   - The prepared section content, structured by section number (1.0 through 3.4 plus the Reference section)
 
 The styler will produce the .docx, embed Open Sans, verify its own required-pattern checklist, and report back with the file path. Do not attempt any style, layout, or font decisions yourself — those all live in the styler skill now.
+
+### If the Skill tool cannot invoke it
+
+Depending on the surface, `s3-docx-styler` may load as a readable file without being registered as an invokable skill. That is NOT permission to improvise the document.
+
+Do this instead, in order:
+
+1. Read `../s3-docx-styler/SKILL.md` (sibling directory of this skill) **in full**.
+2. Read `../s3-docx-styler/references/visual-system.md`.
+3. Compose through `../s3-docx-styler/assets/build-brief.js`. Copy it to your working directory and call its helpers. Never hand-write docx-js.
+4. Run `python3 ../s3-docx-styler/assets/embed-fonts.py <path>`.
+5. Run `python3 ../s3-docx-styler/assets/verify-docx.py <path>`. **If it exits non-zero, the file is rejected.** Fix and regenerate. Never deliver a failing file.
+
+"Executing the workflow directly" means following those five steps exactly. It does not mean writing your own docx-js, choosing your own fonts, or inventing a section structure. Every past failure of this brief (Georgia instead of Open Sans, paper-width tables, invented section numbering) came from treating an unavailable Skill tool as licence to improvise.
 
 ### Save Location (pass to styler)
 - **Google Drive** (if connector available): `{Client Folder}/CREATIVE STRATEGY/{Client}_Foundational_Brief_DRAFT.docx`

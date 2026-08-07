@@ -2,7 +2,7 @@
 name: s3-docx-styler
 description: |
   Packs the final .docx file for every S3 brief. Handles all visual composition (warm B&W palette, three-band structure with shaded band around data-heavy sections, HeadingLevel-driven Outline, source lines, pipe-notes, hyperlinks, cover masthead, tables), enforces editorial discipline (extract-not-regurgitate, importance-not-count, no downstream leaks, no The Read section), and embeds Open Sans fonts. MANDATORY final step for every brief-writing skill.
-  TRIGGERS: Invoked programmatically by s3-foundational-brief, s3-strategy-brief, s3-recommendation-doc, and s3-creative-brief-* skills at their final packing step. NOT for direct user invocation — if the user says "style my brief," the correct skill is whichever brief-writing skill applies; that skill will invoke this one as its last step.
+  TRIGGERS: Every S3 brief-writing skill MUST invoke this skill with the Skill tool at its final packing step: s3-foundational-brief, s3-strategy-brief, s3-recommendation-doc, s3-creative-brief-*. It is always available to invoke. If a user asks directly to "style my brief," route to the brief-writing skill that applies and let it call this one last.
 ---
 
 # S3 Docx Styler — MANDATORY Final Step for Every S3 Brief
